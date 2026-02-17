@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Breakaway Blueprint™ — Independence Candidacy Assessment</title>
+<meta name="description" content="Evaluate your readiness for financial independence with the Breakaway Blueprint™ assessment from Iconoclastic Capital Management." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B6B6B;
+    --text-tertiary: #A0A0A0;
+    --border: #E8E8E4;
+    --border-hover: #D0D0CC;
+    --accent: #D4A843;
+    --accent-bg: #FBF6EC;
+    --accent-border: #E8D5A0;
+    --green: #2E8B57;
+    --green-bg: #F0F8F4;
+    --yellow: #B8860B;
+    --yellow-bg: #FDF8EE;
+    --orange: #CC6B2C;
+    --orange-bg: #FDF4ED;
+    --red: #C0392B;
+    --red-bg: #FDF0EF;
+    --font-body: 'Outfit', -apple-system, sans-serif;
+    --font-display: 'Newsreader', Georgia, serif;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+    --radius: 10px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh; min-height: 100dvh;
+    background: var(--bg); color: var(--text-primary);
+    font-family: var(--font-body); -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  ::selection { background: var(--accent-bg); color: var(--text-primary); }
+  input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: var(--border); border-radius: 2px; outline: none; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--surface); cursor: pointer; border: 2px solid var(--accent); box-shadow: var(--shadow-md); transition: transform 0.15s ease; }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--surface); cursor: pointer; border: 2px solid var(--accent); box-shadow: var(--shadow-md); }
+  .field-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; color: var(--text-primary); font-size: 15px; font-family: var(--font-body); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+  .field-input::placeholder { color: var(--text-tertiary); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUpSm { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+  @keyframes fillBar { from { width: 0; } }
+  @keyframes checkPop { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+  @keyframes ringDraw { from { stroke-dashoffset: 440; } }
+  .a-slide { animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .a-slide-sm { animation: slideUpSm 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .a-scale { animation: scaleIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .d1 { animation-delay: .05s; opacity: 0; } .d2 { animation-delay: .1s; opacity: 0; }
+  .d3 { animation-delay: .15s; opacity: 0; } .d4 { animation-delay: .2s; opacity: 0; }
+  .d5 { animation-delay: .25s; opacity: 0; } .d6 { animation-delay: .3s; opacity: 0; }
+  .kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; background: var(--bg); border: 1px solid var(--border); border-radius: 5px; font-size: 11px; font-weight: 600; color: var(--text-tertiary); font-family: var(--font-body); line-height: 1; }
+  @media (max-width: 600px) { .hide-m { display: none !important; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+const QS = [
+  { id:"q_revenue", sec:"Revenue & Structure", text:"What was your total annual gross revenue over the trailing 12 months?", sub:"Advisory fees + brokerage + insurance combined", type:"single",
+    opts:[{l:"Under $300K",s:0},{l:"$300K – $500K",s:2},{l:"$500K – $1M",s:4},{l:"$1M – $2M",s:5},{l:"$2M+",s:5}]},
+  { id:"q_households", sec:"Revenue & Structure", text:"How many client households do you currently serve?", type:"single",
+    opts:[{l:"Under 50",s:2},{l:"50 – 100",s:4},{l:"100 – 200",s:5},{l:"200+",s:3}]},
+  { id:"q_structure", sec:"Revenue & Structure", text:"How is your practice currently structured?", type:"single",
+    opts:[{l:"Solo advisor",s:2},{l:"Advisor + 1–2 support staff",s:3},{l:"Small team (3–5)",s:5},{l:"Larger team (6+)",s:4}]},
+  { id:"q_model", sec:"Revenue & Structure", text:"Which independence structure are you evaluating?", type:"single",
+    opts:[{l:"Full RIA",s:5},{l:"Hybrid model",s:3},{l:"Unsure",s:1}]},
+  { id:"q_timeline", sec:"Intent & Timing", text:"When are you realistically considering independence?", type:"single",
+    opts:[{l:"Within 3 months",s:5},{l:"3–6 months",s:5},{l:"6–12 months",s:3},{l:"12+ months",s:2},{l:"Exploring only",s:1}]},
+  { id:"q_retention", sec:"Intent & Timing", text:"Are you currently under a retention package or forgivable loan?", type:"single",
+    opts:[{l:"No",s:5},{l:"Yes",s:1}]},
+  { id:"q_decision_maker", sec:"Intent & Timing", text:"Are you the primary decision-maker regarding a potential transition?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"Shared authority",s:3},{l:"No",s:1}]},
+  { id:"q_portability", sec:"Intent & Timing", text:"What percentage of your current revenue do you believe is portable?", type:"single",
+    opts:[{l:"Under 50%",s:1},{l:"50–70%",s:2},{l:"70–90%",s:4},{l:"90%+",s:5},{l:"Unsure",s:1}]},
+  { id:"q_revenue_decline", sec:"Financial Readiness", text:"If revenue declined 25% for 6–9 months during transition, could you maintain stability?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"With meaningful adjustments",s:3},{l:"No",s:0}]},
+  { id:"q_liquidity", sec:"Financial Readiness", text:"How much personal liquidity do you currently maintain?", sub:"Cash or accessible reserves", type:"single",
+    opts:[{l:"Under 6 months of expenses",s:1},{l:"6–12 months",s:3},{l:"12+ months",s:5},{l:"Prefer not to disclose",s:0}]},
+  { id:"q_investment_ready", sec:"Financial Readiness", text:"The Breakaway Blueprint™ requires a $2,500 audit and $30K–$40K engagement. Are you prepared to invest at this level?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"Possibly",s:3},{l:"Not at this time",s:0}]},
+  { id:"q_uncertainty", sec:"Psychological Readiness", text:"When facing uncertainty, you typically:", type:"single",
+    opts:[{l:"Make decisive moves with incomplete information",s:5},{l:"Gather more data before acting",s:3},{l:"Delay action to reduce risk",s:1}]},
+  { id:"q_high_stakes", sec:"Psychological Readiness", text:"In the past 12 months, have you made a high-stakes decision involving real financial or reputational risk?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"No",s:1}]},
+  { id:"q_feedback", sec:"Psychological Readiness", text:"When challenged directly about blind spots in your leadership, you tend to:", type:"single",
+    opts:[{l:"Welcome it",s:5},{l:"Tolerate it",s:3},{l:"Resist it",s:0}]},
+  { id:"q_client_loss", sec:"Psychological Readiness", text:"If a key client indicated they might not follow you, your likely internal response:", type:"single",
+    opts:[{l:"Strategic recalibration",s:5},{l:"Frustration",s:2},{l:"Self-doubt",s:0}]},
+  { id:"q_partner_align", sec:"Psychological Readiness", text:"How aligned is your spouse or partner regarding independence?", type:"single",
+    opts:[{l:"Fully aligned",s:5},{l:"Supportive but concerned",s:3},{l:"Uncertain",s:1},{l:"Resistant",s:0}]},
+  { id:"q_volatility", sec:"Psychological Readiness", text:"How comfortable are you with temporary income volatility and public uncertainty?", type:"slider", min:1, max:10, mult:0.5 },
+  { id:"q_identity", sec:"Psychological Readiness", text:"Today, you primarily see yourself as:", type:"single",
+    opts:[{l:"A high-performing advisor",s:2},{l:"A business owner",s:4},{l:"A founder",s:5},{l:"A future CEO",s:5},{l:"Unsure",s:1}]},
+  { id:"q_sops", sec:"Operator Discipline", text:"Do you currently operate with documented processes for client onboarding, service, and compliance?", type:"single",
+    opts:[{l:"Yes, fully documented",s:5},{l:"Partially documented",s:3},{l:"No",s:0}]},
+  { id:"q_metrics", sec:"Operator Discipline", text:"How frequently do you review business performance metrics?", type:"single",
+    opts:[{l:"Weekly",s:5},{l:"Monthly",s:4},{l:"Quarterly",s:2},{l:"Rarely",s:0}]},
+  { id:"q_dip_response", sec:"Operator Discipline", text:"When performance dips, your default move is:", type:"single",
+    opts:[{l:"Increase structure and clarity",s:5},{l:"Increase activity and prospecting",s:3},{l:"Wait for conditions to improve",s:1},{l:"Blame external factors",s:0}]},
+  { id:"q_transition_exp", sec:"Operator Discipline", text:"Have you led a team through a significant transition before?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"No",s:1}]},
+  { id:"q_sustained_focus", sec:"Operator Discipline", text:"If independence required 60–90 days of disciplined preparation without recognition, would you remain focused?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"Probably",s:3},{l:"Unlikely",s:0}]},
+  { id:"q_feedback_ready", sec:"Operator Discipline", text:"Are you prepared to receive direct feedback — including that independence may not be appropriate right now?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"No",s:0}]},
+  { id:"q_prep_open", sec:"Operator Discipline", text:"If independence isn't viable within 12 months, would you strengthen your leadership and operations in preparation?", type:"single",
+    opts:[{l:"Yes",s:5},{l:"Maybe",s:3},{l:"No",s:0}]},
+];
+
+const N=QS.length, MAX=130;
+const SD=[
+  {id:"revenue",label:"Revenue & Structure",mx:20,qs:["q_revenue","q_households","q_structure","q_model"]},
+  {id:"intent",label:"Intent & Timing",mx:20,qs:["q_timeline","q_retention","q_decision_maker","q_portability"]},
+  {id:"financial",label:"Financial Readiness",mx:15,qs:["q_revenue_decline","q_liquidity","q_investment_ready"]},
+  {id:"psych",label:"Psychological Readiness",mx:35,qs:["q_uncertainty","q_high_stakes","q_feedback","q_client_loss","q_partner_align","q_volatility","q_identity"]},
+  {id:"operator",label:"Operator Discipline",mx:35,qs:["q_sops","q_metrics","q_dip_response","q_transition_exp","q_sustained_focus","q_feedback_ready","q_prep_open"]},
+];
+
+const FORMSPREE_ID = "YOUR_FORM_ID";
+
+function getLvl(p){
+  if(p>=80)return{tier:"High Readiness",color:"var(--green)",bg:"var(--green-bg)",bdr:"#C2DDD0",
+    h:"You're a strong candidate for the Breakaway Blueprint™.",
+    b:"Your structural, financial, psychological, and operational indicators align with advisors who successfully transition to independence. The next step is the Independent Readiness Audit — a focused diagnostic to validate your pathway and build your 180-day plan.",
+    cta:"Schedule Your Readiness Audit"};
+  if(p>=60)return{tier:"Moderate Readiness",color:"var(--yellow)",bg:"var(--yellow-bg)",bdr:"#E8D5A0",
+    h:"Strong fundamentals — with gaps to address.",
+    b:"Your profile shows meaningful alignment with independence, but key areas need strengthening before a transition would be structurally sound. We may recommend a targeted preparation engagement to close specific gaps.",
+    cta:"Explore Preparation Pathways"};
+  if(p>=40)return{tier:"Early Stage",color:"var(--orange)",bg:"var(--orange-bg)",bdr:"#E8C8A0",
+    h:"Independence is plausible — but not imminent.",
+    b:"Several foundational areas require development before a breakaway would be viable. This isn't a disqualification — it's a diagnosis. With the right preparation, many advisors in this range reach readiness within 12–18 months.",
+    cta:"Request a Diagnostic Conversation"};
+  return{tier:"Not Yet Ready",color:"var(--red)",bg:"var(--red-bg)",bdr:"#E8B0A8",
+    h:"Independence is not the right move right now.",
+    b:"Your current profile suggests significant structural and personal risk. This assessment is designed to protect you. Focus on revenue growth, operational discipline, and financial reserves before revisiting.",
+    cta:"Subscribe for Future Resources"};
+}
+
+function App(){
+  const[phase,setPhase]=useState("intro");
+  const[qi,setQi]=useState(0);
+  const[ans,setAns]=useState({});
+  const[sel,setSel]=useState({});
+  const[sld,setSld]=useState({});
+  const[tr,setTr]=useState(false);
+  const[lead,setLead]=useState({name:"",email:"",phone:"",firm:""});
+  const[submitting,setSub]=useState(false);
+  const[err,setErr]=useState("");
+  const timer=useRef(null);
+
+  const q=QS[qi];
+  const prog=phase==="quiz"?((qi+1)/N)*100:0;
+  const total=Object.values(ans).reduce((a,b)=>a+b,0);
+  const pct=Math.round((total/MAX)*100);
+  const lvl=getLvl(pct);
+  const bd=SD.map(s=>{const e=s.qs.reduce((a,id)=>a+(ans[id]||0),0);return{...s,e,pct:Math.round((e/s.mx)*100)};});
+
+  const go=useCallback(fn=>{setTr(true);setTimeout(()=>{fn();setTimeout(()=>setTr(false),30);},220);},[]);
+  const next=useCallback(()=>{if(qi<N-1)go(()=>setQi(i=>i+1));else go(()=>setPhase("capture"));},[qi,go]);
+  const prev=useCallback(()=>{if(qi>0)go(()=>setQi(i=>i-1));else go(()=>setPhase("intro"));},[qi,go]);
+  const pick=useCallback(i=>{const question=QS[qi];if(question.type!=="single")return;setSel(p=>({...p,[question.id]:i}));setAns(p=>({...p,[question.id]:question.opts[i].s}));if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>next(),380);},[qi,next]);
+
+  useEffect(()=>{
+    const h=e=>{
+      if(phase==="intro"&&e.key==="Enter"){go(()=>setPhase("quiz"));return;}
+      if(phase!=="quiz")return;
+      const question=QS[qi];
+      if(question.type==="single"){const n=parseInt(e.key);if(n>=1&&n<=question.opts.length){pick(n-1);return;}}
+      if(e.key==="Enter"&&ans[question.id]!==undefined){if(timer.current)clearTimeout(timer.current);next();}
+      if(e.key==="Backspace"||e.key==="ArrowLeft"){if(timer.current)clearTimeout(timer.current);prev();}
+    };
+    window.addEventListener("keydown",h);return()=>window.removeEventListener("keydown",h);
+  },[phase,qi,ans,pick,next,prev,go]);
+
+  const slChange=v=>{setSld(p=>({...p,[q.id]:v}));setAns(p=>({...p,[q.id]:Math.round(v*q.mult)}));};
+
+  const summary=()=>QS.map(question=>{
+    if(question.type==="slider")return question.text+": "+(sld[question.id]??"N/A")+"/10";
+    const i=sel[question.id];return question.text+": "+(i!==undefined?question.opts[i].l:"N/A");
+  }).join("\n")+"\n\nSCORE: "+pct+"/100 ("+lvl.tier+")\n"+bd.map(s=>s.label+": "+s.pct+"%").join("\n");
+
+  const submit=async()=>{
+    if(!lead.name||!lead.email)return;setSub(true);setErr("");
+    try{
+      const r=await fetch("https://formspree.io/f/"+FORMSPREE_ID,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+        body:JSON.stringify({name:lead.name,email:lead.email,phone:lead.phone||"—",firm:lead.firm||"—",score:pct+"/100",tier:lvl.tier,answers:summary(),
+          _subject:"Breakaway Blueprint™: "+lead.name+" — "+lvl.tier+" ("+pct+"/100)"})});
+      if(r.ok)go(()=>setPhase("results"));else setErr("Something went wrong. Please try again.");
+    }catch{setErr("Network error. Please try again.");}
+    setSub(false);
+  };
+
+  const e=React.createElement;
+  const W=({children})=>e("div",{style:{minHeight:"100vh",display:"flex",flexDirection:"column"}},
+    e("header",{style:{padding:"16px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid var(--border)",background:"rgba(250,250,248,0.85)",backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",position:"sticky",top:0,zIndex:10}},
+      e("div",{style:{display:"flex",alignItems:"center",gap:10}},
+        e("div",{style:{width:8,height:8,borderRadius:2,background:"var(--accent)",transform:"rotate(45deg)"}}),
+        e("span",{style:{fontSize:13,fontWeight:600,letterSpacing:.5,color:"var(--text-secondary)"}},"BREAKAWAY BLUEPRINT™")),
+      phase==="quiz"&&e("span",{style:{fontSize:13,color:"var(--text-tertiary)",fontVariantNumeric:"tabular-nums"}},(qi+1)+" / "+N)),
+    phase==="quiz"&&e("div",{style:{height:2,background:"var(--border)"}},
+      e("div",{style:{height:"100%",background:"var(--accent)",width:prog+"%",transition:"width 0.4s cubic-bezier(0.16,1,0.3,1)"}})),
+    e("main",{style:{flex:1,display:"flex",alignItems:"center",justifyContent:"center",padding:"40px 24px"}},
+      e("div",{style:{width:"100%",maxWidth:560,opacity:tr?0:1,transform:tr?"translateY(6px)":"translateY(0)",transition:"opacity 0.22s ease, transform 0.22s ease"}},children)));
+
+  /* INTRO */
+  if(phase==="intro")return e(W,null,
+    e("div",{style:{textAlign:"center"}},
+      e("div",{className:"a-slide",style:{marginBottom:32}},
+        e("div",{style:{width:48,height:48,borderRadius:12,background:"var(--accent-bg)",border:"1px solid var(--accent-border)",margin:"0 auto 24px",display:"flex",alignItems:"center",justifyContent:"center"}},
+          e("div",{style:{width:12,height:12,borderRadius:3,background:"var(--accent)",transform:"rotate(45deg)"}}))),
+      e("h1",{className:"a-slide d1",style:{fontFamily:"var(--font-display)",fontSize:36,fontWeight:400,lineHeight:1.25,marginBottom:16,letterSpacing:-.5}},"Independence Candidacy Assessment"),
+      e("p",{className:"a-slide d2",style:{color:"var(--text-secondary)",fontSize:16,lineHeight:1.7,maxWidth:420,margin:"0 auto 12px"}},"This assessment evaluates your structural viability, financial readiness, psychological resilience, and operator discipline."),
+      e("p",{className:"a-slide d3",style:{color:"var(--text-tertiary)",fontSize:14,marginBottom:40}},N+" questions · About 5 minutes"),
+      e("button",{className:"a-slide d4",onClick:()=>go(()=>setPhase("quiz")),
+        style:{background:"var(--text-primary)",color:"var(--bg)",border:"none",padding:"14px 36px",borderRadius:8,fontSize:15,fontWeight:500,cursor:"pointer",fontFamily:"var(--font-body)",transition:"opacity 0.2s",letterSpacing:.2},
+        onMouseEnter:x=>x.currentTarget.style.opacity=".85",onMouseLeave:x=>x.currentTarget.style.opacity="1"},"Start assessment"),
+      e("p",{className:"a-slide d5 hide-m",style:{color:"var(--text-tertiary)",fontSize:12,marginTop:16}},"Press ",e("span",{className:"kbd"},"Enter")," to begin")));
+
+  /* QUIZ */
+  if(phase==="quiz"){
+    const done=ans[q.id]!==undefined;
+    return e(W,null,e("div",null,
+      e("div",{style:{marginBottom:8}},e("span",{style:{fontSize:12,fontWeight:600,color:"var(--accent)",letterSpacing:.5,textTransform:"uppercase"}},q.sec)),
+      e("h2",{key:q.id+"_h",className:"a-slide-sm",style:{fontFamily:"var(--font-display)",fontSize:24,fontWeight:400,lineHeight:1.4,marginBottom:6,letterSpacing:-.3}},q.text),
+      q.sub?e("p",{style:{color:"var(--text-tertiary)",fontSize:14,marginBottom:24}},q.sub):e("div",{style:{marginBottom:24}}),
+
+      q.type==="single"&&e("div",{key:q.id+"_o",style:{display:"flex",flexDirection:"column",gap:6}},
+        q.opts.map((o,i)=>{const isSel=sel[q.id]===i;return e("button",{key:i,className:"a-slide-sm d"+(i+1),onClick:()=>pick(i),
+          style:{display:"flex",alignItems:"center",gap:14,background:isSel?"var(--accent-bg)":"var(--surface)",
+            border:"1.5px solid "+(isSel?"var(--accent-border)":"var(--border)"),borderRadius:"var(--radius)",padding:"14px 16px",cursor:"pointer",
+            transition:"all 0.15s ease",textAlign:"left",fontFamily:"var(--font-body)",boxShadow:isSel?"var(--shadow-sm)":"none"},
+          onMouseEnter:x=>{if(!isSel){x.currentTarget.style.borderColor="var(--border-hover)";x.currentTarget.style.boxShadow="var(--shadow-sm)";}},
+          onMouseLeave:x=>{if(!isSel){x.currentTarget.style.borderColor="var(--border)";x.currentTarget.style.boxShadow="none";}}},
+          e("span",{className:"kbd hide-m"},i+1),
+          e("div",{style:{width:18,height:18,borderRadius:"50%",flexShrink:0,border:"2px solid "+(isSel?"var(--accent)":"var(--border)"),display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s ease",background:isSel?"var(--accent)":"transparent"}},
+            isSel&&e("svg",{width:10,height:10,viewBox:"0 0 10 10",style:{animation:"checkPop 0.25s ease"}},
+              e("path",{d:"M2 5l2.5 2.5L8 3",fill:"none",stroke:"white",strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round"}))),
+          e("span",{style:{fontSize:15,color:isSel?"var(--text-primary)":"var(--text-secondary)",fontWeight:isSel?500:400,transition:"all 0.15s"}},o.l));})),
+
+      q.type==="slider"&&e("div",{key:q.id+"_s",className:"a-slide-sm d1"},
+        e("div",{style:{padding:"20px 0"}},
+          e("input",{type:"range",min:1,max:10,value:sld[q.id]??5,onChange:x=>slChange(Number(x.target.value)),style:{width:"100%"}}),
+          e("div",{style:{display:"flex",justifyContent:"space-between",marginTop:8}},
+            e("span",{style:{fontSize:12,color:"var(--text-tertiary)"}},"Very uncomfortable"),
+            e("span",{style:{fontSize:12,color:"var(--text-tertiary)"}},"Very comfortable")),
+          e("div",{style:{textAlign:"center",marginTop:20}},
+            e("span",{style:{fontFamily:"var(--font-display)",fontSize:40,fontWeight:400,color:"var(--text-primary)"}},sld[q.id]??5),
+            e("span",{style:{fontSize:14,color:"var(--text-tertiary)",marginLeft:4}},"/ 10")))),
+
+      e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:36,gap:12}},
+        e("button",{onClick:()=>{if(timer.current)clearTimeout(timer.current);prev();},
+          style:{background:"none",border:"1.5px solid var(--border)",borderRadius:8,padding:"10px 20px",fontSize:14,color:"var(--text-secondary)",cursor:"pointer",fontFamily:"var(--font-body)",transition:"all 0.15s",display:"flex",alignItems:"center",gap:6},
+          onMouseEnter:x=>x.currentTarget.style.borderColor="var(--border-hover)",onMouseLeave:x=>x.currentTarget.style.borderColor="var(--border)"},
+          e("svg",{width:14,height:14,viewBox:"0 0 14 14",fill:"none"},e("path",{d:"M8.5 3L4.5 7L8.5 11",stroke:"currentColor",strokeWidth:1.5,strokeLinecap:"round",strokeLinejoin:"round"})),"Back"),
+        (q.type==="slider"||done)&&e("button",{onClick:()=>{if(timer.current)clearTimeout(timer.current);next();},
+          style:{background:"var(--text-primary)",color:"var(--bg)",border:"none",borderRadius:8,padding:"10px 24px",fontSize:14,fontWeight:500,cursor:"pointer",fontFamily:"var(--font-body)",transition:"opacity 0.15s",display:"flex",alignItems:"center",gap:6},
+          onMouseEnter:x=>x.currentTarget.style.opacity=".85",onMouseLeave:x=>x.currentTarget.style.opacity="1"},
+          qi===N-1?"Finish":"Continue",
+          e("svg",{width:14,height:14,viewBox:"0 0 14 14",fill:"none"},e("path",{d:"M5.5 3L9.5 7L5.5 11",stroke:"currentColor",strokeWidth:1.5,strokeLinecap:"round",strokeLinejoin:"round"})))),
+      e("p",{className:"hide-m",style:{color:"var(--text-tertiary)",fontSize:11,marginTop:14,textAlign:"center"}},
+        "Press ",e("span",{className:"kbd",style:{marginRight:2}},"1"),e("span",{className:"kbd",style:{marginRight:2}},"2"),e("span",{className:"kbd"},"3")," to select · ",e("span",{className:"kbd"},"Enter")," to continue · ",e("span",{className:"kbd"},"←")," to go back")));}
+
+  /* CAPTURE */
+  if(phase==="capture"){
+    const ok=lead.name&&lead.email&&!submitting;
+    return e(W,null,e("div",null,
+      e("div",{className:"a-slide",style:{textAlign:"center",marginBottom:32}},
+        e("div",{style:{width:48,height:48,borderRadius:12,background:"var(--green-bg)",border:"1px solid #C2DDD0",margin:"0 auto 20px",display:"flex",alignItems:"center",justifyContent:"center"}},
+          e("svg",{width:20,height:20,viewBox:"0 0 20 20",fill:"none"},e("path",{d:"M5 10l3.5 3.5L15 7",stroke:"var(--green)",strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round"}))),
+        e("h2",{style:{fontFamily:"var(--font-display)",fontSize:28,fontWeight:400,marginBottom:8,letterSpacing:-.3}},"Assessment complete"),
+        e("p",{style:{color:"var(--text-secondary)",fontSize:15,lineHeight:1.6,maxWidth:380,margin:"0 auto"}},"Enter your details to unlock your Independence Readiness Score and personalized breakdown.")),
+      e("div",{className:"a-slide d2",style:{display:"flex",flexDirection:"column",gap:16,marginBottom:24}},
+        e("div",null,e("label",{style:{display:"block",fontSize:13,fontWeight:500,color:"var(--text-secondary)",marginBottom:6}},"Full name *"),
+          e("input",{type:"text",className:"field-input",placeholder:"John Smith",value:lead.name,onChange:x=>setLead(p=>({...p,name:x.target.value}))})),
+        e("div",null,e("label",{style:{display:"block",fontSize:13,fontWeight:500,color:"var(--text-secondary)",marginBottom:6}},"Email address *"),
+          e("input",{type:"email",className:"field-input",placeholder:"john@example.com",value:lead.email,onChange:x=>setLead(p=>({...p,email:x.target.value}))})),
+        e("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}},
+          e("div",null,e("label",{style:{display:"block",fontSize:13,fontWeight:500,color:"var(--text-secondary)",marginBottom:6}},"Phone"),
+            e("input",{type:"tel",className:"field-input",placeholder:"(555) 123-4567",value:lead.phone,onChange:x=>setLead(p=>({...p,phone:x.target.value}))})),
+          e("div",null,e("label",{style:{display:"block",fontSize:13,fontWeight:500,color:"var(--text-secondary)",marginBottom:6}},"Current firm"),
+            e("input",{type:"text",className:"field-input",placeholder:"e.g., Merrill Lynch",value:lead.firm,onChange:x=>setLead(p=>({...p,firm:x.target.value}))})))),
+      err&&e("p",{style:{color:"var(--red)",fontSize:13,textAlign:"center",marginBottom:12}},err),
+      e("button",{className:"a-slide d3",onClick:submit,disabled:!ok,
+        style:{width:"100%",background:ok?"var(--text-primary)":"var(--border)",color:ok?"var(--bg)":"var(--text-tertiary)",border:"none",padding:"14px 24px",borderRadius:8,fontSize:15,fontWeight:500,cursor:ok?"pointer":"not-allowed",fontFamily:"var(--font-body)",transition:"all 0.2s"},
+        onMouseEnter:x=>{if(ok)x.currentTarget.style.opacity=".85";},onMouseLeave:x=>{x.currentTarget.style.opacity="1";}},submitting?"Submitting…":"Unlock my results"),
+      e("p",{className:"a-slide d4",style:{color:"var(--text-tertiary)",fontSize:12,textAlign:"center",marginTop:14,lineHeight:1.5}},"Your information is shared with Iconoclastic Capital Management for follow-up."),
+      e("div",{style:{textAlign:"center",marginTop:8}},
+        e("button",{onClick:()=>go(()=>{setPhase("quiz");setQi(N-1);}),
+          style:{background:"none",border:"none",color:"var(--text-tertiary)",fontSize:13,cursor:"pointer",fontFamily:"var(--font-body)",textDecoration:"underline",textUnderlineOffset:3}},"Back to questions"))));}
+
+  /* RESULTS */
+  if(phase==="results"){
+    const wk=bd.reduce((m,s)=>s.pct<m.pct?s:m,bd[0]);
+    const r=70,c=2*Math.PI*r,off=c-(pct/100)*c;
+    const bc=p=>p>=75?"var(--green)":p>=50?"var(--yellow)":p>=30?"var(--orange)":"var(--red)";
+    return e(W,null,e("div",null,
+      e("div",{className:"a-scale",style:{display:"flex",justifyContent:"center",marginBottom:8}},
+        e("svg",{width:180,height:180,viewBox:"0 0 180 180"},
+          e("circle",{cx:90,cy:90,r,fill:"none",stroke:"var(--border)",strokeWidth:5}),
+          e("circle",{cx:90,cy:90,r,fill:"none",stroke:lvl.color,strokeWidth:5,strokeDasharray:c,strokeDashoffset:off,strokeLinecap:"round",transform:"rotate(-90 90 90)",
+            style:{transition:"stroke-dashoffset 1s cubic-bezier(0.16,1,0.3,1)",animation:"ringDraw 1s cubic-bezier(0.16,1,0.3,1)"}}),
+          e("text",{x:90,y:84,textAnchor:"middle",fill:"var(--text-primary)",fontSize:38,fontFamily:"var(--font-display)",fontWeight:400},pct),
+          e("text",{x:90,y:108,textAnchor:"middle",fill:"var(--text-tertiary)",fontSize:12,fontFamily:"var(--font-body)",fontWeight:500,letterSpacing:1},"OUT OF 100"))),
+      e("div",{className:"a-slide d1",style:{textAlign:"center",marginBottom:28}},
+        e("span",{style:{display:"inline-block",background:lvl.bg,color:lvl.color,border:"1px solid "+lvl.bdr,padding:"5px 14px",borderRadius:20,fontSize:13,fontWeight:600,letterSpacing:.3}},lvl.tier)),
+      e("div",{className:"a-slide d2",style:{background:"var(--surface)",border:"1.5px solid var(--border)",borderRadius:12,padding:28,marginBottom:20,boxShadow:"var(--shadow-sm)"}},
+        e("h3",{style:{fontFamily:"var(--font-display)",fontSize:20,fontWeight:400,marginBottom:10,lineHeight:1.4}},lvl.h),
+        e("p",{style:{color:"var(--text-secondary)",fontSize:14,lineHeight:1.7}},lvl.b)),
+      e("div",{className:"a-slide d3",style:{background:"var(--surface)",border:"1.5px solid var(--border)",borderRadius:12,padding:28,marginBottom:20,boxShadow:"var(--shadow-sm)"}},
+        e("h4",{style:{fontSize:13,fontWeight:600,color:"var(--text-secondary)",marginBottom:20,letterSpacing:.3}},"Score breakdown"),
+        bd.map((s,i)=>e("div",{key:s.id,style:{marginBottom:i<bd.length-1?16:0}},
+          e("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:6}},
+            e("span",{style:{fontSize:13,color:"var(--text-secondary)"}},s.label),
+            e("span",{style:{fontSize:13,fontWeight:600,color:bc(s.pct),fontVariantNumeric:"tabular-nums"}},s.pct+"%")),
+          e("div",{style:{height:5,background:"var(--bg)",borderRadius:3}},
+            e("div",{style:{height:"100%",borderRadius:3,background:bc(s.pct),width:s.pct+"%",transition:"width 0.8s cubic-bezier(0.16,1,0.3,1)",animation:"fillBar 0.8s cubic-bezier(0.16,1,0.3,1)"}}))))),
+      wk.pct<60&&e("div",{className:"a-slide d4",style:{background:"var(--orange-bg)",border:"1.5px solid #E8C8A0",borderRadius:12,padding:24,marginBottom:20}},
+        e("div",{style:{display:"flex",alignItems:"center",gap:8,marginBottom:8}},
+          e("svg",{width:16,height:16,viewBox:"0 0 16 16",fill:"none"},
+            e("path",{d:"M8 1L15 14H1L8 1Z",fill:"none",stroke:"var(--orange)",strokeWidth:1.5,strokeLinejoin:"round"}),
+            e("path",{d:"M8 6v3M8 11v.5",stroke:"var(--orange)",strokeWidth:1.5,strokeLinecap:"round"})),
+          e("span",{style:{fontSize:13,fontWeight:600,color:"var(--orange)"}},"Primary gap")),
+        e("p",{style:{color:"var(--text-secondary)",fontSize:14,lineHeight:1.6}},"Your ",e("strong",null,wk.label)," score ("+wk.pct+"%) is the most significant area for development before pursuing independence.")),
+      e("div",{className:"a-slide d5",style:{textAlign:"center",marginTop:8}},
+        e("a",{href:"https://iconocapital.com/contact",target:"_blank",rel:"noopener noreferrer",
+          style:{display:"inline-block",background:"var(--text-primary)",color:"var(--bg)",padding:"14px 32px",borderRadius:8,fontSize:15,fontWeight:500,textDecoration:"none",fontFamily:"var(--font-body)",transition:"opacity 0.15s"},
+          onMouseEnter:x=>x.currentTarget.style.opacity=".85",onMouseLeave:x=>x.currentTarget.style.opacity="1"},lvl.cta+" →"),
+        e("div",{style:{marginTop:14}},
+          e("button",{onClick:()=>{setPhase("intro");setQi(0);setAns({});setSel({});setSld({});setLead({name:"",email:"",phone:"",firm:""});},
+            style:{background:"none",border:"none",color:"var(--text-tertiary)",fontSize:13,cursor:"pointer",fontFamily:"var(--font-body)",textDecoration:"underline",textUnderlineOffset:3}},"Retake assessment")))));}
+  return null;
+}
+ReactDOM.createRoot(document.getElementById("app")).render(React.createElement(App));
+</script>
+</body>
+</html>
