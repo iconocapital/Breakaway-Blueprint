@@ -368,7 +368,7 @@ const CHAPTERS = {
   s1:{num:'01',title:'Professional Profile & Revenue',desc:'Contact details, team structure, and trailing 12-month revenue metrics that determine your valuation profile.',icon:'◈',count:'13 questions'},
   s2:{num:'02',title:'Independence Intent & Timing',desc:'Catalyst analysis, transition timeline, retention obligations, and decision authority mapping.',icon:'◎',count:'7 questions'},
   s3:{num:'03',title:'Practice Economics',desc:'Live modeling of your annual take-home across three independent payout tiers — projected over five years.',icon:'◐',count:'Interactive calculator'},
-  s4:{num:'04',title:'Structural & Financial Readiness',desc:'Target structure, client portability, liquidity runway, and the three transition risk factors that matter most.',icon:'◑',count:'13 questions'},
+  s4:{num:'04',title:'Structural & Financial Readiness',desc:'Target structure, client portability, liquidity runway, and the three transition risk factors that matter most.',icon:'◑',count:'10 questions'},
   s5:{num:'05',title:'Psychological Readiness',desc:'Decisiveness under uncertainty, partner alignment, business owner identity, and volatility tolerance.',icon:'◒',count:'11 questions'},
   s6:{num:'06',title:'Operator Discipline',desc:'SOP documentation, performance review cadence, and 90-day focus endurance without external validation.',icon:'◓',count:'9 questions'},
   s7:{num:'07',title:'Commitment & Pathway',desc:'Investment readiness, preparation willingness, and capacity for unfiltered direct feedback.',icon:'◔',count:'6 questions + open response'},
@@ -497,7 +497,7 @@ function computeRawScore() {
   sc+=Math.round((S.vol||5)*0.6);
   const q29s=[3,4,5,5,0]; sc+=q29s[a.q29]||0;
   const q43s=[0,2,4,5]; sc+=q43s[a.q43]||0;
-  const q44s=[0,3,5,4,1]; sc+=q44s[a.q44]||0;
+  const q44s=[0,2,4,5,1]; sc+=q44s[a.q44]||0;
   const q30s=[5,3,0]; sc+=q30s[a.q30]||0;
   const q31s=[5,4,2,0]; sc+=q31s[a.q31]||0;
   const q32s=[4,3,0,0]; sc+=q32s[a.q32]||0;
@@ -520,7 +520,7 @@ function computeRawScore() {
   sc+=proprietarySignalAdjustment(a);
   return sc;
 }
-const RAW_MAX=239;
+const RAW_MAX=246;
 
 function proprietarySignalAdjustment(a){
   let bonus = 0;
@@ -558,7 +558,7 @@ function sectionScores(){
     {label:'Revenue & Book',raw:(()=>{const q7s=[0,4,8,12,12];let s=q7s[a.q7]||0;s+=Math.min(8,Math.round((parseFloat(a.q8_adv)||0)*0.08));const hh=parseInt(a.q9)||0;s+=hh>=200?5:hh>=100?4:hh>=50?3:hh>=20?2:hh>0?1:0;const q10s=[2,4,5,5];s+=q10s[a.q10]||0;const q1as=[0,1,3,5,7];s+=q1as[a.q1a]||0;const rrHH=parseInt(a.q1b)||0;s+=rrHH>=15000?6:rrHH>=9400?5:rrHH>=6000?3:rrHH>=3000?1:0;return s;})(),max:42},
     {label:'Intent & Timing',raw:(()=>{const q12s=[5,5,3,1,0];let s=q12s[a.q12]||0;s+=(a.q14===1)?5:(a.q14===0)?2:0;const q16s=[5,3,0];s+=q16s[a.q16]||0;const q2as=[0,2,4,5];s+=q2as[a.q2a]||0;return s;})(),max:20},
     {label:'Structural Readiness',raw:(()=>{const q17s=[5,3,1];let s=q17s[a.q17]||0;const q18s=[0,2,4,5,1];s+=q18s[a.q18]||0;const q19s=[5,2,0];s+=q19s[a.q19]||0;const q20s=[1,3,5,2];s+=q20s[a.q20]||0;const r2s=[0,2,1,4];s+=r2s[a.r2]||0;const r4s=[1,2,3,4];s+=r4s[a.r4]||0;const r5s=[0,2,3,4];s+=r5s[a.r5]||0;const q39s=[0,2,4,5];s+=q39s[a.q39]||0;const q41s=[0,2,4,5];s+=q41s[a.q41]||0;const q42s=[0,2,4,5];s+=q42s[a.q42]||0;return s;})(),max:42},
-    {label:'Psychological Readiness',raw:(()=>{const q21s=[5,3,0];let s=q21s[a.q21]||0;s+=(a.q22===0)?4:0;const q24s=[5,2,0];s+=q24s[a.q24]||0;const q25s=[4,1,0];s+=q25s[a.q25]||0;const q27s=[5,3,1,0];s+=q27s[a.q27]||0;s+=Math.round((S.vol||5)*0.6);const q29s=[3,4,5,5,0];s+=q29s[a.q29]||0;const q43s=[0,2,4,5];s+=q43s[a.q43]||0;const q44s=[0,3,5,4,1];s+=q44s[a.q44]||0;return s;})(),max:36},
+    {label:'Psychological Readiness',raw:(()=>{const q21s=[5,3,0];let s=q21s[a.q21]||0;s+=(a.q22===0)?4:0;const q24s=[5,2,0];s+=q24s[a.q24]||0;const q25s=[4,1,0];s+=q25s[a.q25]||0;const q27s=[5,3,1,0];s+=q27s[a.q27]||0;s+=Math.round((S.vol||5)*0.6);const q29s=[3,4,5,5,0];s+=q29s[a.q29]||0;const q43s=[0,2,4,5];s+=q43s[a.q43]||0;const q44s=[0,2,4,5,1];s+=q44s[a.q44]||0;return s;})(),max:36},
     {label:'Operator Discipline',raw:(()=>{const q30s=[5,3,0];let s=q30s[a.q30]||0;const q31s=[5,4,2,0];s+=q31s[a.q31]||0;const q32s=[4,3,0,0];s+=q32s[a.q32]||0;s+=(a.q33===0)?3:1;const q34s=[3,1,0];s+=q34s[a.q34]||0;const q40s=[0,2,4,5];s+=q40s[a.q40]||0;const q45s=[0,2,4,5];s+=q45s[a.q45]||0;const q46s=[0,2,4,5];s+=q46s[a.q46]||0;const q47s=[0,2,4,5];s+=q47s[a.q47]||0;return s;})(),max:39},
     {label:'Commitment & Pathway',raw:(()=>{const q35s=[7,3,0];let s=q35s[a.q35]||0;const q36s=[5,2,0];s+=q36s[a.q36]||0;s+=(a.q37===0)?3:0;const q48s=[0,2,4,5];s+=q48s[a.q48]||0;const q49s=[0,2,4,5];s+=q49s[a.q49]||0;return s;})(),max:25},
     {label:'Technology & Infrastructure',raw:(()=>{let s=0;const q50s=[0,2,3,4,5];s+=q50s[a.q50]||0;const q51s=[0,2,4,5];s+=q51s[a.q51]||0;const q52s=[5,3,1,0];s+=q52s[a.q52]||0;const q53s=[4,3,2,1];s+=q53s[a.q53]||0;const q54s=[0,2,5];s+=q54s[a.q54]||0;return s;})(),max:24},
@@ -610,6 +610,8 @@ function validate(phase){
     if(!a.q26||!a.q26.trim())missing.push('q26');
     if(a.q27===undefined)missing.push('q27');
     if(a.q29===undefined)missing.push('q29');
+    if(a.q43===undefined)missing.push('q43');
+    if(a.q44===undefined)missing.push('q44');
   }
   if(phase==='s6'){
     if(a.q30===undefined)missing.push('q30');
@@ -724,7 +726,7 @@ async function runAI(){
     publicBrandReadiness:['Not prepared','Somewhat prepared','Prepared and willing','Already operating this way'][a.q49]||'—',
     techStackMaturity:['Fragmented/manual','Functional with gaps','Integrated and stable','High-performing with clear owner','Best-in-class and scalable'][a.q50]||'—',
     custodianResearch:['None yet','Initial shortlist','Deep diligence in progress','Preferred partner identified'][a.q51]||'—',
-    proprietaryDependency:['Heavy dependency','Moderate dependency','Limited dependency','No material dependency'][a.q52]||'—',
+    proprietaryDependency:['No material dependency','Limited dependency','Moderate dependency','Heavy dependency'][a.q52]||'—',
     meetingModality:['Mostly in-person','Hybrid (lean in-person)','Hybrid (lean virtual)','Mostly virtual'][a.q53]||'—',
     firmOwnsBookData:['Unsure','Yes','No'][a.q54]||'—',
     spouseAlign:['Fully aligned','Supportive/concerned','Uncertain','Resistant'][a.q27]||'—',
@@ -774,7 +776,7 @@ async function submitLead(){
       public_brand_readiness:['Not prepared','Somewhat','Prepared','Already doing it'][a.q49],
       tech_stack_maturity:['Fragmented','Functional','Integrated','High-performing','Best-in-class'][a.q50],
       custodian_research:['None','Shortlist','Deep diligence','Preferred identified'][a.q51],
-      proprietary_dependency:['Heavy','Moderate','Limited','None'][a.q52],
+      proprietary_dependency:['None','Limited','Moderate','Heavy'][a.q52],
       meeting_modality:['Mostly in-person','Hybrid in-person','Hybrid virtual','Mostly virtual'][a.q53],
       firm_owns_book_data:['Unsure','Yes','No'][a.q54],
       catalyst:a.q13,retention:['Yes','No'][a.q14],
