@@ -361,6 +361,7 @@ const STEPS = [
   {n:5,label:'Psychology'},
   {n:6,label:'Operations'},
   {n:7,label:'Commitment'},
+  {n:8,label:'Technology'},
 ];
 
 const CHAPTERS = {
@@ -412,7 +413,7 @@ let S = {
 // ══════════════════════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════════════════════
-const SECTION_ORDER = ['landing','chapter_s1','s1','chapter_s2','s2','chapter_s3','s3','chapter_s4','s4','chapter_s5','s5','chapter_s6','s6','chapter_s7','s7','processing','paywall','results'];
+const SECTION_ORDER = ['landing','chapter_s1','s1','chapter_s2','s2','chapter_s3','s3','chapter_s4','s4','chapter_s5','s5','chapter_s6','s6','chapter_s7','s7','chapter_s8','s8','processing','paywall','results'];
 
 function phaseIndex(p){ return SECTION_ORDER.indexOf(p); }
 
@@ -492,6 +493,8 @@ function computeRawScore() {
   const q27s=[5,3,1,0]; sc+=q27s[a.q27]||0;
   sc+=Math.round((S.vol||5)*0.6);
   const q29s=[3,4,5,5,0]; sc+=q29s[a.q29]||0;
+  const q43s=[0,2,4,5]; sc+=q43s[a.q43]||0;
+  const q44s=[0,2,4,5,1]; sc+=q44s[a.q44]||0;
   const q30s=[5,3,0]; sc+=q30s[a.q30]||0;
   const q31s=[5,4,2,0]; sc+=q31s[a.q31]||0;
   const q32s=[4,3,0,0]; sc+=q32s[a.q32]||0;
@@ -591,6 +594,8 @@ function validate(phase){
     if(!a.q26||!a.q26.trim())missing.push('q26');
     if(a.q27===undefined)missing.push('q27');
     if(a.q29===undefined)missing.push('q29');
+    if(a.q43===undefined)missing.push('q43');
+    if(a.q44===undefined)missing.push('q44');
   }
   if(phase==='s6'){
     if(a.q30===undefined)missing.push('q30');
@@ -604,6 +609,15 @@ function validate(phase){
     if(a.q35===undefined)missing.push('q35');
     if(a.q36===undefined)missing.push('q36');
     if(a.q37===undefined)missing.push('q37');
+    if(a.q48===undefined)missing.push('q48');
+    if(a.q49===undefined)missing.push('q49');
+  }
+  if(phase==='s8'){
+    if(a.q50===undefined)missing.push('q50');
+    if(a.q51===undefined)missing.push('q51');
+    if(a.q52===undefined)missing.push('q52');
+    if(a.q53===undefined)missing.push('q53');
+    if(a.q54===undefined)missing.push('q54');
   }
   return missing;
 }
@@ -844,7 +858,7 @@ function renderLanding(){
         </p>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;animation:qFadeUp .6s cubic-bezier(.16,1,.3,1) .1s both">
-        ${['7 sections · 41 questions','AI-analyzed open responses','Live practice economics','$349 results report'].map(x=>`<div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);font-size:12px;color:var(--text2);font-family:var(--ff-m);letter-spacing:.1px">
+        ${['8 sections · 54 questions','AI-analyzed open responses','Live practice economics','$349 results report'].map(x=>`<div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);font-size:12px;color:var(--text2);font-family:var(--ff-m);letter-spacing:.1px">
           <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l2.5 2.5L9.5 2" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>${x}
         </div>`).join('')}
       </div>
@@ -891,7 +905,7 @@ function renderChapter(chKey){
   return`${hdr('s'+chKey.replace('chapter_s',''))}
   <div class="chapter-wrap section-wrap slide-in-right">
     <div class="chapter-card" id="chapter-card">
-      <div class="chapter-num">Section ${ch.num} of 07</div>
+      <div class="chapter-num">Section ${ch.num} of 08</div>
       <div class="chapter-icon">${ch.icon}</div>
       <h2 class="chapter-title">${ch.title}</h2>
       <p class="chapter-desc">${ch.desc}</p>
@@ -918,7 +932,7 @@ function renderS1(){
   return`${hdr('s1')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
     <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 01 of 07</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 01 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Professional Profile & Revenue</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">All fields required unless noted. Information is shared exclusively with Iconoclastic Capital Management.</p>
     ${field('q1','Full Name','text','Jane Smith','')}
@@ -995,7 +1009,7 @@ function renderS2(){
   return`${hdr('s2')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
     <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 02 of 07</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 02 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Independence Intent & Timing</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Clarity of intent and timing is one of the most reliable indicators of transition success.</p>
     <div class="q-block q-cascade" style="animation-delay:.12s">
@@ -1049,7 +1063,7 @@ function renderS3(){
   const pctBar=((pout-25)/60*100).toFixed(0)+'%';
   return`${hdr('s3')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 03 of 07</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 03 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Practice Economics</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Live modeling of your take-home across three independent payout tiers. Numbers update in real time. Informational — does not affect your candidacy score.</p>
     <div class="g2 q-cascade" style="animation-delay:.12s;margin-bottom:16px">
@@ -1089,7 +1103,7 @@ function renderS4(){
   return`${hdr('s4')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
     <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 04 of 07</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 04 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Structural & Financial Readiness</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Practice structural viability and personal financial capacity to execute a transition.</p>
     <div class="q-block q-cascade" style="animation-delay:.12s">
@@ -1140,7 +1154,7 @@ function renderS5(){
   return`${hdr('s5')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
     <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 05 of 07</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 05 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Psychological Readiness</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:6px">Answer candidly. The AI analysis of this section generates the most consequential insights.</p>
     <p style="font-size:12px;color:var(--text3);margin-bottom:28px;animation:qFadeUp .4s ease .12s both">There are no correct answers. We are looking for self-awareness and honesty, not performance.</p>
@@ -1187,6 +1201,14 @@ function renderS5(){
       <div class="q-label">29. Today, you primarily see yourself as:</div>
       ${renderOpts('q29',[{l:'A high-performing advisor',s:'Skilled practitioner focused on client outcomes'},{l:'A business owner',s:'Running a practice as an enterprise'},{l:'A founder',s:'Building something with equity and scalable value'},{l:'A future CEO',s:'I think in terms of organizational design'},{l:'Unsure — I haven\'t fully resolved this'}])}
     </div>
+    <div class="q-block q-cascade" style="animation-delay:.39s">
+      <div class="q-label">43. Do you view client relationships as assets you own or permissions the firm grants?</div>
+      ${renderOpts('q43',[{l:'Permissions the firm grants'},{l:'A mix of both'},{l:'Mostly assets I own'},{l:'Unequivocally assets I own'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.42s">
+      <div class="q-label">44. How many times have you changed firms in your career?</div>
+      ${renderOpts('q44',[{l:'Never'},{l:'Once'},{l:'Twice'},{l:'3+ times'},{l:'Prefer not to say'}])}
+    </div>
     <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s4')">← Back</button><button class="btn btn-gold" onclick="nextSection('s5','chapter_s6')">Continue →</button></div>
   </div>`;
 }
@@ -1198,7 +1220,7 @@ function renderS6(){
   return`${hdr('s6')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
     <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 06 of 07</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 06 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Operator Discipline</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Independence rewards operators. Advisors who struggle most after transitioning aren't lacking in client skills — they're lacking in business operating systems.</p>
     <div class="q-block q-cascade" style="animation-delay:.12s">
@@ -1236,7 +1258,7 @@ function renderS7(){
   return`${hdr('s7')}
   <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
     <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
-    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 07 of 07 — Final</p>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 07 of 08</p>
     <h2 class="section-title q-cascade" style="animation-delay:.06s">Commitment & Pathway</h2>
     <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">The Breakaway Blueprint™ is a premium, high-contact engagement. These final questions ensure mutual readiness before we proceed.</p>
     <div class="card card-gold q-cascade" style="animation-delay:.12s;padding:22px;margin-bottom:22px">
@@ -1269,12 +1291,51 @@ function renderS7(){
       <div class="q-label">38. Anything else we should know? <span style="font-size:12px;color:var(--text3);font-weight:400">(optional)</span></div>
       <textarea class="fi" placeholder="e.g., I've spoken with two attorneys about my non-solicit. A competitor firm has a deal expiring in 60 days — but I want to do this on my own terms if possible." oninput="setVal('q38',this.value)" rows="4">${S.a.q38||''}</textarea>
     </div>
-    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s6')">← Back</button><button class="btn btn-gold" id="submit-btn" onclick="handleSubmit()">Submit & Process Results →</button></div>
+    <div class="q-block q-cascade" style="animation-delay:.27s">
+      <div class="q-label">48. Have you spoken with independent RIA owners about their real transition experience?</div>
+      ${renderOpts('q48',[{l:'No conversations yet'},{l:'Yes — with one owner'},{l:'Yes — with 2–3 owners'},{l:'Yes — with 4+ owners'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.30s">
+      <div class="q-label">49. Are you prepared to be the public face of your own brand?</div>
+      ${renderOpts('q49',[{l:'Not prepared for that role yet'},{l:'Somewhat prepared, still hesitant'},{l:'Prepared and willing to build visibility'},{l:'Already operating this way'}])}
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s6')">← Back</button><button class="btn btn-gold" onclick="nextSection('s7','chapter_s8')">Continue →</button></div>
+  </div>`;
+}
+
+function renderS8(){
+  return`${hdr('s8')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 08 of 08 — Final</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Technology & Infrastructure</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Technology portability and infrastructure control are often the hidden determinants of transition speed and enterprise value.</p>
+    <div class="q-block q-cascade" style="animation-delay:.12s">
+      <div class="q-label">50. How would you rate your current technology stack maturity?</div>
+      ${renderOpts('q50',[{l:'Fragmented and manual'},{l:'Functional with notable gaps'},{l:'Integrated and stable'},{l:'High-performing with clear ownership'},{l:'Best-in-class and scalable'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.15s">
+      <div class="q-label">51. Custodian research status for an independent model:</div>
+      ${renderOpts('q51',[{l:'No research started'},{l:'Initial shortlist only'},{l:'Deep diligence underway'},{l:'Preferred custodian identified'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">52. Dependence on proprietary planning/reporting tools from your current firm:</div>
+      ${renderOpts('q52',[{l:'No material dependency'},{l:'Limited dependency'},{l:'Moderate dependency'},{l:'Heavy dependency'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">53. Primary client meeting modality today:</div>
+      ${renderOpts('q53',[{l:'Mostly in-person'},{l:'Hybrid (lean in-person)'},{l:'Hybrid (lean virtual)'},{l:'Mostly virtual'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.24s">
+      <div class="q-label">54. Does your current firm own your book-of-record data?</div>
+      ${renderOpts('q54',[{l:'Unsure'},{l:'Yes'},{l:'No'}])}
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s7')">← Back</button><button class="btn btn-gold" id="submit-btn" onclick="handleSubmit()">Submit & Process Results →</button></div>
   </div>`;
 }
 
 function handleSubmit(){
-  const errs=validate('s7');
+  const errs=validate('s8');
   if(errs.length){showErr('Please answer all required questions before submitting.');return;}
   S.phase='processing';S.verrMsg='';
   const app=document.getElementById('app');
@@ -1406,7 +1467,7 @@ function renderResults(){
     <div class="g2 q-cascade" style="animation-delay:.14s;margin-bottom:14px">
       <div class="card" style="padding:20px">
         <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Transition Risk</p>
-        <div class="rbadge ${rl.cls}" style="font-size:13px;padding:9px 18px;margin-bottom:10px">${rl.label==='Low'?'↓':'rl.label'==='Moderate'?'→':'↑'} ${rl.label} Risk</div>
+        <div class="rbadge ${rl.cls}" style="font-size:13px;padding:9px 18px;margin-bottom:10px">${rl.label==='Low'?'↓':rl.label==='Moderate'?'→':'↑'} ${rl.label} Risk</div>
         <p style="font-size:13px;color:var(--text2);line-height:1.65">${rl.cls==='low'?'Favorable profile. Client portability, legal posture, and growth dynamics support a clean transition.':rl.cls==='moderate'?'Specific risk factors exist — address them before committing to a timeline.':'Material vulnerabilities require direct attention before any planning proceeds.'}</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -1589,6 +1650,8 @@ function render(){
     case 's6':         app.innerHTML=renderS6(); break;
     case 'chapter_s7': app.innerHTML=renderChapter('s7'); setTimeout(()=>startChapterTimer('s7'),100); break;
     case 's7':         app.innerHTML=renderS7(); break;
+    case 'chapter_s8': app.innerHTML=renderChapter('s8'); setTimeout(()=>startChapterTimer('s8'),100); break;
+    case 's8':         app.innerHTML=renderS8(); break;
     case 'processing': app.innerHTML=renderProcessing(); break;
     case 'paywall':    app.innerHTML=renderPaywall(); setTimeout(()=>slotMachineReveal(S.finalScore,'pw-cnt'),200); break;
     case 'results':    app.innerHTML=renderResults(); setTimeout(()=>{slotMachineReveal(S.finalScore,'r-cnt');animResultBars();},200); break;
