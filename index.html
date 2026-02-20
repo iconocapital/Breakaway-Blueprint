@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Breakaway Blueprint™ — Independence Candidacy Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* ── Palette ── */
+  --forest:#1C5355;  --forest-lt:#235E60;  --forest-dk:#14393B;
+  --teal:#4EB8BC;    --teal-lt:#6ECCD0;    --teal-dim:rgba(78,184,188,.13); --teal-bdr:rgba(78,184,188,.35);
+  --cream:#F7EEDB;   --offwhite:#F4F2EA;   --white:#FFFEFB;
+  --gray:#DAD8D2;    --gray-lt:#ECEAE5;    --gray-dk:#B8B5AE;
+  /* ── Semantic ── */
+  --bg:var(--offwhite);
+  --bg2:var(--cream);
+  --surface:var(--white);
+  --surface2:var(--gray-lt);
+  --card:var(--white);
+  --border:var(--gray);
+  --border-h:#A0A09A;
+  --text:var(--forest-dk);
+  --text2:#3D5C5E;
+  --text3:#7A9092;
+  /* ── Accent system — forest/teal replaces gold/cyan ── */
+  --gold:var(--forest);         --gold-lt:var(--forest-lt);   --gold-bright:var(--teal);
+  --gold-dim:rgba(28,83,85,.08); --gold-bdr:rgba(28,83,85,.28); --gold-glow:rgba(28,83,85,.12);
+  --cyan:var(--teal);           --cyan-dim:var(--teal-dim);   --cyan-bdr:var(--teal-bdr);
+  --purple:#6B7A8D;             --purple-dim:rgba(107,122,141,.1); --purple-bdr:rgba(107,122,141,.28);
+  --green:var(--forest);        --green-dim:rgba(28,83,85,.1); --green-bdr:rgba(28,83,85,.3);
+  --amber:#8B6914;              --amber-dim:rgba(139,105,20,.1); --amber-bdr:rgba(139,105,20,.28);
+  --red:#8B3A3A;                --red-dim:rgba(139,58,58,.08); --red-bdr:rgba(139,58,58,.25);
+  --muted:var(--gray-dk);       --muted-dim:rgba(184,181,174,.2);
+  /* ── Type ── */
+  --ff-d:'Instrument Serif',Georgia,serif;
+  --ff-b:'Figtree',system-ui,sans-serif;
+  --ff-m:'JetBrains Mono',monospace;
+  /* ── Shape — neo-brutalist: sharper corners, hard shadows ── */
+  --r:6px; --r-lg:8px; --r-xl:10px;
+  --shadow:4px 4px 0 rgba(28,83,85,.15);
+  --shadow-card:3px 3px 0 var(--gray);
+  --shadow-gold:3px 3px 0 var(--forest-dk);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff-b);-webkit-font-smoothing:antialiased;min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ═══════════════════════════════════════════════
+   TEXTURE BACKGROUND — subtle dot grid, light
+═══════════════════════════════════════════════ */
+.aurora{display:none} /* replaced by texture */
+.aurora-blob{display:none}
+body::before{content:'';position:fixed;inset:0;
+  background-image:radial-gradient(circle,rgba(28,83,85,.06) 1px,transparent 1px);
+  background-size:28px 28px;pointer-events:none;z-index:0}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════ */
+#app{position:relative;z-index:1;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+/* ═══════════════════════════════════════════════
+   HEADER — cream bar, hard bottom border
+═══════════════════════════════════════════════ */
+.hdr{position:sticky;top:0;z-index:300;background:var(--cream);border-bottom:2px solid var(--forest)}
+.hdr-in{max-width:720px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--ff-d);font-size:16px;font-weight:400;color:var(--forest);text-decoration:none;cursor:pointer;letter-spacing:.01em}
+.logo-mark{width:32px;height:32px;background:var(--forest);border:2px solid var(--forest-dk);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--cream);font-family:var(--ff-m);flex-shrink:0;letter-spacing:-.5px;box-shadow:2px 2px 0 var(--forest-dk)}
+.hdr-badge{font-size:11px;font-weight:600;color:var(--text3);font-family:var(--ff-m);letter-spacing:.5px}
+
+/* ═══════════════════════════════════════════════
+   SEGMENTED PROGRESS — pill tabs, hard border
+═══════════════════════════════════════════════ */
+.seg-bar-wrap{max-width:720px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:0;overflow:hidden;background:var(--offwhite);border-bottom:1px solid var(--gray)}
+.seg{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;border:1.5px solid var(--gray);background:var(--white);color:var(--text3);transition:all .3s cubic-bezier(.16,1,.3,1);cursor:default;font-family:var(--ff-b)}
+.seg.active{background:var(--forest);border-color:var(--forest-dk);color:var(--cream);box-shadow:2px 2px 0 var(--forest-dk);animation:segPulse 3s ease-in-out infinite}
+.seg.done{background:var(--teal-dim);border-color:var(--teal-bdr);color:var(--forest)}
+.seg-n{font-size:9px;font-family:var(--ff-m);opacity:.7}
+.seg-line{flex:1;height:2px;background:var(--gray);min-width:4px;margin:0 4px}
+.seg-line.done{background:var(--forest)}
+@keyframes segPulse{0%,100%{box-shadow:2px 2px 0 var(--forest-dk)}50%{box-shadow:3px 3px 0 var(--forest-dk),0 0 0 3px rgba(28,83,85,.1)}}
+@media(max-width:580px){.seg span.seg-lbl{display:none}.seg{padding:5px 8px}}
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════ */
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--forest);margin-bottom:12px;font-family:var(--ff-m)}
+.section-title{font-family:var(--ff-d);font-size:clamp(26px,5vw,42px);font-weight:400;line-height:1.18;color:var(--text);margin-bottom:12px;letter-spacing:-.02em}
+.section-sub{font-size:14px;color:var(--text2);line-height:1.78;max-width:540px}
+.sec-head{font-family:var(--ff-d);font-size:20px;font-weight:400;color:var(--text);margin-bottom:4px;letter-spacing:-.01em}
+.sec-desc{font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.65}
+.q-label{font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.58}
+.q-sub{font-size:12px;color:var(--text3);margin-bottom:9px;margin-top:-6px;line-height:1.5}
+.q-num{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:3px;font-family:var(--ff-m)}
+.fi-label{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:7px;font-family:var(--ff-m)}
+.fi-hint{font-size:12px;color:var(--text3);margin-top:5px;line-height:1.55}
+
+/* ═══════════════════════════════════════════════
+   BUTTONS — hard shadow, no border-radius excess
+═══════════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid transparent;border-radius:var(--r);font-family:var(--ff-b);font-weight:700;font-size:15px;cursor:pointer;transition:all .15s;text-decoration:none;letter-spacing:.02em;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .15s}
+.btn:hover::after{background:rgba(255,255,255,.08)}
+.btn-gold{background:var(--forest);color:var(--cream);padding:13px 34px;border-color:var(--forest-dk);box-shadow:3px 3px 0 var(--forest-dk)}
+.btn-gold:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--forest-dk)}
+.btn-gold:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--forest-dk)}
+.btn-gold:disabled{background:var(--gray);color:var(--text3);border-color:var(--border-h);box-shadow:none;cursor:not-allowed;transform:none}
+.btn-outline{background:var(--white);color:var(--text);padding:12px 22px;border-color:var(--border);box-shadow:2px 2px 0 var(--gray)}
+.btn-outline:hover{border-color:var(--forest);color:var(--forest);box-shadow:2px 2px 0 var(--forest)}
+.btn-ghost{background:transparent;color:var(--text2);padding:10px 16px;border:1.5px solid var(--border);font-size:14px;box-shadow:none;border-radius:var(--r)}
+.btn-ghost:hover{border-color:var(--forest);color:var(--forest)}
+.btn-ready{animation:btnReady 2s ease-in-out infinite}
+@keyframes btnReady{0%,100%{box-shadow:3px 3px 0 var(--forest-dk)}50%{box-shadow:4px 4px 0 var(--forest-dk),0 0 0 4px rgba(28,83,85,.12)}}
+
+/* ═══════════════════════════════════════════════
+   FORM INPUTS
+═══════════════════════════════════════════════ */
+.fi{width:100%;background:var(--white);border:2px solid var(--border);border-radius:var(--r);padding:12px 15px;color:var(--text);font-size:15px;font-family:var(--ff-b);outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none}
+.fi:focus{border-color:var(--forest);box-shadow:3px 3px 0 rgba(28,83,85,.15)}
+.fi:focus::placeholder{color:var(--text3)}
+.fi::placeholder{color:var(--gray-dk)}
+textarea.fi{resize:vertical;min-height:88px;line-height:1.65}
+.fi-group{margin-bottom:16px}
+.pct-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px}
+.pct-lbl{font-size:11px;color:var(--text3);margin-bottom:5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;font-family:var(--ff-m)}
+.pct-total{font-size:12px;font-weight:700;text-align:right;padding:5px 0;font-family:var(--ff-m);letter-spacing:.3px;transition:color .2s}
+
+/* ═══════════════════════════════════════════════
+   RADIO OPTIONS — hard border selected state
+═══════════════════════════════════════════════ */
+.ropt{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--white);border:2px solid var(--border);border-radius:var(--r);cursor:pointer;margin-bottom:8px;transition:border-color .15s,background .15s,transform .1s,box-shadow .15s;width:100%;text-align:left;font-family:var(--ff-b);position:relative;overflow:hidden}
+.ropt::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(78,184,188,.1),transparent);pointer-events:none}
+.ropt:hover{border-color:var(--forest);background:var(--offwhite);transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--gray)}
+.ropt.sel{border-color:var(--forest);background:rgba(28,83,85,.05);box-shadow:3px 3px 0 var(--forest)}
+.ropt.sel::after{animation:shimmerSweep .45s ease forwards}
+.ropt.sel-bounce{animation:selBounce .18s ease}
+@keyframes shimmerSweep{from{left:-60%}to{left:140%}}
+@keyframes selBounce{0%,100%{transform:translate(0,0)}35%{transform:translate(-1px,-1px)}70%{transform:translate(2px,2px)}}
+.ropt .radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;background:var(--white)}
+.ropt.sel .radio{border-color:var(--forest);background:var(--forest)}
+.ropt-lbl{font-size:14px;color:var(--text2);line-height:1.5;transition:color .15s;font-weight:500}
+.ropt.sel .ropt-lbl{color:var(--text);font-weight:600}
+.ropt-sub{font-size:12px;color:var(--text3);margin-top:2px;line-height:1.4;transition:color .15s}
+.ropt.sel .ropt-sub{color:var(--text3)}
+.q-block{margin-bottom:26px}
+
+/* ═══════════════════════════════════════════════
+   CARDS — hard shadow, solid border
+═══════════════════════════════════════════════ */
+.card{background:var(--white);border:2px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-card)}
+.card-gold{border-color:var(--forest);background:rgba(28,83,85,.04);box-shadow:3px 3px 0 var(--forest-dk)}
+
+/* ═══════════════════════════════════════════════
+   ECONOMICS
+═══════════════════════════════════════════════ */
+.econ-range{-webkit-appearance:none;width:100%;height:4px;background:var(--gray);border-radius:0;outline:none;cursor:pointer}
+.econ-range::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--forest);border:3px solid var(--cream);box-shadow:2px 2px 0 var(--forest-dk);cursor:pointer;transition:transform .1s}
+.econ-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
+.econ-range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--forest);border:3px solid var(--cream);cursor:pointer}
+.etbl{width:100%;border-collapse:collapse}
+.etbl th{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);padding:9px 11px;border-bottom:2px solid var(--border);text-align:right;font-family:var(--ff-m)}
+.etbl th:first-child{text-align:left}
+.etbl td{padding:10px 11px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--gray-lt);text-align:right;vertical-align:middle;font-family:var(--ff-m)}
+.etbl td:first-child{text-align:left;color:var(--text);font-weight:600;font-family:var(--ff-b)}
+.etbl tr:last-child td{border:none}
+.tc{color:var(--forest)!important;font-weight:700!important}
+.cur{color:var(--text)!important;font-weight:700!important}
+.bar-row{display:flex;align-items:center;gap:10px;padding:7px 0}
+.bar-lbl{font-size:11px;color:var(--text2);width:66px;flex-shrink:0;font-family:var(--ff-m);letter-spacing:.2px}
+.bar-track{flex:1;height:8px;background:var(--gray-lt);border:1.5px solid var(--gray);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:1px;width:0;transition:width 1.1s cubic-bezier(.16,1,.3,1)}
+.bar-val{font-size:12px;font-weight:700;width:66px;text-align:right;flex-shrink:0;font-family:var(--ff-m)}
+
+/* vol slider */
+.vol-slider{-webkit-appearance:none;width:100%;height:4px;background:var(--gray);border-radius:0;outline:none;cursor:pointer}
+.vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--forest);border:3px solid var(--cream);box-shadow:2px 2px 0 var(--forest-dk);cursor:pointer}
+.vol-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--forest);border:3px solid var(--cream);cursor:pointer}
+
+/* ═══════════════════════════════════════════════
+   CONDITIONAL FIELDS
+═══════════════════════════════════════════════ */
+.cond-field{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.16,1,.3,1),opacity .28s;opacity:0}
+.cond-field.open{max-height:320px;opacity:1}
+
+/* ═══════════════════════════════════════════════
+   VALIDATION ERROR
+═══════════════════════════════════════════════ */
+.verr{font-size:13px;color:var(--red);padding:12px 16px;border-radius:var(--r);background:var(--red-dim);border:2px solid var(--red-bdr);margin-bottom:16px;display:none;animation:errShake .35s ease;box-shadow:2px 2px 0 var(--red-bdr)}
+.verr.show{display:flex;align-items:center;gap:9px}
+@keyframes errShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}60%{transform:translateX(5px)}}
+
+/* ═══════════════════════════════════════════════
+   SECTION TRANSITIONS
+═══════════════════════════════════════════════ */
+.section-wrap{animation-duration:.38s;animation-fill-mode:both;animation-timing-function:cubic-bezier(.16,1,.3,1)}
+.slide-in-right{animation-name:slideInRight}
+.slide-in-left{animation-name:slideInLeft}
+.slide-out-left{animation-name:slideOutLeft}
+.slide-out-right{animation-name:slideOutRight}
+@keyframes slideInRight{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideOutLeft{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-28px)}}
+@keyframes slideOutRight{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(28px)}}
+
+/* Staggered question entrance */
+.q-cascade{opacity:0;animation:qFadeUp .38s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes qFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════════════════
+   CHAPTER CARDS — full-bleed forest accent
+═══════════════════════════════════════════════ */
+.chapter-wrap{min-height:calc(100vh - 100px);display:flex;align-items:center;justify-content:center;padding:40px 22px;background:var(--offwhite)}
+.chapter-card{max-width:560px;width:100%;text-align:center;animation:chapterReveal .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes chapterReveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.chapter-num{font-family:var(--ff-m);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text3);margin-bottom:20px}
+.chapter-icon{width:72px;height:72px;border-radius:var(--r-lg);background:var(--forest);border:3px solid var(--forest-dk);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:4px 4px 0 var(--forest-dk);font-size:28px;color:var(--cream);animation:iconPulse 3s ease-in-out infinite}
+@keyframes iconPulse{0%,100%{box-shadow:4px 4px 0 var(--forest-dk)}50%{box-shadow:5px 5px 0 var(--forest-dk),0 0 0 6px rgba(28,83,85,.08)}}
+.chapter-title{font-family:var(--ff-d);font-size:clamp(28px,5vw,46px);font-weight:400;color:var(--text);margin-bottom:14px;line-height:1.18;letter-spacing:-.02em}
+.chapter-desc{font-size:15px;color:var(--text2);line-height:1.75;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto}
+.chapter-meta{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:4px;background:var(--white);border:2px solid var(--border);font-size:12px;color:var(--text3);margin-bottom:28px;font-family:var(--ff-m);box-shadow:2px 2px 0 var(--gray)}
+.chapter-progress{width:100%;height:3px;background:var(--gray);border-radius:0;margin-bottom:10px;overflow:hidden}
+.chapter-progress-fill{height:100%;background:var(--forest);border-radius:0;width:0;transition:width .1s linear}
+.chapter-skip{font-size:12px;color:var(--text3)}
+
+/* ═══════════════════════════════════════════════
+   PROCESSING — NEURAL NETWORK
+═══════════════════════════════════════════════ */
+.proc-wrap{min-height:calc(100vh - 100px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 22px;text-align:center}
+.proc-network{width:280px;height:240px;margin:0 auto 40px}
+.proc-network svg{width:100%;height:100%}
+.nn-node{fill:var(--white);stroke:var(--border);stroke-width:2;transition:fill .4s,stroke .4s}
+.nn-node.active{fill:rgba(28,83,85,.1);stroke:var(--forest);filter:drop-shadow(2px 2px 0 rgba(28,83,85,.3))}
+.nn-node.done{fill:var(--teal-dim);stroke:var(--teal)}
+.nn-edge{stroke:var(--gray);stroke-width:1.5;fill:none;transition:stroke .4s,opacity .4s;opacity:.6}
+.nn-edge.active{stroke:var(--forest);opacity:1;animation:edgePulse 1.2s ease-in-out infinite}
+.nn-edge.done{stroke:var(--teal);opacity:.8}
+@keyframes edgePulse{0%,100%{stroke-opacity:.6}50%{stroke-opacity:1}}
+.proc-steps-list{display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto}
+.proc-step-item{display:flex;align-items:center;gap:10px;text-align:left;font-size:14px;color:var(--text3);transition:color .3s}
+.proc-step-item.active{color:var(--forest);font-weight:600}
+.proc-step-item.done{color:var(--text2)}
+.proc-step-dot{width:8px;height:8px;border-radius:2px;background:var(--gray);flex-shrink:0;transition:background .3s}
+.proc-step-item.active .proc-step-dot{background:var(--forest)}
+.proc-step-item.done .proc-step-dot{background:var(--teal)}
+
+/* ═══════════════════════════════════════════════
+   PAYWALL
+═══════════════════════════════════════════════ */
+.pw-score-wrap{text-align:center;padding:52px 0 32px}
+.pw-score{font-family:var(--ff-m);font-size:96px;font-weight:500;line-height:1;letter-spacing:-4px;display:inline-block}
+.pw-score.strong{color:var(--forest)}
+.pw-score.emerging{color:var(--teal)}
+.pw-score.developing{color:var(--amber)}
+.pw-score.early{color:var(--muted)}
+.pw-tier{display:inline-flex;align-items:center;gap:6px;padding:6px 18px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border:2px solid;font-family:var(--ff-m)}
+.pw-tier.strong{background:rgba(28,83,85,.08);color:var(--forest);border-color:var(--forest);box-shadow:2px 2px 0 var(--forest-dk)}
+.pw-tier.emerging{background:var(--teal-dim);color:var(--forest-dk);border-color:var(--teal-bdr)}
+.pw-tier.developing{background:rgba(139,105,20,.08);color:var(--amber);border-color:var(--amber-bdr)}
+.pw-tier.early{background:var(--gray-lt);color:var(--text3);border-color:var(--gray)}
+.pw-lock{background:var(--white);border:2px solid var(--border);border-radius:var(--r-xl);padding:30px;margin:24px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card)}
+.pw-lock::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--white) 0%,rgba(255,254,251,.97) 45%,transparent 100%);z-index:1;pointer-events:none}
+.pw-blur{filter:blur(4px);opacity:.4;pointer-events:none;user-select:none}
+.pw-overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:28px}
+.lock-icon{width:48px;height:48px;border-radius:var(--r);background:var(--forest);border:2px solid var(--forest-dk);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:3px 3px 0 var(--forest-dk)}
+.pw-price{font-family:var(--ff-m);font-size:52px;font-weight:500;color:var(--forest);line-height:1}
+.pw-feats{display:flex;flex-direction:column;gap:8px;margin:16px 0 22px;text-align:left;max-width:340px;margin-left:auto;margin-right:auto}
+.pw-feat{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text2)}
+.code-wrap{display:flex;gap:8px;max-width:360px;margin:20px auto 0}
+.code-inp{flex:1;background:var(--white);border:2px solid var(--border);border-radius:var(--r);padding:11px 14px;color:var(--text);font-size:14px;font-family:var(--ff-m);outline:none;transition:border-color .15s,box-shadow .15s;text-transform:uppercase;letter-spacing:2px}
+.code-inp:focus{border-color:var(--forest);box-shadow:3px 3px 0 rgba(28,83,85,.15)}
+.code-inp.err{border-color:var(--red);animation:errShake .3s ease}
+.code-err{font-size:12px;color:var(--red);text-align:center;margin-top:8px;min-height:18px;font-family:var(--ff-m)}
+
+/* ═══════════════════════════════════════════════
+   RESULTS
+═══════════════════════════════════════════════ */
+.res-score{font-family:var(--ff-m);font-size:80px;font-weight:500;line-height:1;letter-spacing:-3px;text-align:center}
+.qbar{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-lt)}
+.qbar:last-child{border:none}
+.qbar-lbl{font-size:13px;color:var(--text2);flex:1;line-height:1.4}
+.qbar-track{width:110px;height:7px;background:var(--gray-lt);border:1.5px solid var(--gray);border-radius:2px;flex-shrink:0;overflow:hidden}
+.qbar-fill{height:100%;border-radius:1px;width:0;transition:width .8s cubic-bezier(.16,1,.3,1)}
+.qbar-val{font-size:12px;font-weight:700;width:30px;text-align:right;flex-shrink:0;font-family:var(--ff-m)}
+.insight{padding:22px;border-radius:var(--r);border:2px solid var(--border);background:var(--white);margin-bottom:12px;border-left:4px solid var(--forest);box-shadow:var(--shadow-card)}
+.insight::before{content:'';position:absolute;display:none}
+.ins-eye{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--forest);margin-bottom:8px;font-family:var(--ff-m)}
+.ins-title{font-family:var(--ff-d);font-size:19px;font-weight:400;color:var(--text);margin-bottom:9px;line-height:1.35}
+.ins-body{font-size:13px;color:var(--text2);line-height:1.82}
+.flag-card{padding:16px 20px;border-radius:var(--r);border:2px solid;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.flag-card.red{background:var(--red-dim);border-color:var(--red-bdr);box-shadow:2px 2px 0 var(--red-bdr)}
+.flag-card.green{background:rgba(28,83,85,.06);border-color:var(--forest);box-shadow:2px 2px 0 var(--forest-dk)}
+.rbadge{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:.3px;border:2px solid;font-family:var(--ff-m)}
+.rbadge.low{background:rgba(28,83,85,.08);color:var(--forest);border-color:var(--forest);box-shadow:2px 2px 0 var(--forest-dk)}
+.rbadge.moderate{background:rgba(139,105,20,.08);color:var(--amber);border-color:var(--amber-bdr)}
+.rbadge.high{background:var(--red-dim);color:var(--red);border-color:var(--red-bdr)}
+.ai-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;background:var(--teal-dim);border:1.5px solid var(--teal-bdr);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--forest);font-family:var(--ff-m);margin-bottom:12px}
+
+/* ═══════════════════════════════════════════════
+   NAV FOOTER
+═══════════════════════════════════════════════ */
+.nav-foot{display:flex;justify-content:space-between;align-items:center;margin-top:32px;flex-wrap:wrap;gap:12px;padding-bottom:100px}
+@media(max-width:640px){
+  .nav-foot{position:fixed;bottom:0;left:0;right:0;background:var(--cream);border-top:2px solid var(--forest);padding:14px 20px;margin-top:0;z-index:200;flex-wrap:nowrap;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+  body{padding-bottom:80px}
+}
+
+/* ═══════════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════════ */
+.sdiv{height:2px;background:var(--gray);margin:28px 0}
+
+/* ═══════════════════════════════════════════════
+   GRID
+═══════════════════════════════════════════════ */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:560px){.g2{grid-template-columns:1fr}.hide-sm{display:none!important}}
+
+/* ═══════════════════════════════════════════════
+   CTA / FOOTER
+═══════════════════════════════════════════════ */
+.cta-section{border-top:2px solid var(--forest);margin-top:52px;padding:52px 0;text-align:center}
+
+/* ═══════════════════════════════════════════════
+   PRINT
+═══════════════════════════════════════════════ */
+@media print{
+  body::before{display:none}
+  body{background:#fff;color:#000}
+  .hdr{position:static;background:#fff;border-bottom:1px solid #ccc}
+  .nav-foot,.btn,.seg-bar-wrap{display:none!important}
+  .card,.insight,.flag-card{background:#fff;border:1px solid #ccc;box-shadow:none}
+  .section-title,.ins-title,.res-score,.pw-score{color:#000!important}
+  .pw-tier,.rbadge,.ai-badge{background:#f0f0f0;color:#333;border-color:#ccc;box-shadow:none}
+  .bar-fill,.qbar-fill{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  @page{margin:1.2cm}
+}
+</style>
+</head>
+<body>
+
+<!-- Aurora background -->
+<div class="aurora">
+  <div class="aurora-blob aurora-1"></div>
+  <div class="aurora-blob aurora-2"></div>
+  <div class="aurora-blob aurora-3"></div>
+</div>
+
+<div id="app"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════════════════════════
+const UNLOCK_CODES = ['BLUEPRINT349','ICONO2025','BB2025'];
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+const STRIPE_LINK  = 'https://buy.stripe.com/YOUR_PAYMENT_LINK';
+const Q7_ESTIMATE  = [150000,400000,750000,1500000,2500000];
+
+const STEPS = [
+  {n:1,label:'Intent'},
+  {n:2,label:'Economics'},
+  {n:3,label:'Readiness'},
+  {n:4,label:'Psychology'},
+  {n:5,label:'Operations'},
+  {n:6,label:'Commitment'},
+  {n:7,label:'Profile'},
+];
+
+const CHAPTERS = {
+  s2:{num:'01',title:'Independence Intent & Timing',desc:'Catalyst analysis, transition timeline, retention obligations, and decision authority mapping.',icon:'◎',count:'7 questions'},
+  s3:{num:'02',title:'Practice Economics',desc:'Live modeling of your annual take-home across three independent payout tiers — projected over five years.',icon:'◐',count:'Interactive calculator'},
+  s4:{num:'03',title:'Structural & Financial Readiness',desc:'Target structure, client portability, liquidity runway, and the three transition risk factors that matter most.',icon:'◑',count:'10 questions'},
+  s5:{num:'04',title:'Psychological Readiness',desc:'Decisiveness under uncertainty, partner alignment, business owner identity, and volatility tolerance.',icon:'◒',count:'9 questions'},
+  s6:{num:'05',title:'Operator Discipline',desc:'SOP documentation, performance review cadence, and 90-day focus endurance without external validation.',icon:'◓',count:'5 questions'},
+  s7:{num:'06',title:'Commitment & Pathway',desc:'Investment readiness, preparation willingness, and capacity for unfiltered direct feedback.',icon:'◔',count:'4 questions + open response'},
+  s1:{num:'07',title:'Professional Profile & Revenue',desc:'Contact details, team structure, and trailing 12-month revenue metrics that determine your valuation profile.',icon:'◈',count:'13 questions'},
+};
+
+const PROC_STEPS = [
+  'Submitting your application…',
+  'Analyzing structural readiness…',
+  'Evaluating practice economics…',
+  'Processing open-response answers with AI…',
+  'Generating personalized insights…',
+  'Finalizing your Independence Report…',
+];
+
+// Neural network node/edge layout
+const NN_NODES = [
+  {id:'n1',cx:60,cy:50},{id:'n2',cx:140,cy:30},{id:'n3',cx:220,cy:50},
+  {id:'n4',cx:30,cy:120},{id:'n5',cx:100,cy:110},{id:'n6',cx:180,cy:100},
+  {id:'n7',cx:250,cy:120},{id:'n8',cx:70,cy:190},{id:'n9',cx:150,cy:170},
+  {id:'n10',cx:230,cy:200},{id:'n11',cx:140,cy:120},
+];
+const NN_EDGES = [
+  ['n1','n2'],['n2','n3'],['n1','n4'],['n2','n5'],['n3','n6'],['n3','n7'],
+  ['n4','n5'],['n5','n6'],['n6','n7'],['n4','n8'],['n5','n9'],['n6','n10'],
+  ['n7','n10'],['n8','n9'],['n9','n10'],['n5','n11'],['n11','n6'],['n2','n11'],
+];
+const NN_STEP_ACTIVATIONS = [
+  ['n1','n2'],['n3','n4'],['n5','n6','n7'],['n8','n9','n10','n11'],
+  ['n1','n2','n3','n4','n5','n6','n7','n8','n9','n10','n11'],['n11'],
+];
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let S = {
+  phase:'landing', a:{}, payout:42, vol:5, prodRaw:'',
+  aiData:null, rawScore:0, finalScore:0, procStep:0,
+  codeErr:'', codeVal:'', verrMsg:'', navDir:'forward',
+  chapterTimer:null, crossFlags:[], hardFlags:[],
+};
+
+// ══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════════
+const SECTION_ORDER = ['landing','chapter_s2','s2','chapter_s3','s3','chapter_s4','s4','chapter_s5','s5','chapter_s6','s6','chapter_s7','s7','chapter_s1','s1','processing','paywall','results'];
+
+// Display order mapping — s1 (Profile) moved to end
+const DISPLAY_NUM = {s1:7,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6};
+
+function phaseIndex(p){ return SECTION_ORDER.indexOf(p); }
+
+function go(phase, update) {
+  if(update) Object.assign(S, update);
+  const prevIdx = phaseIndex(S.phase);
+  const nextIdx = phaseIndex(phase);
+  S.navDir = nextIdx >= prevIdx ? 'forward' : 'back';
+
+  if(S.chapterTimer){ clearTimeout(S.chapterTimer); S.chapterTimer=null; }
+
+  const app = document.getElementById('app');
+  const slideOut = S.navDir==='forward' ? 'slide-out-left' : 'slide-out-right';
+  const wrap = app.querySelector('.section-wrap');
+  if(wrap){
+    wrap.className = 'section-wrap '+slideOut;
+  }
+
+  setTimeout(()=>{
+    S.phase = phase;
+    render();
+    window.scrollTo(0,0);
+  }, wrap ? 200 : 0);
+}
+
+// ══════════════════════════════════════════════════════════════
+// CHAPTER AUTO-ADVANCE
+// ══════════════════════════════════════════════════════════════
+function startChapterTimer(targetPhase, sectionLabel) {
+  const duration = 2200;
+  const fill = document.getElementById('ch-progress-fill');
+  if(!fill) return;
+  const start = performance.now();
+  const tick = (now) => {
+    const pct = Math.min((now-start)/duration*100, 100);
+    if(fill) fill.style.width = pct+'%';
+    if(pct < 100){
+      S.chapterTimer = requestAnimationFrame(tick);
+    } else {
+      go(targetPhase);
+    }
+  };
+  S.chapterTimer = requestAnimationFrame(tick);
+}
+
+// ══════════════════════════════════════════════════════════════
+// SCORING
+// ══════════════════════════════════════════════════════════════
+function computeRawScore() {
+  const a = S.a;
+  let sc = 0;
+  const q7s=[0,4,8,12,12]; sc+=q7s[a.q7]||0;
+  sc+=Math.min(8,Math.round((parseFloat(a.q8_adv)||0)*0.08));
+  const hh=parseInt(a.q9)||0; sc+=hh>=200?5:hh>=100?4:hh>=50?3:hh>=20?2:hh>0?1:0;
+  const q10s=[2,4,5,5]; sc+=q10s[a.q10]||0;
+  // q1a: recurring revenue % — FP Transitions Cash Flow Quality Index
+  const q1as=[0,1,3,5,7]; sc+=q1as[a.q1a]||0;
+  // q1b: avg revenue per HH — FP Transitions valuation multiple driver (~$9,400 benchmark)
+  const rrHH=parseInt(a.q1b)||0; sc+=rrHH>=15000?6:rrHH>=9400?5:rrHH>=6000?3:rrHH>=3000?1:0;
+  // q2a: practice valuation — foundational to transition strategy
+  const q2as=[0,2,4,5]; sc+=q2as[a.q2a]||0;
+  const q12s=[5,5,3,1,0]; sc+=q12s[a.q12]||0;
+  sc+=(a.q14===1)?5:(a.q14===0)?2:0;
+  const q16s=[5,3,0]; sc+=q16s[a.q16]||0;
+  const q17s=[5,3,1]; sc+=q17s[a.q17]||0;
+  const q18s=[0,2,4,5,1]; sc+=q18s[a.q18]||0;
+  const q19s=[5,2,0]; sc+=q19s[a.q19]||0;
+  const q20s=[1,3,5,2]; sc+=q20s[a.q20]||0;
+  const r2s=[0,2,1,4]; sc+=r2s[a.r2]||0;
+  const r4s=[1,2,3,4]; sc+=r4s[a.r4]||0;
+  const r5s=[0,2,3,4]; sc+=r5s[a.r5]||0;
+  const q21s=[5,3,0]; sc+=q21s[a.q21]||0;
+  if(a.q22===0) sc+=4;
+  const q24s=[5,2,0]; sc+=q24s[a.q24]||0;
+  const q25s=[4,1,0]; sc+=q25s[a.q25]||0;
+  const q27s=[5,3,1,0]; sc+=q27s[a.q27]||0;
+  sc+=Math.round((S.vol||5)*0.6);
+  const q29s=[3,4,5,5,0]; sc+=q29s[a.q29]||0;
+  const q30s=[5,3,0]; sc+=q30s[a.q30]||0;
+  const q31s=[5,4,2,0]; sc+=q31s[a.q31]||0;
+  const q32s=[4,3,0,0]; sc+=q32s[a.q32]||0;
+  sc+=(a.q33===0)?3:1;
+  const q34s=[3,1,0]; sc+=q34s[a.q34]||0;
+  const q35s=[7,3,0]; sc+=q35s[a.q35]||0;
+  const q36s=[5,2,0]; sc+=q36s[a.q36]||0;
+  sc+=(a.q37===0)?3:0;
+  return sc;
+}
+const RAW_MAX=159;
+
+function tier(sc){
+  if(sc>=75) return{label:'Strong Candidate',cls:'strong'};
+  if(sc>=58) return{label:'Emerging Candidate',cls:'emerging'};
+  if(sc>=38) return{label:'Developing',cls:'developing'};
+  return{label:'Early Stage',cls:'early'};
+}
+function riskLabel(a){
+  let rs=0;
+  const r2s=[0,2,1,4]; rs+=r2s[a.r2]||0;
+  const r4s=[1,2,3,4]; rs+=r4s[a.r4]||0;
+  const r5s=[0,2,3,4]; rs+=r5s[a.r5]||0;
+  const q18s=[0,1,3,4,1]; rs+=q18s[a.q18]||0;
+  if(rs>=11) return{label:'Low',cls:'low'};
+  if(rs>=7)  return{label:'Moderate',cls:'moderate'};
+  return{label:'High',cls:'high'};
+}
+function barColor(pct){
+  if(pct>=75) return'var(--forest)';
+  if(pct>=55) return'var(--teal)';
+  if(pct>=35) return'var(--amber)';
+  return'var(--red)';
+}
+function sectionScores(){
+  const a=S.a;
+  return[
+    {label:'Revenue & Book',raw:(()=>{const q7s=[0,4,8,12,12];let s=q7s[a.q7]||0;s+=Math.min(8,Math.round((parseFloat(a.q8_adv)||0)*0.08));const hh=parseInt(a.q9)||0;s+=hh>=200?5:hh>=100?4:hh>=50?3:hh>=20?2:hh>0?1:0;const q10s=[2,4,5,5];s+=q10s[a.q10]||0;const q1as=[0,1,3,5,7];s+=q1as[a.q1a]||0;const rrHH=parseInt(a.q1b)||0;s+=rrHH>=15000?6:rrHH>=9400?5:rrHH>=6000?3:rrHH>=3000?1:0;return s;})(),max:42},
+    {label:'Intent & Timing',raw:(()=>{const q12s=[5,5,3,1,0];let s=q12s[a.q12]||0;s+=(a.q14===1)?5:(a.q14===0)?2:0;const q16s=[5,3,0];s+=q16s[a.q16]||0;const q2as=[0,2,4,5];s+=q2as[a.q2a]||0;return s;})(),max:20},
+    {label:'Structural Readiness',raw:(()=>{const q17s=[5,3,1];let s=q17s[a.q17]||0;const q18s=[0,2,4,5,1];s+=q18s[a.q18]||0;const q19s=[5,2,0];s+=q19s[a.q19]||0;const q20s=[1,3,5,2];s+=q20s[a.q20]||0;const r2s=[0,2,1,4];s+=r2s[a.r2]||0;const r4s=[1,2,3,4];s+=r4s[a.r4]||0;const r5s=[0,2,3,4];s+=r5s[a.r5]||0;return s;})(),max:27},
+    {label:'Psychological Readiness',raw:(()=>{const q21s=[5,3,0];let s=q21s[a.q21]||0;s+=(a.q22===0)?4:0;const q24s=[5,2,0];s+=q24s[a.q24]||0;const q25s=[4,1,0];s+=q25s[a.q25]||0;const q27s=[5,3,1,0];s+=q27s[a.q27]||0;s+=Math.round((S.vol||5)*0.6);const q29s=[3,4,5,5,0];s+=q29s[a.q29]||0;return s;})(),max:26},
+    {label:'Operator Discipline',raw:(()=>{const q30s=[5,3,0];let s=q30s[a.q30]||0;const q31s=[5,4,2,0];s+=q31s[a.q31]||0;const q32s=[4,3,0,0];s+=q32s[a.q32]||0;s+=(a.q33===0)?3:1;const q34s=[3,1,0];s+=q34s[a.q34]||0;return s;})(),max:20},
+    {label:'Commitment & Pathway',raw:(()=>{const q35s=[7,3,0];let s=q35s[a.q35]||0;const q36s=[5,2,0];s+=q36s[a.q36]||0;s+=(a.q37===0)?3:0;return s;})(),max:15},
+  ].map(s=>({...s,pct:Math.round(s.raw/s.max*100)}));
+}
+
+// ══════════════════════════════════════════════════════════════
+// VALIDATION
+// ══════════════════════════════════════════════════════════════
+function validate(phase){
+  const a=S.a; const missing=[];
+  if(phase==='s1'){
+    ['q1','q2','q3','q4','q5'].forEach(k=>{if(!a[k]||!a[k].trim())missing.push(k);});
+    if(a.q7===undefined) missing.push('q7');
+    const t=(parseFloat(a.q8_adv)||0)+(parseFloat(a.q8_brok)||0)+(parseFloat(a.q8_ins)||0);
+    if(Math.abs(t-100)>0.5) missing.push('q8');
+    if(!a.q9||isNaN(parseInt(a.q9))) missing.push('q9');
+    if(a.q10===undefined) missing.push('q10');
+    if(a.q1a===undefined) missing.push('q1a');
+    if(!a.q1b||isNaN(parseInt(a.q1b))) missing.push('q1b');
+    if(!a.q11||!a.q11.trim()) missing.push('q11');
+  }
+  if(phase==='s2'){
+    if(a.q12===undefined)missing.push('q12');
+    if(!a.q13||!a.q13.trim())missing.push('q13');
+    if(a.q14===undefined)missing.push('q14');
+    if(a.q14===0&&(!a.q15||!a.q15.trim()))missing.push('q15');
+    if(a.q16===undefined)missing.push('q16');
+    if(a.q2a===undefined)missing.push('q2a');
+  }
+  if(phase==='s4'){
+    if(a.q17===undefined)missing.push('q17');
+    if(a.q18===undefined)missing.push('q18');
+    if(a.q19===undefined)missing.push('q19');
+    if(a.q20===undefined)missing.push('q20');
+    if(a.r2===undefined)missing.push('r2');
+    if(a.r4===undefined)missing.push('r4');
+    if(a.r5===undefined)missing.push('r5');
+  }
+  if(phase==='s5'){
+    if(a.q21===undefined)missing.push('q21');
+    if(a.q22===undefined)missing.push('q22');
+    if(a.q22===0&&(!a.q23||!a.q23.trim()))missing.push('q23');
+    if(a.q24===undefined)missing.push('q24');
+    if(a.q25===undefined)missing.push('q25');
+    if(!a.q26||!a.q26.trim())missing.push('q26');
+    if(a.q27===undefined)missing.push('q27');
+    if(a.q29===undefined)missing.push('q29');
+  }
+  if(phase==='s6'){
+    if(a.q30===undefined)missing.push('q30');
+    if(a.q31===undefined)missing.push('q31');
+    if(a.q32===undefined)missing.push('q32');
+    if(a.q33===undefined)missing.push('q33');
+    if(a.q34===undefined)missing.push('q34');
+  }
+  if(phase==='s7'){
+    if(a.q35===undefined)missing.push('q35');
+    if(a.q36===undefined)missing.push('q36');
+    if(a.q37===undefined)missing.push('q37');
+  }
+  return missing;
+}
+function showErr(msg){
+  S.verrMsg=msg;
+  const el=document.getElementById('verr');
+  if(el){el.innerHTML=`<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 12H1L7 1Z" stroke="var(--red)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 5v4M7 10v.5" stroke="var(--red)" stroke-width="1.4" stroke-linecap="round"/></svg>${msg}`;el.classList.add('show');}
+  window.scrollTo(0,0);
+}
+function nextSection(from, to){
+  const errs=validate(from);
+  if(errs.length){
+    let msg='Please complete all required fields before continuing.';
+    if(from==='s1'){
+      const t=(parseFloat(S.a.q8_adv)||0)+(parseFloat(S.a.q8_brok)||0)+(parseFloat(S.a.q8_ins)||0);
+      if(errs.includes('q8')) msg=`Revenue mix must total 100% — currently at ${t.toFixed(0)}%.`;
+    }
+    showErr(msg); return;
+  }
+  go(to);
+}
+
+// ══════════════════════════════════════════════════════════════
+// ECONOMICS
+// ══════════════════════════════════════════════════════════════
+function parseNum(s){return parseFloat(String(s||'').replace(/[$,\s]/g,''))||0;}
+function fmt(n,full){
+  if(!n||isNaN(n))return'—';
+  if(full)return'$'+Math.round(n).toLocaleString();
+  if(n>=1e6)return'$'+(n/1e6).toFixed(n%1e6===0?0:1).replace(/\.?0+$/,'')+'M';
+  if(n>=1000)return'$'+Math.round(n/1000)+'K';
+  return'$'+Math.round(n);
+}
+function prodEstimate(){return S.prodRaw?parseNum(S.prodRaw):(S.a.q7!==undefined?Q7_ESTIMATE[S.a.q7]||0:0);}
+function econCmpInner(production,currentNet){
+  if(!production) return`<div style="text-align:center;padding:32px 0;color:var(--text3);font-size:13px;font-family:var(--ff-m)">Enter your gross production above to calculate</div>`;
+  const tiers=[{l:'85%',pct:.85,c:'var(--teal)'},{l:'88%',pct:.88,c:'var(--forest)'},{l:'92%',pct:.92,c:'#1C5355'}];
+  const maxV=Math.max(currentNet,...tiers.map(t=>production*t.pct));
+  const bars=[{l:'Current',v:currentNet,c:'var(--gray)'},...tiers.map(t=>({l:t.l,v:production*t.pct,c:t.c}))];
+  return`<div style="margin-bottom:18px">${bars.map(b=>`<div class="bar-row"><div class="bar-lbl">${b.l}</div><div class="bar-track"><div class="bar-fill" style="background:${b.c}" data-w="${(b.v/maxV*100).toFixed(1)}%"></div></div><div class="bar-val" style="color:${b.l==='Current'?'var(--text2)':'var(--forest)'}">${fmt(b.v)}</div></div>`).join('')}</div>
+  <table class="etbl"><thead><tr><th></th><th style="color:var(--text2)">Current</th>${tiers.map(t=>`<th style="color:var(--forest)">${t.l}</th>`).join('')}</tr></thead><tbody>
+  <tr><td>Annual Net</td><td class="cur">${fmt(currentNet,true)}</td>${tiers.map(t=>`<td class="tc">${fmt(production*t.pct,true)}</td>`).join('')}</tr>
+  <tr><td>5-Year Total</td><td class="cur">${fmt(currentNet*5,true)}</td>${tiers.map(t=>`<td class="tc">${fmt(production*t.pct*5,true)}</td>`).join('')}</tr>
+  <tr><td>5-Year Advantage</td><td style="color:var(--text3)">Baseline</td>${tiers.map(t=>{const d=production*t.pct*5-currentNet*5;return`<td style="color:${d>=0?'var(--forest)':'var(--red)'};font-weight:700">${d>=0?'+':''}${fmt(d,true)}</td>`;}).join('')}</tr>
+  </tbody></table>`;
+}
+function animBars(){setTimeout(()=>{document.querySelectorAll('.bar-fill[data-w]').forEach((b,i)=>{setTimeout(()=>{b.style.width=b.dataset.w;},i*55);});},180);}
+function refreshEcon(){
+  const prod=prodEstimate(),pout=S.payout/100,net=prod*pout;
+  const netEl=document.getElementById('e-net'),subEl=document.getElementById('e-sub'),f5El=document.getElementById('e-5yr');
+  if(netEl)netEl.textContent=prod?fmt(net):'—';
+  if(subEl)subEl.textContent=prod?`${S.payout}% of ${fmt(prod)}`:'Enter production to calculate';
+  if(f5El)f5El.textContent=prod?fmt(net*5):'';
+  const inner=document.getElementById('e-cmp');
+  if(inner){inner.innerHTML=econCmpInner(prod,net);animBars();}
+}
+
+// ══════════════════════════════════════════════════════════════
+// HARD DISQUALIFIER DETECTION
+// ══════════════════════════════════════════════════════════════
+function detectDisqualifiers(){
+  const a=S.a, flags=[];
+  if(a.q7===0) flags.push({id:'below_threshold',label:'Below Program Threshold',detail:'Production under $300K does not justify the $30K–$40K engagement economics. Consider the Renegade Advisors platform for infrastructure-supported independence at this scale.'});
+  if(a.q35===2) flags.push({id:'no_investment',label:'No Investment Commitment',detail:'Your assessment has been scored, however the Breakaway Blueprint™ requires financial commitment that is not currently aligned with your stated readiness. This does not affect your score — it affects engagement timing.'});
+  if(a.q37===1) flags.push({id:'feedback_resistant',label:'Closed Feedback Posture',detail:'You indicated commitment to independence regardless of assessment outcome. The Blueprint engagement is designed for advisors who want strategic guidance — including the possibility of "not yet." Verify this posture during Blueprint Call.'});
+  if(a.q16===2&&a.q35!==0) flags.push({id:'authority_gap',label:'Decision Authority Gap',detail:'The primary decision-maker is not the person completing this assessment. Engagement requires the actual decision-maker\'s participation and commitment.'});
+  if(a.q27===3&&a.q19===2) flags.push({id:'structural_infeasibility',label:'Structural Infeasibility Flag',detail:'Resistant spouse/partner combined with inability to sustain a revenue decline creates a compounding risk that typically prevents successful transition. Address both before proceeding.'});
+  return flags;
+}
+
+// ══════════════════════════════════════════════════════════════
+// CROSS-VALIDATION ENGINE
+// ══════════════════════════════════════════════════════════════
+function crossValidate(){
+  const a=S.a, flags=[];
+  // Portability vs lead dependence
+  if((a.q18===3||a.q18===4)&&(a.r5===0||a.r5===1)){
+    flags.push('Portability claim ('+['<50%','50–70%','70–90%','90%+','Unsure'][a.q18]+') conflicts with firm lead dependence ('+['Very dependent','Somewhat dependent','Rarely use','Not at all'][a.r5]+'). Self-reported portability may be overstated.');
+  }
+  // Spouse alignment vs resistor identification
+  if((a.q27===2||a.q27===3)&&a.q26&&!a.q26.toLowerCase().match(/spouse|wife|husband|partner|significant other/)){
+    flags.push('Spouse/partner marked as "'+['Fully aligned','Supportive/concerned','Uncertain','Resistant'][a.q27]+'" but not mentioned in resistor identification (Q26). Gap in self-awareness or avoidance.');
+  }
+  // Timeline urgency vs exploration
+  if(a.q12<=1&&a.q35===2){
+    flags.push('Timeline indicates "'+['Within 3 months','3–6 months'][a.q12]+'" but investment readiness is "Not at this time." Urgency and financial commitment are misaligned.');
+  }
+  // Honesty check — uniformly high psych profile
+  const psychMax=(a.q21===0&&a.q22===0&&a.q24===0&&a.q25===0&&a.q27===0&&(a.q29===2||a.q29===3)&&S.vol>=9);
+  if(psychMax){
+    flags.push('HONESTY CHECK: Uniformly high-confidence psychological profile across all variables. Statistically uncommon. Verify authenticity during Blueprint Call — this pattern occasionally indicates performance rather than self-assessment.');
+  }
+  return flags;
+}
+
+// ══════════════════════════════════════════════════════════════
+// AI ANALYZER — PROPRIETARY SCORING ALGORITHM v1.0
+// ══════════════════════════════════════════════════════════════
+async function runAI(){
+  const a=S.a; const prod=prodEstimate();
+  const secs=sectionScores();
+  const crossFlags=crossValidate();
+  const hardFlags=detectDisqualifiers();
+
+  const openResp={
+    q11_team:a.q11||'(not provided)',q13_catalyst:a.q13||'(not provided)',
+    q15_retention:(a.q14===0)?a.q15||'(not provided)':'N/A',
+    q23_highstakes:(a.q22===0)?a.q23||'(not provided)':'N/A',
+    q26_resistors:a.q26||'(not provided)',q38_extra:a.q38||'none',
+  };
+
+  const profile={
+    production:prod?fmt(prod):'Not specified',
+    production_range:['<$300K','$300K–$500K','$500K–$1M','$1M–$2M','$2M+'][a.q7]||'—',
+    advisory_pct:`${a.q8_adv||0}%`,
+    brokerage_pct:`${a.q8_brok||0}%`,
+    insurance_pct:`${a.q8_ins||0}%`,
+    households:a.q9||'—',
+    practice_structure:['Solo advisor','Advisor + 1–2 support','Small team (3–5)','Larger team (6+)'][a.q10]||'—',
+    recurringRevPct:['<40%','40–60%','60–80%','80–90%','90%+'][a.q1a]||'—',
+    avgRevPerHH:a.q1b?`$${parseInt(a.q1b).toLocaleString()} (benchmark $9,400)`:'—',
+    practiceValuation:['Never valued','Informal estimate only','Formal third-party valuation','Recently valued — knows number'][a.q2a]||'—',
+    timeline:['Within 3 months','3–6 months','6–12 months','12+ months','Exploring only'][a.q12]||'—',
+    retention_package:a.q14===0?'Yes':'No',
+    decision_authority:['Sole decision-maker','Shared authority','Another person holds authority'][a.q16]||'—',
+    structure:['Full RIA','Hybrid','Unsure'][a.q17]||'—',
+    portability:['<50%','50–70%','70–90%','90%+','Unsure'][a.q18]||'—',
+    revenue_decline_tolerance:['Yes — no changes needed','With meaningful adjustments','No — real hardship'][a.q19]||'—',
+    personal_liquidity:['Under 6 months','6–12 months','12+ months','Prefer not to disclose'][a.q20]||'—',
+    non_compete:['Broad restrictions','Limited restrictions','Unsure','No restrictions'][a.r2]||'—',
+    client_age:['Mostly 70+','Mostly 55–70','Mixed','Mostly under 55'][a.r4]||'—',
+    lead_dependence:['Very dependent','Somewhat dependent','Rarely use','Not at all'][a.r5]||'—',
+    decision_style:['Decisive with incomplete info','Gather more data','Delay to reduce risk'][a.q21]||'—',
+    recent_high_stakes:a.q22===0?'Yes':'No',
+    feedback_reception:['Welcome it','Tolerate it','Resist it'][a.q24]||'—',
+    client_loss_response:['Strategic recalibration','Push through','Self-doubt'][a.q25]||'—',
+    spouseAlign:['Fully aligned','Supportive/concerned','Uncertain','Resistant'][a.q27]||'—',
+    volatility_comfort:`${S.vol}/10`,
+    identity:['High-performing advisor','Business owner','Founder','Future CEO','Unsure'][a.q29]||'—',
+    sops:['Fully documented','Partial','No documentation'][a.q30]||'—',
+    review_cadence:['Weekly','Monthly','Quarterly','Rarely'][a.q31]||'—',
+    performance_dip_response:['Diagnose system','Increase activity','Wait for market','Blame external'][a.q32]||'—',
+    led_transition:a.q33===0?'Yes':'No',
+    autonomous_execution:['Yes','Probably','Unlikely'][a.q34]||'—',
+    investReady:['Yes — budgeted','Possibly','Not at this time'][a.q35]||'—',
+    willingness_to_prepare:['Yes — enterprise value','Maybe','No — breakaway only'][a.q36]||'—',
+    direct_feedback:a.q37===0?'Yes':'No',
+  };
+
+  // Section scores for AI context
+  const sectionContext=secs.map(s=>`${s.label}: ${s.pct}% (${s.raw}/${s.max})`).join(', ');
+
+  const SYSTEM_PROMPT=`You are the Breakaway Blueprint™ Candidacy Scoring Engine for Iconoclastic Capital Management, designed by Christopher Haigh, CFP®. You evaluate financial advisor independence candidacy for a premium engagement ($30K–$40K, preceded by a $2,500 Readiness Audit).
+
+SCORING PHILOSOPHY — CORE PRINCIPLES:
+1. OPERATOR OVER ADVISOR. Technical client skill is table stakes. What separates breakaway success from failure is operator thinking — systems, accountability, measurement, sustained execution without external validation.
+2. SELF-SOURCED > FIRM-DEPENDENT. Advisors who built books on firm leads carry structurally higher transition risk. Self-sourced books are portable. Everything else is a negotiation.
+3. DECISIVENESS UNDER UNCERTAINTY. Candidates who delay, need consensus, or require constant validation will stall in execution.
+4. ECONOMICS MUST JUSTIFY THE MOVE. If the 5-year cumulative advantage at 88-92% payout doesn't create minimum $250K+ delta, the economic case weakens materially.
+5. SPOUSE/PARTNER ALIGNMENT IS NON-NEGOTIABLE. Resistant or unaligned partners are the #1 silent killer of transitions.
+6. RECURRING REVENUE = CASH FLOW QUALITY. Following FP Transitions methodology: recurring % and revenue-per-HH directly drive valuation multiples. An advisor with $1M production but 30% recurring has fundamentally different risk than one with $600K and 90% recurring.
+7. HONESTY > PERFORMANCE. The psychological readiness section detects self-awareness, not bravado. Flag suspiciously uniform high-confidence responses.
+
+OPEN-RESPONSE EVALUATION CRITERIA:
+- q11 (Team followup): STRONG (+1 to +2) = Names specific people, distinguishes certain/likely/uncertain, quantifies, references prior moves. WEAK (-1 to -2) = Vague, no team mention, overconfident without evidence. Cross-validate against portability (q18) and lead dependence (r5).
+- q13 (Catalyst): STRONG (+1 to +2) = Specific triggering event, quantifies impact, structural analysis not just frustration. WEAK (-1 to -2) = Generic dissatisfaction, no specific event.
+- q15 (Retention): Evaluate balance relative to production, maturity vs. timeline, whether factored into decision.
+- q23 (High-stakes decision): STRONG (+1 to +2) = Real financial/reputational risk, clear agency. WEAK (-1 to -2) = Low-stakes or passive framing despite claiming to have made one.
+- q26 (Resistors): STRONG (+1) = Specific names/relationships, internal + external. WEAK (-1 to -2) = "No one" — almost always inaccurate, signals naiveté or avoidance. Cross-validate against spouse alignment (q27).
+
+NARRATIVE RULES:
+1. Be specific to the data — reference actual percentages, FP Transitions benchmarks, specific responses.
+2. Name the gaps directly. No hedging language.
+3. Differentiate by tier — Strong Candidates get forward-looking language; Developing gets constructive specifics.
+4. Never oversell. If data says "not ready," say "not ready" with specificity and a pathway.
+5. Insights must be actionable — something to do, think about, or discuss.
+6. Use the candidate's own language from their open responses.
+
+TIER CONTEXT:
+- 75-100 (Strong): Advance to Blueprint Call immediately. Priority scheduling.
+- 58-74 (Emerging): Advance with specific areas to probe. Likely viable but 1-2 structural gaps.
+- 38-57 (Developing): Not ready for full engagement. Provide specific development areas and alternative pathways.
+- 0-37 (Early Stage): Significant gaps. Provide report with respect and specificity. Do not soft-sell.
+
+Return ONLY valid JSON — no markdown, no code blocks, no preamble.`;
+
+  const USER_MSG=`CANDIDATE PROFILE:
+${JSON.stringify(profile,null,1)}
+
+SECTION SCORES: ${sectionContext}
+
+OPEN RESPONSES:
+${Object.entries(openResp).map(([k,v])=>`${k}: "${v}"`).join('\n')}
+
+CROSS-VALIDATION FLAGS DETECTED BY ALGORITHM:
+${crossFlags.length?crossFlags.join('\n'):'None detected.'}
+
+HARD DISQUALIFIERS:
+${hardFlags.length?hardFlags.map(f=>f.label+': '+f.detail).join('\n'):'None.'}
+
+Return exactly this JSON structure:
+{
+  "q11_assessment":"2-3 sentence evaluation of team/client followup response",
+  "q11_delta":0,
+  "q13_assessment":"2-3 sentence evaluation of catalyst response",
+  "q13_delta":0,
+  "q15_assessment":"2-3 sentence evaluation of retention details (or N/A)",
+  "q15_delta":0,
+  "q23_assessment":"2-3 sentence evaluation of high-stakes decision (or N/A)",
+  "q23_delta":0,
+  "q26_assessment":"2-3 sentence evaluation of resistor identification",
+  "q26_delta":0,
+  "total_adjustment":0,
+  "candidacy_narrative":"2-3 sentences, direct and specific to this candidate. No hedging. Reference their actual data points.",
+  "insights":[
+    {"title":"max 8 words","body":"2-3 sentences, actionable and specific to this profile"},
+    {"title":"max 8 words","body":"2-3 sentences"},
+    {"title":"max 8 words","body":"2-3 sentences"}
+  ],
+  "red_flag":"One critical concern specific to this candidate — or null if genuinely none",
+  "green_light":"Strongest positive signal specific to this candidate — or null",
+  "honesty_check":"Pass or Flag with brief explanation"
+}
+
+Delta values: -3 to +3 each. total_adjustment: -5 to +5 (capped even if individual deltas sum higher — this is a calibration tool, not a second scoring engine).`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',max_tokens:1800,
+      system:SYSTEM_PROMPT,
+      messages:[{role:'user',content:USER_MSG}]
+    })});
+    const data=await resp.json();
+    const text=data.content?.[0]?.text||'{}';
+    S.aiData=JSON.parse(text.replace(/```json|```/g,'').trim());
+  }catch(e){
+    S.aiData={candidacy_narrative:'Your assessment data has been captured and is queued for review by Christopher Haigh, CFP®.',insights:[{title:'Schedule Your Blueprint Call',body:'Your application is complete. The next step is a direct conversation with Christopher Haigh, CFP® to evaluate your specific profile and determine whether the Breakaway Blueprint™ engagement is the right fit.'},{title:'Review Your Economics',body:'Use the economics section of this report to model your specific production across independent payout tiers. The 5-year cumulative difference typically becomes the most clarifying number.'},{title:'Prepare Your Three Questions',body:'Before your Blueprint Call, be ready to answer: What specifically is driving this now? What does success look like at year three? And who are the five clients you\'re most confident would follow you?'}],red_flag:null,green_light:null,total_adjustment:0,honesty_check:'Unable to process — queued for manual review'};
+  }
+
+  // Store cross-validation and hard disqualifier data for rendering
+  S.crossFlags=crossFlags;
+  S.hardFlags=hardFlags;
+
+  const rawScore=computeRawScore();
+  const adj=S.aiData?.total_adjustment||0;
+  const norm=Math.round(rawScore/RAW_MAX*100);
+  S.rawScore=norm;
+  S.finalScore=Math.min(100,Math.max(0,norm+adj));
+}
+
+// ══════════════════════════════════════════════════════════════
+// FORMSPREE
+// ══════════════════════════════════════════════════════════════
+async function submitLead(){
+  const a=S.a,t=tier(S.finalScore),rl=riskLabel(a),secs=sectionScores();
+  const crossFlags=S.crossFlags||[];
+  const hardFlags=S.hardFlags||[];
+  try{
+    await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+      _subject:`[BB] ${a.q1||'New Applicant'} — ${S.finalScore}/100 — ${t.label}${hardFlags.length?' ⚠ '+hardFlags.map(f=>f.id).join(', '):''}`,
+      name:a.q1,email:a.q2,mobile:a.q3,firm:a.q4,location:a.q5,
+      production_range:['<$300K','$300K–$500K','$500K–$1M','$1M–$2M','$2M+'][a.q7],
+      advisory_pct:(a.q8_adv||0)+'%',households:a.q9,
+      recurring_rev:['<40%','40–60%','60–80%','80–90%','90%+'][a.q1a],
+      avg_rev_per_hh:a.q1b||'—',
+      timeline:['Within 3mo','3–6mo','6–12mo','12+mo','Exploring'][a.q12],
+      catalyst:a.q13,retention:['Yes','No'][a.q14],
+      structure:['Full RIA','Hybrid','Unsure'][a.q17],
+      portability:['<50%','50–70%','70–90%','90%+','Unsure'][a.q18],
+      spouse:['Aligned','Supportive','Uncertain','Resistant'][a.q27],
+      identity:['Advisor','Business owner','Founder','CEO','Unsure'][a.q29],
+      invest_ready:['Yes','Possibly','No'][a.q35],
+      score:S.finalScore+'/100',tier:t.label,
+      risk:rl.label,
+      section_scores:secs.map(s=>s.label+': '+s.pct+'%').join(' | '),
+      hard_disqualifiers:hardFlags.length?hardFlags.map(f=>f.label).join(', '):'None',
+      cross_validation:crossFlags.length?crossFlags.join(' | '):'Clean',
+      ai_adjustment:S.aiData?.total_adjustment||0,
+      honesty_check:S.aiData?.honesty_check||'—',
+    })});
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROCESSING
+// ══════════════════════════════════════════════════════════════
+async function startProcessing(){
+  S.phase='processing'; S.procStep=0; render();
+  const app=document.getElementById('app');
+  app.style.opacity='1';app.style.transform='none';
+  window.scrollTo(0,0);
+  const interval=setInterval(()=>{
+    S.procStep=Math.min(S.procStep+1,PROC_STEPS.length-1);
+    PROC_STEPS.forEach((_,i)=>{
+      const el=document.getElementById('ps-'+i);
+      if(!el)return;
+      el.className='proc-step-item'+(i<S.procStep?' done':i===S.procStep?' active':'');
+    });
+    // Update neural network
+    const acts=NN_STEP_ACTIVATIONS[Math.min(S.procStep,NN_STEP_ACTIVATIONS.length-1)]||[];
+    NN_NODES.forEach(n=>{
+      const el=document.getElementById('nn-'+n.id);
+      if(!el)return;
+      const wasDone=el.classList.contains('done');
+      el.className='nn-node'+(wasDone||acts.includes(n.id)?' active':'');
+    });
+    NN_EDGES.forEach(([a,b],i)=>{
+      const el=document.getElementById('nne-'+i);
+      if(!el)return;
+      const na=acts.includes(a),nb=acts.includes(b);
+      el.className='nn-edge'+(na&&nb?' active':'');
+    });
+  },800);
+  await submitLead();
+  await runAI();
+  clearInterval(interval);
+  go('paywall');
+}
+
+// ══════════════════════════════════════════════════════════════
+// INTERACTION HELPERS
+// ══════════════════════════════════════════════════════════════
+function pickOpt(key,idx){
+  S.a[key]=idx;
+  document.querySelectorAll(`.ropt[data-key="${key}"]`).forEach((el,i)=>{
+    const isSel=i===idx;
+    el.classList.toggle('sel',isSel);
+    if(isSel){el.classList.add('sel-bounce');setTimeout(()=>el.classList.remove('sel-bounce'),250);}
+    el.querySelector('.radio').innerHTML=isSel?`<svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`:'';
+    el.querySelector('.ropt-lbl').style.color=isSel?'var(--text)':'';
+  });
+  if(key==='q14'){const cf=document.getElementById('cf-q15');if(cf)cf.classList.toggle('open',idx===0);}
+  if(key==='q22'){const cf=document.getElementById('cf-q23');if(cf)cf.classList.toggle('open',idx===0);}
+}
+function setVal(key,val){S.a[key]=val;}
+function setPctVal(key,val){
+  S.a[key]=val;
+  const t=(parseFloat(S.a.q8_adv)||0)+(parseFloat(S.a.q8_brok)||0)+(parseFloat(S.a.q8_ins)||0);
+  const el=document.getElementById('pct-total');
+  if(el){el.textContent=t.toFixed(0)+'% total';el.style.color=Math.abs(t-100)<0.5?'var(--green)':t>100?'var(--red)':'var(--text3)';}
+}
+function renderOpts(key,opts){
+  return opts.map((o,i)=>{
+    const isSel=S.a[key]===i;
+    return`<button class="ropt${isSel?' sel':''}" data-key="${key}" onclick="pickOpt('${key}',${i})">
+      <div class="radio">${isSel?`<svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`:''}</div>
+      <div><div class="ropt-lbl">${o.l}</div>${o.s?`<div class="ropt-sub">${o.s}</div>`:''}</div>
+    </button>`;
+  }).join('');
+}
+function field(id,label,type='text',placeholder='',hint='',req=true){
+  const val=S.a[id]||'';
+  return`<div class="fi-group q-cascade" style="animation-delay:${Math.random()*0.1+0.05}s">
+    <label class="fi-label" for="${id}">${label}${!req?'<span style="color:var(--text3);font-weight:400;margin-left:4px;text-transform:none;letter-spacing:0;font-family:var(--ff-b)">(optional)</span>':''}</label>
+    ${type==='textarea'?`<textarea class="fi" id="${id}" placeholder="${placeholder}" oninput="setVal('${id}',this.value)" rows="3">${val}</textarea>`:`<input type="${type}" class="fi" id="${id}" placeholder="${placeholder}" value="${val}" oninput="setVal('${id}',this.value)"/>`}
+    ${hint?`<div class="fi-hint">${hint}</div>`:''}
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// HEADER
+// ══════════════════════════════════════════════════════════════
+function hdr(step){
+  const sKey=step||'s0';
+  const sNum=DISPLAY_NUM[sKey]||0;
+  return`<header class="hdr">
+    <div class="hdr-in">
+      <a class="logo" href="javascript:void 0" onclick="go('landing')">
+        <div class="logo-mark">IC</div>
+        Breakaway Blueprint™
+      </a>
+      <span class="hdr-badge hide-sm">Iconoclastic Capital</span>
+    </div>
+    ${step?`<div style="background:var(--bg2);border-bottom:1px solid var(--border)">
+      <div class="seg-bar-wrap">
+        ${STEPS.map((s,i)=>{
+          const done=sNum>s.n,active=sNum===s.n;
+          return`${i>0?`<div class="seg-line${done?' done':''}"></div>`:''}<div class="seg${active?' active':done?' done':''}"><span class="seg-n">${done?'✓':s.n}</span><span class="seg-lbl">${s.label}</span></div>`;
+        }).join('')}
+      </div>
+    </div>`:''}
+  </header>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// LANDING
+// ══════════════════════════════════════════════════════════════
+function renderLanding(){
+  return`${hdr()}
+  <div class="section-wrap slide-in-right">
+    <div class="wrap" style="padding-top:80px;padding-bottom:80px">
+      <div style="animation:qFadeUp .6s cubic-bezier(.16,1,.3,1) both">
+        <p class="eyebrow">Selective by Design</p>
+        <h1 style="font-family:var(--ff-d);font-size:clamp(38px,7vw,68px);font-weight:400;line-height:1.12;color:var(--text);margin-bottom:18px;letter-spacing:-.03em">
+          Breakaway<br/><em style="background:linear-gradient(90deg,var(--gold),var(--gold-lt),var(--gold-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic">Blueprint™</em>
+        </h1>
+        <p style="font-size:16px;color:var(--text2);line-height:1.8;max-width:500px;margin-bottom:14px">
+          A structured diagnostic for financial advisors generating <strong style="color:var(--text)">$300K–$2M+</strong> in gross revenue who are seriously evaluating independence. Selective by design — if this program is not right for you, we will tell you.
+        </p>
+        <p style="font-size:13px;color:var(--text3);max-width:500px;margin-bottom:36px;line-height:1.7">
+          We evaluate structural viability, financial readiness, psychological resilience, and operator discipline before entering any engagement.
+        </p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;animation:qFadeUp .6s cubic-bezier(.16,1,.3,1) .1s both">
+        ${['7 sections · 41 questions','AI-analyzed open responses','Live practice economics','$349 results report'].map(x=>`<div style="display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);font-size:12px;color:var(--text2);font-family:var(--ff-m);letter-spacing:.1px">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l2.5 2.5L9.5 2" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>${x}
+        </div>`).join('')}
+      </div>
+      <div style="animation:qFadeUp .6s cubic-bezier(.16,1,.3,1) .18s both;margin-bottom:72px">
+        <button class="btn btn-gold" onclick="go('chapter_s2')" style="font-size:16px;padding:16px 54px;border-radius:11px">Begin Assessment →</button>
+        <p style="font-size:12px;color:var(--text3);margin-top:11px;font-family:var(--ff-m)">10–12 min · Results unlocked after $349 payment · No obligation</p>
+      </div>
+      <!-- Admin -->
+      <div id="admin-gate" style="position:fixed;bottom:16px;right:16px;z-index:999">
+        <button onclick="document.getElementById('admin-modal').style.display='flex'" style="width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);cursor:pointer;opacity:.35;transition:opacity .15s;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3)" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.35'">⚙</button>
+      </div>
+      <div id="admin-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.4);align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+        <div style="background:var(--white);border:2px solid var(--border);border-radius:var(--r-lg);padding:28px;max-width:320px;width:90%;box-shadow:var(--shadow)">
+          <div style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Admin Access</div>
+          <input type="password" id="admin-pw" class="fi" placeholder="Password" style="margin-bottom:10px" onkeydown="if(event.key==='Enter')adminLogin()"/>
+          <div id="admin-err" style="font-size:12px;color:var(--red);margin-bottom:8px;font-family:var(--ff-m);min-height:16px"></div>
+          <button class="btn btn-gold" onclick="adminLogin()" style="width:100%;padding:11px;font-size:13px">Unlock →</button>
+        </div>
+      </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:64px;animation:qFadeUp .6s cubic-bezier(.16,1,.3,1) .26s both">
+        ${Object.entries(CHAPTERS).map(([k,ch])=>`<div class="card" style="padding:20px;transition:border-color .2s,transform .2s" onmouseover="this.style.borderColor='var(--border-h)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+          <div style="font-size:22px;margin-bottom:10px;filter:grayscale(1);opacity:.6">${ch.icon}</div>
+          <div style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:7px">${ch.num}</div>
+          <div style="font-family:var(--ff-d);font-size:16px;font-weight:400;color:var(--text);margin-bottom:7px;line-height:1.32">${ch.title}</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.65">${ch.count}</div>
+        </div>`).join('')}
+      </div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin-bottom:40px"></div>
+      <div style="animation:qFadeUp .6s cubic-bezier(.16,1,.3,1) .34s both">
+        <p class="eyebrow" style="margin-bottom:22px">Your Advisors</p>
+        <div style="display:flex;flex-wrap:wrap;gap:28px">
+          ${[
+            {i:'CH',g:'linear-gradient(135deg,#1C5355,#235E60)',tc:'#F7EEDB',n:'Christopher Haigh, CFP',r:'CEO · Iconoclastic Capital Management',b:'Leads strategic engagements for high-producing advisors with strong breakaway profiles. Specializes in enterprise value creation, transition execution, and RIA infrastructure design.'},
+            {i:'JS',g:'linear-gradient(135deg,#4EB8BC,#1C5355)',tc:'#F7EEDB',n:'Jonathan Sheldon',r:'CPC · ICF ACC — Belleau Wood Coaching',b:'EOS and 12 Week Year practitioner. Former Northwestern Mutual Top 10 Intern and Guardian Brokerage Leader. Specializes in helping great salespeople become CEOs.'},
+          ].map(c=>`<div style="display:flex;gap:14px;align-items:flex-start;max-width:320px">
+            <div style="width:46px;height:46px;border-radius:50%;background:${c.g};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:${c.tc};flex-shrink:0;font-family:var(--ff-m);box-shadow:0 4px 16px rgba(0,0,0,.3)">${c.i}</div>
+            <div>
+              <div style="font-weight:600;font-size:15px;color:var(--text)">${c.n}</div>
+              <div style="font-size:11px;color:var(--gold);font-weight:600;margin-bottom:6px;font-family:var(--ff-m);letter-spacing:.2px">${c.r}</div>
+              <div style="font-size:13px;color:var(--text2);line-height:1.65">${c.b}</div>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// CHAPTER CARDS
+// ══════════════════════════════════════════════════════════════
+function renderChapter(chKey){
+  const ch=CHAPTERS[chKey];
+  const targetPhase=chKey; // 'chapter_s1' → go to 's1'
+  const sectionPhase=chKey.replace('chapter_','');
+  return`${hdr('s'+chKey.replace('chapter_s',''))}
+  <div class="chapter-wrap section-wrap slide-in-right">
+    <div class="chapter-card" id="chapter-card">
+      <div class="chapter-num">Section ${ch.num} of 07</div>
+      <div class="chapter-icon">${ch.icon}</div>
+      <h2 class="chapter-title">${ch.title}</h2>
+      <p class="chapter-desc">${ch.desc}</p>
+      <div class="chapter-meta">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 3v2.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        ${ch.count}
+      </div>
+      <div class="chapter-progress"><div class="chapter-progress-fill" id="ch-progress-fill"></div></div>
+      <div class="chapter-skip">Auto-advancing… <button onclick="go('${sectionPhase}')" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:12px;font-family:var(--ff-m);text-decoration:underline;text-underline-offset:3px;padding:0;margin-left:4px">Skip →</button></div>
+      <div style="margin-top:20px">
+        <button class="btn btn-gold" onclick="go('${sectionPhase}')" style="padding:13px 36px">Begin ${ch.title.split('&')[0].trim()} →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 1
+// ══════════════════════════════════════════════════════════════
+function renderS1(){
+  const a=S.a;
+  const adv=a.q8_adv||'',brok=a.q8_brok||'',ins=a.q8_ins||'';
+  const total=(parseFloat(adv)||0)+(parseFloat(brok)||0)+(parseFloat(ins)||0);
+  return`${hdr('s1')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 07 of 07 — Final</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Professional Profile & Revenue</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Last step. Your contact information and revenue metrics complete the assessment and determine your valuation profile. Shared exclusively with Iconoclastic Capital Management.</p>
+    ${field('q1','Full Name','text','Jane Smith','')}
+    <div class="g2">${field('q2','Email Address','email','jane@example.com','')}${field('q3','Mobile Number','tel','(555) 000-0000','')}</div>
+    <div class="g2">${field('q4','Current Firm / Platform','text','e.g., Merrill Lynch, UBS','')}${field('q5','City & State','text','e.g., Austin, TX','')}</div>
+    ${field('q6','LinkedIn Profile URL','url','https://linkedin.com/in/…','','false')}
+    <div class="sdiv q-cascade" style="animation-delay:.12s"></div>
+    <div class="q-cascade" style="animation-delay:.15s"><div class="sec-head">Revenue & Book Structure</div><div class="sec-desc">Primary drivers of your valuation profile. Trailing 12 months.</div></div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">7. Total annual gross revenue — trailing 12 months?</div>
+      ${renderOpts('q7',[{l:'Under $300K',s:'Below minimum threshold for this program'},{l:'$300K – $500K'},{l:'$500K – $1M'},{l:'$1M – $2M'},{l:'$2M+'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">8. Revenue mix — must total 100%</div>
+      <div class="pct-group">
+        <div><div class="pct-lbl">Advisory Fees %</div><input type="number" class="fi" placeholder="e.g. 65" min="0" max="100" value="${adv}" oninput="setPctVal('q8_adv',this.value)"/></div>
+        <div><div class="pct-lbl">Brokerage / Comm %</div><input type="number" class="fi" placeholder="e.g. 25" min="0" max="100" value="${brok}" oninput="setPctVal('q8_brok',this.value)"/></div>
+        <div><div class="pct-lbl">Insurance / Trails %</div><input type="number" class="fi" placeholder="e.g. 10" min="0" max="100" value="${ins}" oninput="setPctVal('q8_ins',this.value)"/></div>
+      </div>
+      <div id="pct-total" class="pct-total" style="color:${Math.abs(total-100)<0.5?'var(--green)':total>100?'var(--red)':'var(--text3)'}">${total.toFixed(0)}% total</div>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.24s">
+      <div class="q-label">9. Approximate client households served?</div>
+      <input type="number" class="fi" placeholder="e.g. 125" min="1" value="${a.q9||''}" oninput="setVal('q9',this.value)"/>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.27s">
+      <div class="q-label">10. Practice structure?</div>
+      ${renderOpts('q10',[{l:'Solo advisor'},{l:'Advisor + 1–2 support staff'},{l:'Small team (3–5 members)'},{l:'Larger team (6+ members)'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.30s">
+      <div class="q-label">
+        <span style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--cyan);display:inline-flex;align-items:center;gap:5px;margin-bottom:5px;display:block">
+          <svg width="9" height="9" viewBox="0 0 9 9" fill="none" style="display:inline"><circle cx="4.5" cy="4.5" r="4" stroke="var(--cyan)" stroke-width="1"/><path d="M3 4.5l1 1L6 3" stroke="var(--cyan)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          FP Transitions · Cash Flow Quality Index
+        </span>
+        11. What percentage of your revenue is truly recurring vs. event-driven?
+      </div>
+      <div class="q-sub">Recurring = fees, trails, renewals on auto-pay. Event-driven = one-time transactions, new money events, insurance commissions.</div>
+      ${renderOpts('q1a',[
+        {l:'Under 40% recurring',s:'Primarily transactional — highest valuation discount'},
+        {l:'40–60% recurring',s:'Mixed model — moderate quality score'},
+        {l:'60–80% recurring',s:'Strong recurring base — above benchmark'},
+        {l:'80–90% recurring',s:'High-quality cash flow — favorable multiple'},
+        {l:'90%+ recurring',s:'Elite recurring profile — maximum valuation impact'},
+      ])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.33s">
+      <div class="q-label">
+        <span style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--cyan);display:inline-flex;align-items:center;gap:5px;margin-bottom:5px;display:block">
+          <svg width="9" height="9" viewBox="0 0 9 9" fill="none" style="display:inline"><circle cx="4.5" cy="4.5" r="4" stroke="var(--cyan)" stroke-width="1"/><path d="M3 4.5l1 1L6 3" stroke="var(--cyan)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          FP Transitions · Valuation Multiple Driver
+        </span>
+        12. Average annual revenue per client household?
+      </div>
+      <div class="q-sub">FP Transitions industry benchmark: ~$9,400. Higher concentration in fewer, larger relationships increases your valuation multiple.</div>
+      <input type="number" class="fi" placeholder="e.g. 11000" min="0" value="${a.q1b||''}" oninput="setVal('q1b',this.value)" style="max-width:240px"/>
+      <div class="fi-hint">Enter a whole dollar amount (no $ sign). Average = total revenue ÷ total households.</div>
+      ${(()=>{const v=parseInt(a.q1b)||0; if(!v) return''; const bm=9400; const pct=((v-bm)/bm*100).toFixed(0); const abv=v>=bm; return`<div style="margin-top:10px;padding:10px 14px;border-radius:8px;background:${abv?'var(--green-dim)':'var(--amber-dim)'};border:1px solid ${abv?'var(--green-bdr)':'var(--amber-bdr)'};font-size:12px;color:${abv?'var(--green)':'var(--amber)'};font-family:var(--ff-m)">${abv?'↑':'↓'} $${v.toLocaleString()} vs. $9,400 benchmark — ${abv?'+'+pct+'% above':''+Math.abs(pct)+'% below'} FP Transitions median</div>`;})()}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.36s">
+      <div class="q-label">13. If you transitioned tomorrow, who would move with you?</div>
+      <div class="fi-hint" style="margin-bottom:8px">Team and key clients. Be specific — this is AI-analyzed.</div>
+      <textarea class="fi" placeholder="e.g., My CSA of 7 years would definitely follow. My associate is on the fence. Roughly 90% of my top 20 clients are self-sourced and have followed me through two prior firm moves." oninput="setVal('q11',this.value)" rows="4">${a.q11||''}</textarea>
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s7')">← Back</button><button class="btn btn-gold" id="submit-btn" onclick="handleSubmit()">Submit & Process Results →</button></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 2
+// ══════════════════════════════════════════════════════════════
+function renderS2(){
+  const a=S.a;
+  return`${hdr('s2')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 01 of 07</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Independence Intent & Timing</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Clarity of intent and timing is one of the most reliable indicators of transition success.</p>
+    <div class="q-block q-cascade" style="animation-delay:.12s">
+      <div class="q-label">12. When are you realistically considering independence?</div>
+      ${renderOpts('q12',[{l:'Within 3 months'},{l:'3–6 months'},{l:'6–12 months'},{l:'12+ months'},{l:'Exploring only',s:'No committed timeline'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.15s">
+      <div class="q-label">13. What changed in the last 6–12 months that makes this serious now?</div>
+      <div class="fi-hint" style="margin-bottom:8px">AI-analyzed. "I'm frustrated" is not sufficient — be direct and specific.</div>
+      <textarea class="fi" placeholder="e.g., Our firm was acquired last April. The new compliance environment restricts the planning tools my clients need. Combined with a grid cut, I'm netting 12% less than two years ago with less autonomy than ever." oninput="setVal('q13',this.value)" rows="5">${a.q13||''}</textarea>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">14. Are you under a retention package or forgivable loan?</div>
+      ${renderOpts('q14',[{l:'Yes'},{l:'No'}])}
+      <div id="cf-q15" class="cond-field${a.q14===0?' open':''}">
+        <div style="padding-top:12px">
+          <div class="q-label" style="margin-bottom:6px">15. Approximate remaining balance and maturity date:</div>
+          <textarea class="fi" placeholder="e.g., ~$185,000 remaining. Forgiveness schedule through March 2027." oninput="setVal('q15',this.value)" rows="3">${a.q15||''}</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">16. Are you the primary decision-maker?</div>
+      ${renderOpts('q16',[{l:'Yes — sole decision-maker'},{l:'Shared authority',s:'Partner, team lead, or spouse involved'},{l:'No — another person holds primary authority'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.24s">
+      <div class="q-label">
+        <span style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:5px">
+          <svg width="9" height="9" viewBox="0 0 9 9" fill="none" style="display:inline;margin-right:4px"><circle cx="4.5" cy="4.5" r="4" stroke="var(--cyan)" stroke-width="1"/><path d="M3 4.5l1 1L6 3" stroke="var(--cyan)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          FP Transitions · Transition Strategy Foundation
+        </span>
+        17. Has your practice ever been informally or formally valued?
+      </div>
+      <div class="q-sub">Advisors who know their number make structurally better decisions. This does not affect whether you qualify — it affects how we calibrate your transition strategy.</div>
+      ${renderOpts('q2a',[
+        {l:'No — never been valued',s:'Starting point — we will address this in Blueprint engagement'},
+        {l:'Informal estimate only',s:'Ballpark figure, no structured methodology applied'},
+        {l:'Formal valuation — third-party methodology',s:'E.g., FP Transitions, Succession Resource Group, or similar'},
+        {l:'Yes — recently valued and I know my number',s:'Fully informed — strongest strategic starting position'},
+      ])}
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('landing')">← Back</button><button class="btn btn-gold" onclick="nextSection('s2','chapter_s3')">Continue →</button></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 3 — ECONOMICS
+// ══════════════════════════════════════════════════════════════
+function renderS3(){
+  const prod=prodEstimate(),pout=S.payout,net=prod*pout/100;
+  const pctBar=((pout-25)/60*100).toFixed(0)+'%';
+  return`${hdr('s3')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 02 of 07</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Practice Economics</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Live modeling of your take-home across three independent payout tiers. Numbers update in real time. Informational — does not affect your candidacy score.</p>
+    <div class="g2 q-cascade" style="animation-delay:.12s;margin-bottom:16px">
+      <div class="card" style="padding:22px">
+        <label class="fi-label">Gross Production / Revenue</label>
+        <input class="fi" type="text" id="prod-inp" placeholder="e.g. $1,200,000" value="${S.prodRaw}" oninput="S.prodRaw=this.value;refreshEcon()" onblur="const n=parseNum(this.value);if(n>0){this.value='$'+n.toLocaleString();S.prodRaw=this.value;}refreshEcon()"/>
+        <p style="font-size:11px;color:var(--text3);margin-top:5px;font-family:var(--ff-m)">Pre-filled from Q7 if blank</p>
+        <div style="margin-top:20px">
+          <label class="fi-label">Current Payout — <span id="pout-lbl" style="color:var(--gold)">${pout}%</span></label>
+          <div style="padding:8px 0"><input class="econ-range" type="range" min="25" max="85" value="${pout}" oninput="S.payout=parseInt(this.value);document.getElementById('pout-lbl').textContent=this.value+'%';this.style.background='linear-gradient(90deg,var(--gold) 0%,var(--gold) '+((parseInt(this.value)-25)/60*100).toFixed(0)+'%,var(--border) '+((parseInt(this.value)-25)/60*100).toFixed(0)+'%)';refreshEcon()" style="background:linear-gradient(90deg,var(--gold) 0%,var(--gold) ${pctBar},var(--border) ${pctBar})"/></div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--ff-m)"><span>25%</span><span>Wirehouse grids: 35–55%</span><span>85%</span></div>
+        </div>
+      </div>
+      <div class="card" style="padding:22px">
+        <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Current Take-Home</p>
+        <div style="font-family:var(--ff-m);font-size:44px;font-weight:500;color:var(--text);line-height:1;margin-bottom:5px" id="e-net">${prod?fmt(net):'—'}</div>
+        <div style="font-size:13px;color:var(--text2)" id="e-sub">${prod?`${pout}% of ${fmt(prod)}`:'Enter production to calculate'}</div>
+        ${prod?`<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><p style="font-size:10px;color:var(--text3);margin-bottom:2px;font-family:var(--ff-m);letter-spacing:.3px;text-transform:uppercase">5-Year Cumulative</p><div style="font-family:var(--ff-m);font-size:24px;font-weight:500;color:var(--text)" id="e-5yr">${fmt(net*5)}</div></div>`:''}
+      </div>
+    </div>
+    <div class="card q-cascade" style="animation-delay:.15s;padding:22px;margin-bottom:16px">
+      <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:${prod?'16px':'0'}">Independent Payout Comparison</p>
+      <div id="e-cmp">${econCmpInner(prod,net)}</div>
+    </div>
+    ${prod?`<div style="padding:14px 18px;border-radius:var(--r);background:var(--gold-dim);border:1px solid var(--gold-bdr);margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;animation:qFadeUp .4s ease .18s both">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="flex-shrink:0;margin-top:2px"><path d="M7.5 1.5L13.5 12H1.5L7.5 1.5Z" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.5 6v3.5M7.5 11.5v.5" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <p style="font-size:13px;color:var(--text2);line-height:1.7"><strong style="color:var(--gold)">Note:</strong> Independent overhead (compliance, tech, E&O) typically runs $30–80K/year at your scale — substantially offset by higher payout. A Blueprint Call produces a precise pro-forma.</p>
+    </div>`:''}
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s2')">← Back</button><button class="btn btn-gold" onclick="go('chapter_s4')">Continue →</button></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 4
+// ══════════════════════════════════════════════════════════════
+function renderS4(){
+  return`${hdr('s4')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 03 of 07</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Structural & Financial Readiness</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Practice structural viability and personal financial capacity to execute a transition.</p>
+    <div class="q-block q-cascade" style="animation-delay:.12s">
+      <div class="q-label">17. Which independence structure are you evaluating?</div>
+      ${renderOpts('q17',[{l:'Full RIA — I own the ADV',s:'Maximum autonomy, highest complexity'},{l:'Hybrid model (Osaic, Commonwealth, LPL)',s:'Split broker-dealer + RIA'},{l:'Unsure — still researching'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.15s">
+      <div class="q-label">18. What percentage of your revenue do you believe is portable?</div>
+      <div class="q-sub">Advisors most frequently overestimate this variable. Be honest.</div>
+      ${renderOpts('q18',[{l:'Under 50%',s:'High transition risk'},{l:'50–70%',s:'Moderate risk'},{l:'70–90%',s:'Low-moderate — strong personal relationships'},{l:'90%+',s:'Low risk — advisor-centric book'},{l:'Unsure'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">19. If revenue declined 25% for 6–9 months, could you maintain stability?</div>
+      ${renderOpts('q19',[{l:'Yes — no meaningful changes required'},{l:'With meaningful adjustments — manageable'},{l:'No — real financial hardship'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">20. Personal liquidity — cash or accessible reserves?</div>
+      ${renderOpts('q20',[{l:'Under 6 months of expenses',s:'Below minimum recommended threshold'},{l:'6–12 months'},{l:'12+ months',s:'Transition-ready liquidity level'},{l:'Prefer not to disclose'}])}
+    </div>
+    <div class="sdiv q-cascade" style="animation-delay:.24s"></div>
+    <div class="q-cascade" style="animation-delay:.27s"><div class="sec-head">Transition Risk Factors</div><div class="sec-desc">Three variables that determine your specific risk profile.</div></div>
+    <div class="q-block q-cascade" style="animation-delay:.30s">
+      <div class="q-label">Non-solicitation or non-compete with your current firm?</div>
+      ${renderOpts('r2',[{l:'Yes — broad restrictions',s:'Immediate legal review required'},{l:'Yes — limited restrictions',s:'Manageable with proper guidance'},{l:'Unsure — don\'t know exact terms',s:'Legal review strongly recommended'},{l:'No restrictions'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.33s">
+      <div class="q-label">Typical client age demographic?</div>
+      ${renderOpts('r4',[{l:'Mostly 70 or older',s:'Distribution-phase concentration'},{l:'Mostly 55–70',s:'Near-retirement concentration'},{l:'Mixed across age groups'},{l:'Mostly under 55',s:'Long accumulation runway'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.36s">
+      <div class="q-label">Dependence on firm-provided leads or referral programs?</div>
+      ${renderOpts('r5',[{l:'Very dependent — primary source'},{l:'Somewhat dependent — supplemental'},{l:'Rarely use them'},{l:'Not at all — fully self-sourced'}])}
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s3')">← Back</button><button class="btn btn-gold" onclick="nextSection('s4','chapter_s5')">Continue →</button></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 5
+// ══════════════════════════════════════════════════════════════
+function renderS5(){
+  const a=S.a;
+  return`${hdr('s5')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 04 of 07</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Psychological Readiness</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:6px">Answer candidly. The AI analysis of this section generates the most consequential insights.</p>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:28px;animation:qFadeUp .4s ease .12s both">There are no correct answers. We are looking for self-awareness and honesty, not performance.</p>
+    <div class="q-block q-cascade" style="animation-delay:.15s">
+      <div class="q-label">21. When facing high-stakes uncertainty, you typically:</div>
+      ${renderOpts('q21',[{l:'Make decisive moves with incomplete information'},{l:'Gather more data before acting'},{l:'Delay action to reduce risk'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">22. In the past 12 months, did you make a high-stakes decision involving real financial or reputational risk?</div>
+      ${renderOpts('q22',[{l:'Yes'},{l:'No'}])}
+      <div id="cf-q23" class="cond-field${a.q22===0?' open':''}">
+        <div style="padding-top:12px">
+          <div class="q-label" style="margin-bottom:6px">23. Briefly describe the decision and outcome:</div>
+          <textarea class="fi" placeholder="e.g., I terminated a $2.2M client relationship after it became clear they expected legal grey-area work. It cost real revenue, but we replaced it within 6 months." oninput="setVal('q23',this.value)" rows="4">${a.q23||''}</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">24. When challenged directly about blind spots in your leadership:</div>
+      ${renderOpts('q24',[{l:'Welcome it — I actively seek this kind of feedback'},{l:'Tolerate it — I can receive it when framed respectfully'},{l:'Resist it — I tend to become defensive'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.24s">
+      <div class="q-label">25. If a key client indicated they might not follow you, your internal response would be:</div>
+      ${renderOpts('q25',[{l:'Strategic recalibration — adjust the plan'},{l:'Frustration — but I\'d push through'},{l:'Self-doubt — I\'d question the whole move'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.27s">
+      <div class="q-label">26. Who is most likely to resist or undermine your independence decision?</div>
+      <div class="fi-hint" style="margin-bottom:8px">Be specific. Internal resistance is one of the most common silent killers of advisor transitions.</div>
+      <textarea class="fi" placeholder="e.g., My biggest concern is my lead CSA — she's been with the firm 14 years and the brand matters to her. My wife is fully on board. No clients come to mind as likely resistors." oninput="setVal('q26',this.value)" rows="4">${a.q26||''}</textarea>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.30s">
+      <div class="q-label">27. Spouse or partner alignment regarding independence?</div>
+      ${renderOpts('q27',[{l:'Fully aligned — active supporter and informed participant'},{l:'Supportive but has real concerns about timing or risk'},{l:'Uncertain — haven\'t had the full conversation yet'},{l:'Resistant — significant point of friction'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.33s">
+      <div class="q-label">28. Comfort with temporary income volatility and public professional uncertainty? <span style="font-family:var(--ff-m);font-size:11px;color:var(--text3)">(1 = very uncomfortable / 10 = fully comfortable)</span></div>
+      <div class="slider-wrap" style="padding:10px 0">
+        <input type="range" class="vol-slider" min="1" max="10" value="${S.vol}" oninput="S.vol=parseInt(this.value);document.getElementById('vol-val').textContent=this.value"/>
+        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--text3);font-family:var(--ff-m)"><span>1 — Uncomfortable</span><span>10 — Energized</span></div>
+        <div style="text-align:center;margin-top:16px"><span style="font-family:var(--ff-m);font-size:60px;font-weight:500;color:var(--gold);line-height:1;text-shadow:0 0 30px var(--gold-glow)" id="vol-val">${S.vol}</span><span style="font-size:14px;color:var(--text3);font-family:var(--ff-m);margin-left:4px">/ 10</span></div>
+      </div>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.36s">
+      <div class="q-label">29. Today, you primarily see yourself as:</div>
+      ${renderOpts('q29',[{l:'A high-performing advisor',s:'Skilled practitioner focused on client outcomes'},{l:'A business owner',s:'Running a practice as an enterprise'},{l:'A founder',s:'Building something with equity and scalable value'},{l:'A future CEO',s:'I think in terms of organizational design'},{l:'Unsure — I haven\'t fully resolved this'}])}
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s4')">← Back</button><button class="btn btn-gold" onclick="nextSection('s5','chapter_s6')">Continue →</button></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 6
+// ══════════════════════════════════════════════════════════════
+function renderS6(){
+  return`${hdr('s6')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 05 of 07</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Operator Discipline</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">Independence rewards operators. Advisors who struggle most after transitioning aren't lacking in client skills — they're lacking in business operating systems.</p>
+    <div class="q-block q-cascade" style="animation-delay:.12s">
+      <div class="q-label">30. Documented processes (SOPs) for onboarding, service delivery, and compliance?</div>
+      ${renderOpts('q30',[{l:'Yes — fully documented and actively used'},{l:'Partial — some written, some tribal knowledge'},{l:'No — we operate from experience and judgment'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.15s">
+      <div class="q-label">31. How frequently do you formally review business performance metrics?</div>
+      ${renderOpts('q31',[{l:'Weekly'},{l:'Monthly'},{l:'Quarterly'},{l:'Rarely — no structured review cadence'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">32. When performance dips, your default move:</div>
+      ${renderOpts('q32',[{l:'Increase structure and clarity — diagnose the system'},{l:'Increase activity — more motion creates momentum'},{l:'Wait for market conditions to improve'},{l:'Identify external factors responsible'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">33. Have you led a team through a significant operational transition?</div>
+      ${renderOpts('q33',[{l:'Yes — direct experience leading through meaningful change'},{l:'No — this would be my first transition of this kind'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.24s">
+      <div class="q-label">34. Could you sustain 60–90 days of disciplined preparation without external recognition or validation?</div>
+      ${renderOpts('q34',[{l:'Yes — I can operate without external validation for extended periods'},{l:'Probably — I\'d need some check-ins to stay on track'},{l:'Unlikely — I need feedback loops to sustain focus'}])}
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s5')">← Back</button><button class="btn btn-gold" onclick="nextSection('s6','chapter_s7')">Continue →</button></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 7
+// ══════════════════════════════════════════════════════════════
+function renderS7(){
+  return`${hdr('s7')}
+  <div class="wrap section-wrap ${S.navDir==='forward'?'slide-in-right':'slide-in-left'}" style="padding-top:36px;padding-bottom:40px">
+    <div id="verr" class="verr${S.verrMsg?' show':''}"></div>
+    <p class="eyebrow q-cascade" style="animation-delay:.03s">Section 06 of 07</p>
+    <h2 class="section-title q-cascade" style="animation-delay:.06s">Commitment & Pathway</h2>
+    <p class="section-sub q-cascade" style="animation-delay:.09s;margin-bottom:28px">The Breakaway Blueprint™ is a premium, high-contact engagement. These final questions ensure mutual readiness before we proceed.</p>
+    <div class="card card-gold q-cascade" style="animation-delay:.12s;padding:22px;margin-bottom:22px">
+      <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Engagement Investment</p>
+      <p style="font-family:var(--ff-d);font-size:20px;font-weight:400;color:var(--text);margin-bottom:12px;line-height:1.35">The Breakaway Blueprint™ requires:</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px">
+        ${[
+          ['$2,500','Independent Readiness Audit — paid today to unlock your report'],
+          ['$30,000–$40,000','Full 6-month Breakaway Blueprint™ engagement (if alignment is confirmed)'],
+        ].map(([price,desc])=>`<div style="display:flex;align-items:flex-start;gap:12px">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M2 7l3 3L12 4" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px;color:var(--text2)"><strong style="color:var(--text);font-family:var(--ff-m)">${price}</strong> — ${desc}</span>
+        </div>`).join('')}
+      </div>
+      <p style="font-size:12px;color:var(--text3);line-height:1.65">The $2,500 Readiness Audit includes your full AI-analyzed candidacy report, a structured 60-minute Blueprint Call, and a written candidacy assessment. If engagement is not recommended, we will say so directly.</p>
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.15s">
+      <div class="q-label">35. If alignment is confirmed, are you prepared to invest at this level?</div>
+      ${renderOpts('q35',[{l:'Yes — budgeted and ready to proceed'},{l:'Possibly — need to see the full picture first'},{l:'Not at this time'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.18s">
+      <div class="q-label">36. If independence isn't viable in the next 12 months, would you strengthen your leadership and operational infrastructure in preparation?</div>
+      ${renderOpts('q36',[{l:'Yes — building enterprise value has ROI regardless'},{l:'Maybe — depends on what\'s involved'},{l:'No — I only want help with the breakaway itself'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.21s">
+      <div class="q-label">37. Are you prepared to receive direct, unfiltered feedback — including the possibility that independence is not appropriate for you at this time?</div>
+      ${renderOpts('q37',[{l:'Yes — that\'s exactly what I\'m looking for',s:'The right answer is the honest one'},{l:'No — I\'m committed to going independent regardless'}])}
+    </div>
+    <div class="q-block q-cascade" style="animation-delay:.24s">
+      <div class="q-label">38. Anything else we should know? <span style="font-size:12px;color:var(--text3);font-weight:400">(optional)</span></div>
+      <textarea class="fi" placeholder="e.g., I've spoken with two attorneys about my non-solicit. A competitor firm has a deal expiring in 60 days — but I want to do this on my own terms if possible." oninput="setVal('q38',this.value)" rows="4">${S.a.q38||''}</textarea>
+    </div>
+    <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s6')">← Back</button><button class="btn btn-gold" onclick="nextSection('s7','chapter_s1')">Continue →</button></div>
+  </div>`;
+}
+
+function handleSubmit(){
+  const errs=validate('s1');
+  if(errs.length){
+    let msg='Please complete all required fields before submitting.';
+    const t=(parseFloat(S.a.q8_adv)||0)+(parseFloat(S.a.q8_brok)||0)+(parseFloat(S.a.q8_ins)||0);
+    if(errs.includes('q8')) msg=`Revenue mix must total 100% — currently at ${t.toFixed(0)}%.`;
+    showErr(msg);return;
+  }
+  S.phase='processing';S.verrMsg='';
+  const app=document.getElementById('app');
+  app.innerHTML=renderProcessing();
+  app.style.opacity='1';app.style.transform='none';
+  window.scrollTo(0,0);
+  setTimeout(startProcessing,100);
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROCESSING
+// ══════════════════════════════════════════════════════════════
+function renderProcessing(){
+  const nodesSVG=NN_NODES.map(n=>`<circle id="nn-${n.id}" class="nn-node" cx="${n.cx}" cy="${n.cy}" r="8"/>`).join('');
+  const edgesSVG=NN_EDGES.map(([a,b],i)=>{
+    const na=NN_NODES.find(n=>n.id===a),nb=NN_NODES.find(n=>n.id===b);
+    return`<line id="nne-${i}" class="nn-edge" x1="${na.cx}" y1="${na.cy}" x2="${nb.cx}" y2="${nb.cy}"/>`;
+  }).join('');
+  return`${hdr()}
+  <div class="proc-wrap section-wrap slide-in-right">
+    <h2 style="font-family:var(--ff-d);font-size:32px;font-weight:400;color:var(--text);margin-bottom:8px;letter-spacing:-.02em">Analyzing Your Application</h2>
+    <p style="font-size:14px;color:var(--text2);margin-bottom:36px;font-family:var(--ff-m);letter-spacing:.1px">AI is reviewing your open-response answers · 15–25 seconds</p>
+    <div class="proc-network">
+      <svg viewBox="0 0 280 240" xmlns="http://www.w3.org/2000/svg">
+        ${edgesSVG}
+        ${nodesSVG}
+      </svg>
+    </div>
+    <div class="proc-steps-list">
+      ${PROC_STEPS.map((step,i)=>`<div class="proc-step-item${i===0?' active':''}" id="ps-${i}"><div class="proc-step-dot"></div><span>${step}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// PAYWALL
+// ══════════════════════════════════════════════════════════════
+function renderPaywall(){
+  const t=tier(S.finalScore);
+  const blurItems=['Complete Section-by-Section Score Breakdown','AI Analysis of All 6 Open-Response Answers','3 Personalized Independence Insights','Transition Risk Rating with Detail','Practice Economics Summary & 5-Year Projection','Red Flag / Green Light Assessment','Candidacy Narrative from AI Reviewer'];
+  return`${hdr()}
+  <div class="wrap section-wrap slide-in-right">
+    <div class="pw-score-wrap">
+      <p class="eyebrow" style="margin-bottom:20px">Your Assessment Is Complete</p>
+      <div class="pw-score ${t.cls}" id="pw-cnt">0</div>
+      <div style="font-family:var(--ff-m);font-size:12px;color:var(--text2);margin:8px 0 16px;letter-spacing:.3px">OUT OF 100</div>
+      <div class="pw-tier ${t.cls}">${t.label}</div>
+      <p style="font-size:14px;color:var(--text2);max-width:440px;margin:18px auto 0;line-height:1.75">Your full Independence Candidacy Report is ready — including AI-analyzed open responses, personalized insights, and your complete section breakdown.</p>
+    </div>
+    <div class="pw-lock">
+      <div class="pw-blur">
+        ${blurItems.map(l=>`<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+          <div style="width:34px;height:34px;border-radius:8px;background:var(--border);flex-shrink:0"></div>
+          <div style="height:13px;background:var(--border);border-radius:4px;flex:1;max-width:${Math.floor(Math.random()*30)+52}%"></div>
+        </div>`).join('')}
+      </div>
+      <div class="pw-overlay">
+        <div class="lock-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3.5" y="9" width="13" height="10" rx="2" stroke="var(--gold)" stroke-width="1.6"/><path d="M6.5 9V6a3.5 3.5 0 0 1 7 0v3" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14" r="1.5" fill="var(--gold)"/></svg>
+        </div>
+        <h3 style="font-family:var(--ff-d);font-size:24px;font-weight:400;color:var(--text);margin-bottom:8px;letter-spacing:-.01em">Full Report Locked</h3>
+        <div class="pw-price">$349</div>
+        <p style="font-size:13px;color:var(--text2);margin:10px 0 16px;font-family:var(--ff-m)">One-time · Permanent access · Instant delivery</p>
+        <div class="pw-feats">
+          ${blurItems.map(l=>`<div class="pw-feat"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.5 6l3 3L10.5 3" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>${l}</div>`).join('')}
+        </div>
+        <a href="${STRIPE_LINK}" target="_blank" rel="noopener" class="btn btn-gold" style="width:100%;max-width:360px;padding:14px;font-size:15px;border-radius:10px;margin-top:4px">Unlock Full Report — $349 →</a>
+        <p style="font-size:11px;color:var(--text3);margin-top:10px;font-family:var(--ff-m)">Secure via Stripe · Access code emailed within 1 business hour</p>
+      </div>
+    </div>
+    <div style="text-align:center;padding-bottom:60px">
+      <p style="font-size:13px;color:var(--text3);margin-bottom:8px;font-family:var(--ff-m)">Already paid? Enter your access code.</p>
+      <div class="code-wrap">
+        <input type="text" class="code-inp${S.codeErr?' err':''}" id="code-inp" placeholder="ACCESS-CODE" maxlength="24" value="${S.codeVal}" oninput="S.codeVal=this.value.toUpperCase();this.value=S.codeVal;S.codeErr='';this.classList.remove('err');document.getElementById('code-err').textContent=''" onkeydown="if(event.key==='Enter')tryCode()"/>
+        <button class="btn btn-outline" onclick="tryCode()" style="padding:11px 20px;font-size:14px;white-space:nowrap">Unlock →</button>
+      </div>
+      <div class="code-err" id="code-err">${S.codeErr}</div>
+      <p style="font-size:11px;color:var(--text3);margin-top:14px">Questions? <a href="mailto:team@iconocapital.com" style="color:var(--gold);text-decoration:none">team@iconocapital.com</a></p>
+    </div>
+  </div>`;
+}
+
+function tryCode(){
+  const val=(S.codeVal||'').trim().toUpperCase();
+  if(UNLOCK_CODES.includes(val)){go('results');}
+  else{
+    S.codeErr='Invalid code. Check your email or contact team@iconocapital.com.';
+    const inp=document.getElementById('code-inp'),err=document.getElementById('code-err');
+    if(inp)inp.classList.add('err');
+    if(err)err.textContent=S.codeErr;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════════════════════
+function renderResults(){
+  const t=tier(S.finalScore),ai=S.aiData||{},rl=riskLabel(S.a),secs=sectionScores();
+  const prod=prodEstimate(),net=prod*S.payout/100;
+  const crossFlags=S.crossFlags||[];
+  const hardFlags=S.hardFlags||[];
+  const tierDescs={
+    strong:{h:'You have the profile of a high-probability breakaway candidate.',b:'Your practice fundamentals, psychological readiness, and business posture align well with the demands of independence. The question is not whether you can go — it\'s how to optimize execution and timing for maximum effect.'},
+    emerging:{h:'A strong candidate with specific gaps to close first.',b:'Your fundamentals are solid, but 2–3 dimensions need deliberate attention before transitioning. Advisors who address gaps deliberately consistently outperform those who rush.'},
+    developing:{h:'The intent is present. The infrastructure needs deliberate work.',b:'Multiple dimensions need development before independence becomes viable. This is a prioritized 12–18 month roadmap, not a rejection. Advisors who build deliberately before leaping consistently outperform.'},
+    early:{h:'Independence is a future destination — not an immediate move.',b:'Your assessment reveals foundational gaps that would make a near-term transition high-risk. Use this roadmap to build the practice that makes independence inevitable.'},
+  };
+  const td=tierDescs[t.cls];
+  const scoreColor={strong:'var(--forest)',emerging:'var(--teal)',developing:'var(--amber)',early:'var(--muted)'}[t.cls];
+  const scoreGlow={strong:'rgba(28,83,85,.3)',emerging:'rgba(78,184,188,.25)',developing:'rgba(139,105,20,.2)',early:'transparent'}[t.cls];
+
+  // Renegade routing check
+  const showRenegade=(S.finalScore<38||S.a.q7===0)&&(S.a.q12<=2)&&S.a.q13&&S.a.q13.trim().length>20;
+
+  return`${hdr()}
+  <div class="wrap section-wrap slide-in-right">
+    <!-- Score Hero -->
+    <div style="text-align:center;padding:52px 0 32px;animation:qFadeUp .6s ease both">
+      <p class="eyebrow" style="margin-bottom:18px">Independence Candidacy Report</p>
+      <div style="font-family:var(--ff-m);font-size:96px;font-weight:500;line-height:1;letter-spacing:-4px;color:${scoreColor};text-shadow:0 0 60px ${scoreGlow}" id="r-cnt">0</div>
+      <div style="font-family:var(--ff-m);font-size:12px;color:var(--text2);margin:8px 0 14px;letter-spacing:.5px">OUT OF 100${S.aiData?.total_adjustment?` · AI Adjustment: ${S.aiData.total_adjustment>0?'+':''}${S.aiData.total_adjustment}`:''}</div>
+      <div class="pw-tier ${t.cls}">${t.label}</div>
+    </div>
+
+    ${hardFlags.length?`<!-- Hard Disqualifiers -->
+    <div class="q-cascade" style="animation-delay:.06s;margin-bottom:14px">
+      ${hardFlags.map(f=>`<div style="padding:16px 20px;border-radius:var(--r-lg);background:var(--red-dim);border:2px solid var(--red-bdr);margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px"><path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="var(--red)" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6v4M8 12v.5" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div><div style="font-family:var(--ff-m);font-size:10px;font-weight:700;color:var(--red);letter-spacing:.6px;text-transform:uppercase;margin-bottom:5px">${f.label}</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.65">${f.detail}</div></div>
+      </div>`).join('')}
+    </div>`:''}
+
+    <!-- Verdict -->
+    <div class="card q-cascade" style="animation-delay:.1s;padding:26px;margin-bottom:14px">
+      <div class="ai-badge"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 5l1 1L7 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> AI Analysis · Algorithm v1.0</div>
+      <div style="font-family:var(--ff-d);font-size:21px;font-weight:400;color:var(--text);margin-bottom:10px;line-height:1.32">${td.h}</div>
+      <p style="font-size:14px;color:var(--text2);line-height:1.78;margin-bottom:${ai.candidacy_narrative?'14px':'0'}">${td.b}</p>
+      ${ai.candidacy_narrative?`<div style="padding:14px 16px;background:var(--card);border-radius:var(--r);border-left:2px solid var(--gold);font-size:14px;color:var(--text2);line-height:1.78;font-style:italic">"${ai.candidacy_narrative}"</div>`:''}
+    </div>
+
+    <!-- Risk + Flags -->
+    <div class="g2 q-cascade" style="animation-delay:.14s;margin-bottom:14px">
+      <div class="card" style="padding:20px">
+        <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Transition Risk</p>
+        <div class="rbadge ${rl.cls}" style="font-size:13px;padding:9px 18px;margin-bottom:10px">${rl.cls==='low'?'↓':rl.cls==='moderate'?'→':'↑'} ${rl.label} Risk</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65">${rl.cls==='low'?'Favorable profile. Client portability, legal posture, and growth dynamics support a clean transition.':rl.cls==='moderate'?'Specific risk factors exist — address them before committing to a timeline.':'Material vulnerabilities require direct attention before any planning proceeds.'}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        ${ai.green_light?`<div class="flag-card green"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5l3.5 3.5L12.5 4" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div style="font-family:var(--ff-m);font-size:10px;font-weight:700;color:var(--green);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px">Green Light</div><div style="font-size:13px;color:var(--text2);line-height:1.6">${ai.green_light}</div></div></div>`:''}
+        ${ai.red_flag?`<div class="flag-card red"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5L13.5 12H1.5L7.5 1.5Z" stroke="var(--red)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.5 5.5v4M7.5 11.5v.5" stroke="var(--red)" stroke-width="1.4" stroke-linecap="round"/></svg><div><div style="font-family:var(--ff-m);font-size:10px;font-weight:700;color:var(--red);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px">Critical Consideration</div><div style="font-size:13px;color:var(--text2);line-height:1.6">${ai.red_flag}</div></div></div>`:''}
+        ${!ai.green_light&&!ai.red_flag?`<div class="card" style="padding:20px;display:flex;align-items:center;justify-content:center;min-height:80px"><p style="font-size:13px;color:var(--text3);text-align:center;font-family:var(--ff-m)">No critical flags identified</p></div>`:''}
+      </div>
+    </div>
+
+    ${crossFlags.length?`<!-- Cross-Validation Flags -->
+    <div class="card q-cascade" style="animation-delay:.16s;padding:22px;margin-bottom:14px;border-color:var(--amber-bdr)">
+      <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">⚡ Cross-Validation Flags</p>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:12px;line-height:1.55">The algorithm detected inconsistencies between your responses. These are not penalties — they are areas that will be explored in your Blueprint Call.</p>
+      ${crossFlags.map(f=>`<div style="padding:10px 14px;margin-bottom:6px;border-radius:var(--r);background:var(--amber-dim);border:1px solid var(--amber-bdr);font-size:13px;color:var(--text2);line-height:1.6">${f}</div>`).join('')}
+    </div>`:''}
+
+    <!-- Section Scores -->
+    <div class="card q-cascade" style="animation-delay:.18s;padding:22px;margin-bottom:14px">
+      <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:16px">Score by Section</p>
+      ${secs.map(s=>`<div class="qbar"><div class="qbar-lbl">${s.label}</div><div class="qbar-track"><div class="qbar-fill" style="background:${barColor(s.pct)}" data-w="${s.pct}%"></div></div><div class="qbar-val" style="color:${barColor(s.pct)}">${s.pct}%</div></div>`).join('')}
+    </div>
+
+    <!-- Economics -->
+    ${prod?`<div class="card q-cascade" style="animation-delay:.22s;padding:22px;margin-bottom:14px">
+      <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:14px">Practice Economics</p>
+      <div class="g2" style="margin-bottom:16px">
+        <div><p style="font-family:var(--ff-m);font-size:10px;color:var(--text3);margin-bottom:3px;letter-spacing:.3px;text-transform:uppercase">Gross Production</p><div style="font-family:var(--ff-m);font-size:24px;font-weight:500;color:var(--text)">${fmt(prod)}</div></div>
+        <div><p style="font-family:var(--ff-m);font-size:10px;color:var(--text3);margin-bottom:3px;letter-spacing:.3px;text-transform:uppercase">Current Net (${S.payout}%)</p><div style="font-family:var(--ff-m);font-size:24px;font-weight:500;color:var(--text)">${fmt(net)}</div></div>
+      </div>
+      ${(()=>{const trs=[{l:'85%',pct:.85,c:'var(--teal)'},{l:'88%',pct:.88,c:'var(--forest)'},{l:'92%',pct:.92,c:'var(--forest-dk)'}];const maxV=Math.max(net*5,...trs.map(t=>prod*t.pct*5));return`<p style="font-family:var(--ff-m);font-size:10px;color:var(--text3);margin-bottom:10px;letter-spacing:.3px;text-transform:uppercase">5-Year Comparison</p>${[{l:'Current',v:net*5,c:'var(--gray)'},...trs.map(t=>({l:t.l,v:prod*t.pct*5,c:t.c}))].map(r=>`<div class="bar-row"><div class="bar-lbl">${r.l}</div><div class="bar-track"><div class="bar-fill" style="background:${r.c}" data-w="${(r.v/maxV*100).toFixed(1)}%"></div></div><div class="bar-val" style="color:${r.l==='Current'?'var(--text2)':'var(--green)'}">${fmt(r.v)}</div></div>`).join('')}<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text2)">At 92% independent payout, you would accumulate an additional <strong style="color:var(--forest);font-family:var(--ff-m)">${fmt(prod*.92*5-net*5)}</strong> over five years.</div>`;})()}
+    </div>`:`<div class="card q-cascade" style="animation-delay:.22s;padding:22px;margin-bottom:14px;border-style:dashed"><p style="font-size:13px;color:var(--text2)">No production entered. <button onclick="go('s3')" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:13px;font-family:var(--ff-b);text-decoration:underline;padding:0">Add your numbers →</button></p></div>`}
+
+    <!-- AI Open Response Analysis -->
+    ${['q11','q13','q15','q23','q26'].some(k=>ai[k+'_assessment']&&ai[k+'_assessment']!=='N/A')?`<div class="card q-cascade" style="animation-delay:.26s;padding:22px;margin-bottom:14px">
+      <div class="ai-badge" style="margin-bottom:14px"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 5l1 1L7 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Open-Response Analysis</div>
+      ${[['q11','Team & Client Followup','q11_delta'],['q13','Transition Catalyst','q13_delta'],['q15','Retention Package','q15_delta'],['q23','High-Stakes Decision','q23_delta'],['q26','Resistance Mapping','q26_delta']].filter(([k])=>ai[k+'_assessment']&&ai[k+'_assessment']!=='N/A').map(([k,lbl,dk])=>`<div style="padding:12px 0;border-bottom:1px solid var(--border)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><div style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3)">${lbl}</div>${ai[dk]!==undefined&&ai[dk]!==0?`<span style="font-family:var(--ff-m);font-size:10px;font-weight:700;color:${ai[dk]>0?'var(--forest)':'var(--red)'};letter-spacing:.3px">${ai[dk]>0?'+':''}${ai[dk]} pts</span>`:''}</div><div style="font-size:13px;color:var(--text2);line-height:1.72">${ai[k+'_assessment']}</div></div>`).join('')}
+    </div>`:''}
+
+    ${ai.honesty_check&&ai.honesty_check!=='Pass'?`<!-- Honesty Check -->
+    <div class="card q-cascade" style="animation-delay:.27s;padding:16px 20px;margin-bottom:14px;border-color:var(--amber-bdr);background:var(--amber-dim)">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <span style="font-size:16px;flex-shrink:0">⊘</span>
+        <div><div style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--amber);margin-bottom:4px">Calibration Note</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.65">${ai.honesty_check}</div></div>
+      </div>
+    </div>`:``}
+
+    <!-- Insights -->
+    <div style="animation:qFadeUp .4s ease .28s both;margin-bottom:8px">
+      <h3 style="font-family:var(--ff-d);font-size:28px;font-weight:400;color:var(--text);margin-bottom:6px;letter-spacing:-.02em">Personalized Insights</h3>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:18px">Generated by AI based on your complete application profile.</p>
+    </div>
+    ${(ai.insights||[]).map((ins,i)=>`<div class="insight q-cascade" style="animation-delay:${.30+i*.06}s"><div class="ins-eye">Insight ${i+1}</div><div class="ins-title">${ins.title}</div><div class="ins-body">${ins.body}</div></div>`).join('')}
+
+    ${showRenegade?`<!-- Renegade Advisors Routing -->
+    <div class="card card-gold q-cascade" style="animation-delay:.42s;padding:22px;margin-bottom:14px">
+      <p style="font-family:var(--ff-m);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:10px">Alternative Pathway</p>
+      <div style="font-family:var(--ff-d);font-size:18px;font-weight:400;color:var(--text);margin-bottom:8px;line-height:1.35">Renegade Advisors — Platform-Supported Independence</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.72;margin-bottom:12px">Your current profile is below the engagement threshold for the full Breakaway Blueprint™. However, Iconoclastic Capital Management operates Renegade Advisors — a platform designed for advisors managing $10–50M who want independence infrastructure without the full build. If platform-supported independence is of interest, we'll include information in your Blueprint Call follow-up.</p>
+      <a href="mailto:team@iconocapital.com?subject=Renegade Advisors Inquiry — ${S.a.q1||'Inquiry'}" style="font-size:13px;color:var(--teal);text-decoration:none;font-weight:600;font-family:var(--ff-m)">Learn More →</a>
+    </div>`:''}
+
+    <!-- CTA -->
+    <div class="cta-section q-cascade" style="animation-delay:.44s">
+      <h2 style="font-family:var(--ff-d);font-size:clamp(26px,5vw,42px);font-weight:400;color:var(--text);margin-bottom:8px;letter-spacing:-.02em">Ready to Build Your Blueprint?</h2>
+      <p style="font-size:15px;color:var(--text2);max-width:460px;margin:0 auto 28px;line-height:1.78">Iconoclastic Capital Management works with a selective group of advisors. The Blueprint Call is where strategy gets specific — your numbers, your timeline, your structure.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:16px">
+        <a href="mailto:team@iconocapital.com?subject=Blueprint Call — ${S.a.q1||'Inquiry'} (${S.finalScore}/100 — ${tier(S.finalScore).label})" class="btn btn-gold" style="font-size:15px;padding:14px 32px">Schedule a Blueprint Call →</a>
+        <button class="btn btn-outline" onclick="dlResults()">Download Report ↓</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px">
+        <button class="btn btn-ghost" onclick="window.print()" style="font-size:12px;padding:9px 16px">Print</button>
+        <button class="btn btn-ghost" onclick="restart()" style="font-size:12px;padding:9px 16px">Retake</button>
+      </div>
+      <div style="font-size:12px;color:var(--text3);display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;font-family:var(--ff-m)">
+        <a href="https://iconocapital.com" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text3)'">iconocapital.com</a>
+        <span style="color:var(--border-h)">·</span>
+        <a href="mailto:team@iconocapital.com" style="color:var(--text3);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text3)'">team@iconocapital.com</a>
+        <span style="color:var(--border-h)">·</span>
+        <span>Rochester, NY</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// DOWNLOAD
+// ══════════════════════════════════════════════════════════════
+function dlResults(){
+  const a=S.a,t=tier(S.finalScore),rl=riskLabel(a),ai=S.aiData||{};
+  const prod=prodEstimate(),net=prod*S.payout/100,secs=sectionScores();
+  const crossFlags=S.crossFlags||[];
+  const hardFlags=S.hardFlags||[];
+  const D=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const txt=`BREAKAWAY BLUEPRINT™ — INDEPENDENCE CANDIDACY REPORT
+Iconoclastic Capital Management | iconocapital.com | Rochester, NY
+Generated: ${D} | Advisor: ${a.q1||'—'} | Firm: ${a.q4||'—'}
+Algorithm v1.0 · Designed by Christopher Haigh, CFP®
+${'═'.repeat(66)}
+
+OVERALL SCORE: ${S.finalScore} / 100 | TIER: ${t.label}
+Raw Score: ${S.rawScore} | AI Adjustment: ${ai.total_adjustment>0?'+':''}${ai.total_adjustment||0}
+TRANSITION RISK: ${rl.label}
+${ai.honesty_check?`HONESTY CHECK: ${ai.honesty_check}`:''}
+${hardFlags.length?`\n${'═'.repeat(66)}\n⚠  HARD DISQUALIFIERS\n${'═'.repeat(66)}\n${hardFlags.map(f=>`• ${f.label}: ${f.detail}`).join('\n')}`:''}
+
+CANDIDACY NARRATIVE:
+${ai.candidacy_narrative||'See full report.'}
+
+${'─'.repeat(66)}
+SECTION SCORES
+${'─'.repeat(66)}
+${secs.map(s=>`${s.label.padEnd(32)} ${s.pct}% (${s.raw}/${s.max})`).join('\n')}
+
+${'─'.repeat(66)}
+SIGNALS
+${'─'.repeat(66)}
+${ai.green_light?'✓ Green Light: '+ai.green_light:''}
+${ai.red_flag?'⚠ Consider: '+ai.red_flag:''}
+${crossFlags.length?`\n${'─'.repeat(66)}\nCROSS-VALIDATION FLAGS\n${'─'.repeat(66)}\n${crossFlags.map(f=>`• ${f}`).join('\n')}`:''}
+
+${'─'.repeat(66)}
+AI OPEN-RESPONSE ANALYSIS
+${'─'.repeat(66)}
+${[['q11','Team & Client Followup','q11_delta'],['q13','Transition Catalyst','q13_delta'],['q15','Retention Package','q15_delta'],['q23','High-Stakes Decision','q23_delta'],['q26','Resistance Mapping','q26_delta']].filter(([k])=>ai[k+'_assessment']&&ai[k+'_assessment']!=='N/A').map(([k,lbl,dk])=>`${lbl}${ai[dk]?' ('+((ai[dk]>0?'+':'')+ai[dk])+' pts)':''}\n${ai[k+'_assessment']}`).join('\n\n')}
+
+${'─'.repeat(66)}
+ECONOMICS
+${'─'.repeat(66)}
+${prod?`Gross Production: ${fmt(prod,true)}
+Current Net (${S.payout}%): ${fmt(net,true)}
+5-Year Current: ${fmt(net*5,true)}
+5-Year at 85%: ${fmt(prod*.85*5,true)}
+5-Year at 88%: ${fmt(prod*.88*5,true)}
+5-Year at 92%: ${fmt(prod*.92*5,true)}
+5-Year Advantage (92%): +${fmt(prod*.92*5-net*5,true)}`:'Not entered.'}
+
+${'─'.repeat(66)}
+PERSONALIZED INSIGHTS
+${'─'.repeat(66)}
+${(ai.insights||[]).map((ins,i)=>`\n${i+1}. ${ins.title}\n${ins.body}`).join('\n')}
+
+${'─'.repeat(66)}
+NEXT STEP: team@iconocapital.com | iconocapital.com
+`;
+  const blob=new Blob([txt],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  link.href=url;link.download=`BB-Report-${(a.q1||'Report').replace(/\s+/g,'-')}-${new Date().toISOString().split('T')[0]}.txt`;
+  link.click();URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════════════════════════
+// SLOT MACHINE SCORE
+// ══════════════════════════════════════════════════════════════
+function slotMachineReveal(target, elId, dur=2200){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  const start=performance.now();
+  const tick=(now)=>{
+    const p=Math.min((now-start)/dur,1);
+    if(p<0.65){
+      el.textContent=Math.floor(Math.random()*(target>50?100:60));
+    } else {
+      const ease=1-Math.pow(1-((p-.65)/.35),3);
+      el.textContent=Math.round(target*ease);
+    }
+    if(p<1)requestAnimationFrame(tick);
+    else el.textContent=target;
+  };
+  requestAnimationFrame(tick);
+}
+
+function animResultBars(){
+  setTimeout(()=>{
+    document.querySelectorAll('.qbar-fill,.bar-fill').forEach((b,i)=>{
+      setTimeout(()=>{b.style.width=b.dataset.w||'0%';},i*45);
+    });
+  },350);
+}
+
+// ══════════════════════════════════════════════════════════════
+// RESTART
+// ══════════════════════════════════════════════════════════════
+function restart(){
+  S={phase:'landing',a:{},payout:42,vol:5,prodRaw:'',aiData:null,rawScore:0,finalScore:0,procStep:0,codeErr:'',codeVal:'',verrMsg:'',navDir:'forward',chapterTimer:null,crossFlags:[],hardFlags:[]};
+  go('landing');
+}
+
+// ══════════════════════════════════════════════════════════════
+// ADMIN — Password-protected test mode
+// ══════════════════════════════════════════════════════════════
+function adminLogin(){
+  const pw=document.getElementById('admin-pw');
+  const err=document.getElementById('admin-err');
+  if(!pw)return;
+  if(pw.value==='minitank'){
+    document.getElementById('admin-modal').style.display='none';
+    adminFillAndRun();
+  } else {
+    if(err) err.textContent='Invalid password.';
+    pw.value='';pw.focus();
+  }
+}
+function adminFillAndRun(){
+  // Populate all fields with a strong-candidate test profile
+  S.a={
+    q1:'Test Advisor (Admin)',q2:'admin@test.com',q3:'(555) 999-0000',
+    q4:'Merrill Lynch',q5:'Rochester, NY',q6:'',
+    q7:3, // $1M–$2M
+    q8_adv:80,q8_brok:15,q8_ins:5,
+    q9:'142',
+    q10:2, // Small team
+    q1a:3, // 80–90% recurring
+    q1b:'10500',
+    q11:'My senior CSA of 8 years would absolutely follow — she has said so explicitly. My junior advisor is 70% likely. Of my top 30 households, 25 are entirely self-sourced relationships that pre-date my current firm affiliation. The remaining 5 came through firm-assigned leads but I have managed them for 6+ years.',
+    q12:1, // 3–6 months
+    q13:'My branch manager was replaced six months ago. The new manager has restructured compensation to penalize fee-based business and is pushing annuity production quotas that conflict with my fiduciary approach. This is structural, not personality-driven.',
+    q14:1, // No retention
+    q15:'',
+    q16:0, // Sole decision-maker
+    q2a:2, // Formal valuation
+    q17:0, // Full RIA
+    q18:3, // 90%+
+    q19:0, // Yes, no changes
+    q20:2, // 12+ months
+    r2:3, // No restrictions
+    r4:2, // Mixed
+    r5:3, // Not at all dependent
+    q21:0, // Decisive
+    q22:0, // Yes
+    q23:'Left a guaranteed $180K salary at a wireframe to join a startup RIA as partner. Made the decision in under two weeks after initial conversations. The firm grew from $40M to $220M AUM in four years.',
+    q24:0, // Welcome feedback
+    q25:0, // Strategic recalibration
+    q26:'My wife initially had concerns about income stability but after reviewing the economics is now fully supportive. My father-in-law, a retired advisor, thinks I should stay at Merrill for the pension. One client who is close friends with my current branch manager may not follow.',
+    q27:0, // Fully aligned
+    q29:2, // Founder
+    q30:0, // Fully documented
+    q31:0, // Weekly
+    q32:0, // Diagnose system
+    q33:0, // Yes
+    q34:0, // Yes
+    q35:0, // Budgeted
+    q36:0, // Growth mindset
+    q37:0, // Yes — direct feedback
+    q38:'I have been quietly interviewing custodians and have narrowed to Schwab and Fidelity. My lease expires in 8 months which aligns with transition timing.',
+  };
+  S.payout=42;S.vol=8;S.prodRaw='1350000';
+  startProcessing();
+}
+
+// ══════════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ══════════════════════════════════════════════════════════════
+const app=document.getElementById('app');
+app.style.transition='opacity .2s ease,transform .2s ease';
+
+function render(){
+  S.verrMsg='';
+  switch(S.phase){
+    case 'landing':    app.innerHTML=renderLanding(); break;
+    case 'chapter_s1': app.innerHTML=renderChapter('s1'); setTimeout(()=>startChapterTimer('s1'),100); break;
+    case 's1':         app.innerHTML=renderS1(); break;
+    case 'chapter_s2': app.innerHTML=renderChapter('s2'); setTimeout(()=>startChapterTimer('s2'),100); break;
+    case 's2':         app.innerHTML=renderS2(); break;
+    case 'chapter_s3': app.innerHTML=renderChapter('s3'); setTimeout(()=>startChapterTimer('s3'),100); break;
+    case 's3':         app.innerHTML=renderS3(); setTimeout(animBars,300); break;
+    case 'chapter_s4': app.innerHTML=renderChapter('s4'); setTimeout(()=>startChapterTimer('s4'),100); break;
+    case 's4':         app.innerHTML=renderS4(); break;
+    case 'chapter_s5': app.innerHTML=renderChapter('s5'); setTimeout(()=>startChapterTimer('s5'),100); break;
+    case 's5':         app.innerHTML=renderS5(); break;
+    case 'chapter_s6': app.innerHTML=renderChapter('s6'); setTimeout(()=>startChapterTimer('s6'),100); break;
+    case 's6':         app.innerHTML=renderS6(); break;
+    case 'chapter_s7': app.innerHTML=renderChapter('s7'); setTimeout(()=>startChapterTimer('s7'),100); break;
+    case 's7':         app.innerHTML=renderS7(); break;
+    case 'processing': app.innerHTML=renderProcessing(); break;
+    case 'paywall':    app.innerHTML=renderPaywall(); setTimeout(()=>slotMachineReveal(S.finalScore,'pw-cnt'),200); break;
+    case 'results':    app.innerHTML=renderResults(); setTimeout(()=>{slotMachineReveal(S.finalScore,'r-cnt');animResultBars();},200); break;
+  }
+}
+
+render();
+</script>
+</body>
+</html>
