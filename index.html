@@ -368,11 +368,10 @@ const CHAPTERS = {
   s1:{num:'01',title:'Professional Profile & Revenue',desc:'Contact details, team structure, and trailing 12-month revenue metrics that determine your valuation profile.',icon:'◈',count:'13 questions'},
   s2:{num:'02',title:'Independence Intent & Timing',desc:'Catalyst analysis, transition timeline, retention obligations, and decision authority mapping.',icon:'◎',count:'7 questions'},
   s3:{num:'03',title:'Practice Economics',desc:'Live modeling of your annual take-home across three independent payout tiers — projected over five years.',icon:'◐',count:'Interactive calculator'},
-  s4:{num:'04',title:'Structural & Financial Readiness',desc:'Target structure, client portability, liquidity runway, and the three transition risk factors that matter most.',icon:'◑',count:'10 questions'},
-  s5:{num:'05',title:'Psychological Readiness',desc:'Decisiveness under uncertainty, partner alignment, business owner identity, and volatility tolerance.',icon:'◒',count:'11 questions'},
-  s6:{num:'06',title:'Operator Discipline',desc:'SOP documentation, performance review cadence, and 90-day focus endurance without external validation.',icon:'◓',count:'9 questions'},
-  s7:{num:'07',title:'Commitment & Pathway',desc:'Investment readiness, preparation willingness, and capacity for unfiltered direct feedback.',icon:'◔',count:'6 questions + open response'},
-  s8:{num:'08',title:'Technology & Infrastructure',desc:'Platform independence, custodial preparation, workflow portability, and book-of-record data control.',icon:'◍',count:'5 questions'},
+  s4:{num:'04',title:'Structural & Financial Readiness',desc:'Target structure, client portability, liquidity runway, and the three transition risk factors that matter most.',icon:'◑',count:'11 questions'},
+  s5:{num:'05',title:'Psychological Readiness',desc:'Decisiveness under uncertainty, partner alignment, business owner identity, and volatility tolerance.',icon:'◒',count:'9 questions'},
+  s6:{num:'06',title:'Operator Discipline',desc:'SOP documentation, performance review cadence, and 90-day focus endurance without external validation.',icon:'◓',count:'6 questions'},
+  s7:{num:'07',title:'Commitment & Pathway',desc:'Investment readiness, preparation willingness, and capacity for unfiltered direct feedback.',icon:'◔',count:'4 questions + open response'},
 };
 
 const PROC_STEPS = [
@@ -487,8 +486,6 @@ function computeRawScore() {
   const r4s=[1,2,3,4]; sc+=r4s[a.r4]||0;
   const r5s=[0,2,3,4]; sc+=r5s[a.r5]||0;
   const q39s=[0,2,4,5]; sc+=q39s[a.q39]||0;
-  const q41s=[0,2,4,5]; sc+=q41s[a.q41]||0;
-  const q42s=[0,2,4,5]; sc+=q42s[a.q42]||0;
   const q21s=[5,3,0]; sc+=q21s[a.q21]||0;
   if(a.q22===0) sc+=4;
   const q24s=[5,2,0]; sc+=q24s[a.q24]||0;
@@ -504,23 +501,13 @@ function computeRawScore() {
   sc+=(a.q33===0)?3:1;
   const q34s=[3,1,0]; sc+=q34s[a.q34]||0;
   const q40s=[0,2,4,5]; sc+=q40s[a.q40]||0;
-  const q45s=[0,2,4,5]; sc+=q45s[a.q45]||0;
-  const q46s=[0,2,4,5]; sc+=q46s[a.q46]||0;
-  const q47s=[0,2,4,5]; sc+=q47s[a.q47]||0;
   const q35s=[7,3,0]; sc+=q35s[a.q35]||0;
   const q36s=[5,2,0]; sc+=q36s[a.q36]||0;
   sc+=(a.q37===0)?3:0;
-  const q48s=[0,2,4,5]; sc+=q48s[a.q48]||0;
-  const q49s=[0,2,4,5]; sc+=q49s[a.q49]||0;
-  const q50s=[0,2,3,4,5]; sc+=q50s[a.q50]||0;
-  const q51s=[0,2,4,5]; sc+=q51s[a.q51]||0;
-  const q52s=[5,3,1,0]; sc+=q52s[a.q52]||0;
-  const q53s=[4,3,2,1]; sc+=q53s[a.q53]||0;
-  const q54s=[0,2,5]; sc+=q54s[a.q54]||0;
   sc+=proprietarySignalAdjustment(a);
   return sc;
 }
-const RAW_MAX=246;
+const RAW_MAX=177;
 
 function proprietarySignalAdjustment(a){
   let bonus = 0;
@@ -557,11 +544,10 @@ function sectionScores(){
   return[
     {label:'Revenue & Book',raw:(()=>{const q7s=[0,4,8,12,12];let s=q7s[a.q7]||0;s+=Math.min(8,Math.round((parseFloat(a.q8_adv)||0)*0.08));const hh=parseInt(a.q9)||0;s+=hh>=200?5:hh>=100?4:hh>=50?3:hh>=20?2:hh>0?1:0;const q10s=[2,4,5,5];s+=q10s[a.q10]||0;const q1as=[0,1,3,5,7];s+=q1as[a.q1a]||0;const rrHH=parseInt(a.q1b)||0;s+=rrHH>=15000?6:rrHH>=9400?5:rrHH>=6000?3:rrHH>=3000?1:0;return s;})(),max:42},
     {label:'Intent & Timing',raw:(()=>{const q12s=[5,5,3,1,0];let s=q12s[a.q12]||0;s+=(a.q14===1)?5:(a.q14===0)?2:0;const q16s=[5,3,0];s+=q16s[a.q16]||0;const q2as=[0,2,4,5];s+=q2as[a.q2a]||0;return s;})(),max:20},
-    {label:'Structural Readiness',raw:(()=>{const q17s=[5,3,1];let s=q17s[a.q17]||0;const q18s=[0,2,4,5,1];s+=q18s[a.q18]||0;const q19s=[5,2,0];s+=q19s[a.q19]||0;const q20s=[1,3,5,2];s+=q20s[a.q20]||0;const r2s=[0,2,1,4];s+=r2s[a.r2]||0;const r4s=[1,2,3,4];s+=r4s[a.r4]||0;const r5s=[0,2,3,4];s+=r5s[a.r5]||0;const q39s=[0,2,4,5];s+=q39s[a.q39]||0;const q41s=[0,2,4,5];s+=q41s[a.q41]||0;const q42s=[0,2,4,5];s+=q42s[a.q42]||0;return s;})(),max:42},
-    {label:'Psychological Readiness',raw:(()=>{const q21s=[5,3,0];let s=q21s[a.q21]||0;s+=(a.q22===0)?4:0;const q24s=[5,2,0];s+=q24s[a.q24]||0;const q25s=[4,1,0];s+=q25s[a.q25]||0;const q27s=[5,3,1,0];s+=q27s[a.q27]||0;s+=Math.round((S.vol||5)*0.6);const q29s=[3,4,5,5,0];s+=q29s[a.q29]||0;const q43s=[0,2,4,5];s+=q43s[a.q43]||0;const q44s=[0,2,4,5,1];s+=q44s[a.q44]||0;return s;})(),max:36},
-    {label:'Operator Discipline',raw:(()=>{const q30s=[5,3,0];let s=q30s[a.q30]||0;const q31s=[5,4,2,0];s+=q31s[a.q31]||0;const q32s=[4,3,0,0];s+=q32s[a.q32]||0;s+=(a.q33===0)?3:1;const q34s=[3,1,0];s+=q34s[a.q34]||0;const q40s=[0,2,4,5];s+=q40s[a.q40]||0;const q45s=[0,2,4,5];s+=q45s[a.q45]||0;const q46s=[0,2,4,5];s+=q46s[a.q46]||0;const q47s=[0,2,4,5];s+=q47s[a.q47]||0;return s;})(),max:39},
-    {label:'Commitment & Pathway',raw:(()=>{const q35s=[7,3,0];let s=q35s[a.q35]||0;const q36s=[5,2,0];s+=q36s[a.q36]||0;s+=(a.q37===0)?3:0;const q48s=[0,2,4,5];s+=q48s[a.q48]||0;const q49s=[0,2,4,5];s+=q49s[a.q49]||0;return s;})(),max:25},
-    {label:'Technology & Infrastructure',raw:(()=>{let s=0;const q50s=[0,2,3,4,5];s+=q50s[a.q50]||0;const q51s=[0,2,4,5];s+=q51s[a.q51]||0;const q52s=[5,3,1,0];s+=q52s[a.q52]||0;const q53s=[4,3,2,1];s+=q53s[a.q53]||0;const q54s=[0,2,5];s+=q54s[a.q54]||0;return s;})(),max:24},
+    {label:'Structural Readiness',raw:(()=>{const q17s=[5,3,1];let s=q17s[a.q17]||0;const q18s=[0,2,4,5,1];s+=q18s[a.q18]||0;const q19s=[5,2,0];s+=q19s[a.q19]||0;const q20s=[1,3,5,2];s+=q20s[a.q20]||0;const r2s=[0,2,1,4];s+=r2s[a.r2]||0;const r4s=[1,2,3,4];s+=r4s[a.r4]||0;const r5s=[0,2,3,4];s+=r5s[a.r5]||0;const q39s=[0,2,4,5];s+=q39s[a.q39]||0;return s;})(),max:32},
+    {label:'Psychological Readiness',raw:(()=>{const q21s=[5,3,0];let s=q21s[a.q21]||0;s+=(a.q22===0)?4:0;const q24s=[5,2,0];s+=q24s[a.q24]||0;const q25s=[4,1,0];s+=q25s[a.q25]||0;const q27s=[5,3,1,0];s+=q27s[a.q27]||0;s+=Math.round((S.vol||5)*0.6);const q29s=[3,4,5,5,0];s+=q29s[a.q29]||0;return s;})(),max:26},
+    {label:'Operator Discipline',raw:(()=>{const q30s=[5,3,0];let s=q30s[a.q30]||0;const q31s=[5,4,2,0];s+=q31s[a.q31]||0;const q32s=[4,3,0,0];s+=q32s[a.q32]||0;s+=(a.q33===0)?3:1;const q34s=[3,1,0];s+=q34s[a.q34]||0;const q40s=[0,2,4,5];s+=q40s[a.q40]||0;return s;})(),max:25},
+    {label:'Commitment & Pathway',raw:(()=>{const q35s=[7,3,0];let s=q35s[a.q35]||0;const q36s=[5,2,0];s+=q36s[a.q36]||0;s+=(a.q37===0)?3:0;return s;})(),max:15},
   ].map(s=>({...s,pct:Math.round(s.raw/s.max*100)}));
 }
 
@@ -598,8 +584,6 @@ function validate(phase){
     if(a.r4===undefined)missing.push('r4');
     if(a.r5===undefined)missing.push('r5');
     if(a.q39===undefined)missing.push('q39');
-    if(a.q41===undefined)missing.push('q41');
-    if(a.q42===undefined)missing.push('q42');
   }
   if(phase==='s5'){
     if(a.q21===undefined)missing.push('q21');
@@ -620,9 +604,6 @@ function validate(phase){
     if(a.q33===undefined)missing.push('q33');
     if(a.q34===undefined)missing.push('q34');
     if(a.q40===undefined)missing.push('q40');
-    if(a.q45===undefined)missing.push('q45');
-    if(a.q46===undefined)missing.push('q46');
-    if(a.q47===undefined)missing.push('q47');
   }
   if(phase==='s7'){
     if(a.q35===undefined)missing.push('q35');
@@ -714,21 +695,7 @@ async function runAI(){
     structure:['Full RIA','Hybrid','Unsure'][a.q17]||'—',
     portability:['<50%','50–70%','70–90%','90%+','Unsure'][a.q18]||'—',
     top10Concentration:['>60%','40–60%','25–40%','<25%'][a.q39]||'—',
-    avgClientTenure:['Under 3 years','3–7 years','7–12 years','12+ years'][a.q41]||'—',
-    top20SelfSourced:['Under 40%','40–60%','60–80%','80%+'][a.q42]||'—',
     crmReadiness:['No segmented workflows','Partial tagging and notes','Consistent segmentation and workflows','Migration-ready, fully standardized'][a.q40]||'—',
-    relationshipIdentity:['Firm-granted permission','A mix of both','Mostly advisor-owned assets','Unequivocally advisor-owned assets'][a.q43]||'—',
-    priorFirmChanges:['Never','1 time','2 times','3+ times','Prefer not to say'][a.q44]||'—',
-    continuityPlan:['No documented plan','Basic but outdated plan','Documented and annually reviewed','Comprehensive and tested plan'][a.q45]||'—',
-    nonProprietaryCRM:['No','Partially','Yes — fully','In active migration'][a.q46]||'—',
-    staffNonSolicit:['No','Some key staff only','Most licensed staff','Yes — comprehensive'][a.q47]||'—',
-    riaPeerResearch:['No','1 owner','2–3 owners','4+ owners'][a.q48]||'—',
-    publicBrandReadiness:['Not prepared','Somewhat prepared','Prepared and willing','Already operating this way'][a.q49]||'—',
-    techStackMaturity:['Fragmented/manual','Functional with gaps','Integrated and stable','High-performing with clear owner','Best-in-class and scalable'][a.q50]||'—',
-    custodianResearch:['None yet','Initial shortlist','Deep diligence in progress','Preferred partner identified'][a.q51]||'—',
-    proprietaryDependency:['No material dependency','Limited dependency','Moderate dependency','Heavy dependency'][a.q52]||'—',
-    meetingModality:['Mostly in-person','Hybrid (lean in-person)','Hybrid (lean virtual)','Mostly virtual'][a.q53]||'—',
-    firmOwnsBookData:['Unsure','Yes','No'][a.q54]||'—',
     spouseAlign:['Fully aligned','Supportive/concerned','Uncertain','Resistant'][a.q27]||'—',
     investReady:['Yes','Possibly','Not at this time'][a.q35]||'—',
   };
@@ -764,21 +731,7 @@ async function submitLead(){
       advisory_pct:(a.q8_adv||0)+'%',households:a.q9,
       timeline:['Within 3mo','3–6mo','6–12mo','12+mo','Exploring'][a.q12],
       top10_concentration:['>60%','40–60%','25–40%','<25%'][a.q39],
-      avg_client_tenure:['<3 years','3–7 years','7–12 years','12+ years'][a.q41],
-      top20_self_sourced:['<40%','40–60%','60–80%','80%+'][a.q42],
       crm_readiness:['No segmented workflows','Partial tagging/notes','Consistent workflows','Migration-ready'][a.q40],
-      relationship_identity:['Firm-granted','Mixed','Mostly advisor-owned','Advisor-owned assets'][a.q43],
-      prior_firm_changes:['Never','1','2','3+','Prefer not to say'][a.q44],
-      continuity_plan:['No','Basic/outdated','Reviewed annually','Comprehensive/tested'][a.q45],
-      non_proprietary_crm:['No','Partial','Yes','Migrating'][a.q46],
-      staff_non_solicit:['No','Some key staff','Most licensed staff','Comprehensive'][a.q47],
-      ria_owner_research:['No','1','2-3','4+'][a.q48],
-      public_brand_readiness:['Not prepared','Somewhat','Prepared','Already doing it'][a.q49],
-      tech_stack_maturity:['Fragmented','Functional','Integrated','High-performing','Best-in-class'][a.q50],
-      custodian_research:['None','Shortlist','Deep diligence','Preferred identified'][a.q51],
-      proprietary_dependency:['None','Limited','Moderate','Heavy'][a.q52],
-      meeting_modality:['Mostly in-person','Hybrid in-person','Hybrid virtual','Mostly virtual'][a.q53],
-      firm_owns_book_data:['Unsure','Yes','No'][a.q54],
       catalyst:a.q13,retention:['Yes','No'][a.q14],
       score:S.finalScore+'/100',tier:t.label,
     })});
@@ -1189,16 +1142,6 @@ function renderS4(){
       <div class="q-sub">This is a core proprietary risk marker for transition fragility.</div>
       ${renderOpts('q39',[{l:'Over 60%',s:'Very concentrated — elevated transition volatility'},{l:'40–60%',s:'Moderate concentration risk'},{l:'25–40%',s:'Healthy concentration profile'},{l:'Under 25%',s:'Diversified and resilient'}])}
     </div>
-    <div class="q-block q-cascade" style="animation-delay:.42s">
-      <div class="q-label">41. What is your client average tenure?</div>
-      <div class="q-sub">Core input used in the FP Transitions Transition Risk Index.</div>
-      ${renderOpts('q41',[{l:'Under 3 years'},{l:'3–7 years'},{l:'7–12 years'},{l:'12+ years'}])}
-    </div>
-    <div class="q-block q-cascade" style="animation-delay:.45s">
-      <div class="q-label">42. What % of your top 20 clients did you personally source?</div>
-      <div class="q-sub">Exclude firm-introduced or inherited relationships.</div>
-      ${renderOpts('q42',[{l:'Under 40%'},{l:'40–60%'},{l:'60–80%'},{l:'80%+'}])}
-    </div>
     <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s3')">← Back</button><button class="btn btn-gold" onclick="nextSection('s4','chapter_s5')">Continue →</button></div>
   </div>`;
 }
@@ -1303,18 +1246,6 @@ function renderS6(){
     <div class="q-block q-cascade" style="animation-delay:.27s">
       <div class="q-label">40. How migration-ready is your CRM and client data today?</div>
       ${renderOpts('q40',[{l:'Low — no household segmentation or clean workflow states'},{l:'Basic — partial tags and notes, not fully consistent'},{l:'Good — consistent segmentation, notes, and process checkpoints'},{l:'Excellent — migration-ready, standardized fields and service tiers'}])}
-    </div>
-    <div class="q-block q-cascade" style="animation-delay:.30s">
-      <div class="q-label">45. Do you have a documented business continuity / succession plan?</div>
-      ${renderOpts('q45',[{l:'No documented plan'},{l:'Basic plan, not recently updated'},{l:'Documented and reviewed annually'},{l:'Comprehensive and periodically tested'}])}
-    </div>
-    <div class="q-block q-cascade" style="animation-delay:.33s">
-      <div class="q-label">46. Do you use a non-proprietary CRM?</div>
-      ${renderOpts('q46',[{l:'No — fully tied to firm tools'},{l:'Partially — mixed stack'},{l:'Yes — fully non-proprietary'},{l:'In active migration now'}])}
-    </div>
-    <div class="q-block q-cascade" style="animation-delay:.36s">
-      <div class="q-label">47. Do licensed staff have non-solicit agreements with your current practice?</div>
-      ${renderOpts('q47',[{l:'No'},{l:'Some key staff only'},{l:'Most licensed staff'},{l:'Yes — comprehensive coverage'}])}
     </div>
     <div class="nav-foot"><button class="btn btn-ghost" onclick="go('chapter_s5')">← Back</button><button class="btn btn-gold" onclick="nextSection('s6','chapter_s7')">Continue →</button></div>
   </div>`;
